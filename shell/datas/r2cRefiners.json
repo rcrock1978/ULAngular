@@ -1,0 +1,164 @@
+﻿{
+  "Data": {
+    "Sectors": [
+      {
+        "CoveredSectorId": "1",
+        "CoveredSector": "Safety"
+      },
+      {
+        "CoveredSectorId": "2",
+        "CoveredSector": "Wireless"
+      }
+    ],
+    "FrequencyAndTechnology": [
+      {
+        "FrequencyAndTechnologyId": "1",
+        "RefinerName": "RFID_860M"
+      },
+      {
+        "FrequencyAndTechnologyId": "2",
+        "RefinerName": "RFID_900M"
+      },
+        {
+            "FrequencyAndTechnologyId": "3",
+            "RefinerName": "Not WLAN_2.4G"
+        },
+        {
+            "FrequencyAndTechnologyId": "4",
+            "RefinerName": "WLAN_2.4G"
+        },
+         {
+        "FrequencyAndTechnologyId": "5",
+        "RefinerName": "WLAN 5G"
+      }
+    ],
+    "ProductCategory": [
+        {
+            "ProductCategoryId": "1",
+            "RefinerName": "Battery"
+        },
+        {
+            "ProductCategoryId": "2",
+            "RefinerName": "Consumer Electronics"
+        },
+        {
+            "ProductCategoryId": "3",
+            "RefinerName": "I.T. Equipment"
+        }
+    ],
+     "ApplicationType": [
+      {
+        "ApplicationTypeId": "1",
+        "RefinerName": "New"
+      },
+      {
+        "ApplicationTypeId": "2",
+        "RefinerName": "Renewal"
+      },
+      {
+        "ApplicationTypeId": "3",
+        "RefinerName": "Modification"
+      }
+    ],
+    "Region": [
+      {
+        "RegionId": "1",
+        "RefinerName": "North America"
+      },
+      {
+        "RegionId": "2",
+        "RefinerName": "Europe"
+      },
+      {
+        "RegionId": "3",
+        "RefinerName": "Asia"
+      },
+      {
+        "RegionId": "4",
+        "RefinerName": "Australia/Oceania"
+      },
+      {
+        "RegionId": "5",
+        "RefinerName": "South America"
+      },
+      {
+        "RegionId": "6",
+        "RefinerName": "Region6"
+      },
+      {
+        "RegionId": "7",
+        "RefinerName": "Region7"
+      },
+      {
+        "RegionId": "8",
+        "RefinerName": "Region8"
+      },
+      {
+        "RegionId": "9",
+        "RefinerName": "Region9"
+      }
+    ],
+    "Country": [
+      {
+        "CountryId": "1",
+        "RefinerName": "Afghanistan"
+      },
+      {
+        "CountryId": "2",
+        "RefinerName": "Albania"
+      },
+      {
+        "CountryId": "3",
+        "RefinerName": "Algeria"
+      },
+      {
+        "CountryId": "4",
+        "RefinerName": "Andorra"
+      },
+      {
+        "CountryId": "5",
+        "RefinerName": "Angola"
+      },
+      {
+        "CountryId": "6",
+        "RefinerName": "Argentina"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "1",
+        "RefinerName": "CDC"
+      },
+      {
+        "ComplianceProgramId": "2",
+        "RefinerName": "CSAT"
+      },
+      {
+        "ComplianceProgramId": "3",
+        "RefinerName": "CWP"
+      },
+      {
+        "ComplianceProgramId": "4",
+        "RefinerName": "CWSP"
+      },
+      {
+        "ComplianceProgramId": "5",
+        "RefinerName": "IGC"
+      }
+    ],
+    "DocumentCategory": [
+      {
+        "DocumentCategoryId": "1",
+        "RefinerName": "[-] Documents"
+      },
+      {
+        "DocumentCategoryId": "2",
+        "RefinerName": "News Source 2"
+      },
+      {
+        "DocumentCategoryId": "3",
+        "RefinerName": "News Source 3"
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+﻿<style>
+    /*ui grid dynamic row height*/
+    /*#regulatoryGrid [ui-grid-row] {
+      display: table-row;
+    }
+
+    #regulatoryGrid .ui-grid-row,#regulatoryGrid .ui-grid-cell {
+      height: auto!important;
+    }
+
+    #regulatoryGrid .ui-grid-cell {
+      float: none;
+      display: table-cell;
+    }
+
+    #regulatoryGrid .ui-grid-header-cell,#regulatoryGrid .ui-grid-cell-contents {
+      white-space: normal;
+      padding: 2px;
+      word-break: break-word;
+    }*/
+</style>
+
+<div ng-controller="regulatoryController as controller">
+    {{test}}
+    <div id="dvSelectedRefiner">
+        <b>SELECTED REFINER :</b>
+        <span ng-hide="selectedRefiners.length == 0" ng-repeat="refiner in selectedRefiners">
+            {{refiner.Parent}} | {{refiner.Value}}
+            <i class="fa fa-times" ng-click="removeRefiner(refiner)"></i>
+        </span>
+    </div>
+    <div class="row col-lg-12" style="padding-right:0px">
+        <div ui-view="tabContainer" class="row col-lg-9"></div>
+        <div class="smi-toolbar row col-lg-3 no-padding pull-right">
+            <button class="btn btn-primary" type="button" style="margin:0px; padding: 7px 5px;" ng-if="!isWorkflow" disabled><i class="fa fa-th"></i>Custom View</button>
+            <!--<button class="btn btn-primary {{gridSelections.length > 0 ? '':'disabled'}}" type="button" ng-click="DownloadToExcel()" ng-disabled="!gridSelections.length > 0"><i class="fa fa-download"></i>Export Results</button>-->
+            <button class="btn btn-primary {{gridSelections.length > 0 ? '':'disabled'}}" type="button" style="margin:0px; padding: 7px 5px;" ng-click="downloadToExcel()" ng-disabled="!gridSelections.length > 0" ng-if="!isWorkflow"><i class="fa fa-download"></i>Export Results</button>
+
+        </div>
+    </div>
+
+    <div class="text-align-right">
+        <button class="btn btn-primary" type="button" ng-click="manageData()" ng-if="isUserContributor && !isWorkflow"><i class="fa fa-plus"></i>MANAGE DATA</button>
+        <button class="btn btn-primary" type="button" ng-click="switchView()">{{switchViewLink}}</button>
+    </div>
+    Showing {{regulations.length}} item(s)
+    <div class="page-content">
+        <div id="regulatoryGrid" ui-grid-cellnav ui-grid="regulatoryGrid" style="height:72vh; text-align:left;" ui-grid-selection ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column ui-grid-pinning></div>
+        <div class="grid-loader" ng-hide="!showGridLoader">
+            <i class="fa fa-circle-o-notch fa-spin" area-hidden="true"></i>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <div ng-include src="modalTemplateUrl"></div>
+</div>

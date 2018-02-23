@@ -1,0 +1,75 @@
+﻿[
+    {
+        "ApplicationName": "regulatory",
+        "ApplicationDisplayText": "REGULATORY",
+        "ImageIcon": "fa-list-alt",
+        "Controllers": [ "regulatory", "regulatoryAddEdit", "regulatoryAddEditFile", "regulatoryFieldChanges"],
+        "Services": [ "regulatory", "regulatoryConfig" ],
+        "Styles": [ ],
+        "HasSideNav": true,
+        "IsEnable": true,
+        "BasePath": "module/"
+
+    },
+    {
+        "ApplicationName": "news",
+        "ApplicationDisplayText": "NEWS",
+        "ImageIcon": "fa-list-alt",
+        "Controllers": [ "news", "newsAddEdit", "newsAddFavorite", "newsExportToPDF", "newsFieldChanges" ],
+        "Services": [ "news" ],
+        "Styles": [ ],
+        "HasSideNav": false,
+         "IsEnable" : true,
+        "BasePath": "module/"
+
+    },
+    {
+        "ApplicationName": "contacts",
+        "ApplicationDisplayText": "CONTACTS",
+        "ImageIcon": "fa-list-alt",
+        "Controllers": [ "contacts", "contactsAdd", "manageCompanies" ],
+        "Services": [ "contacts" ],
+        "Styles": [ ],
+        "HasSideNav": true,
+        "IsEnable": true,
+        "BasePath": "module/"
+    },
+
+  {
+    "ApplicationName": "delivery",
+    "ApplicationDisplayText": "DELIVERY",
+    "ImageIcon": "fa-list-alt",
+    "Controllers": [ "delivery", "addDelivery", "viewDeliveryManual", "addDeliveryManual", "deliveryChangeRequestDetails" ],
+    "Services": [ "delivery", "deliveryConfig" ],
+    "Styles": [ ],
+    "HasSideNav": true,
+    "IsEnable": true,
+    "BasePath": "module/"
+  },
+   {
+        "ApplicationName": "r2c",
+        "ApplicationDisplayText": "REQUIRED ITEMS",
+        "ImageIcon": "fa-home",
+        "Controllers": [ "r2c","r2cModal","r2cWorkflowTracking","r2cEvidence","r2cWorkflowFieldChanges"],
+        "Services": ["r2c"],
+        "Styles": [ ],
+        "HasSideNav": true,
+        "IsEnable" : true,
+        "BasePath": "module/"
+
+    },
+    {
+        "ApplicationName": "certificates",
+        "ApplicationDisplayText": "CERTIFICATES",
+        "ImageIcon": "fa-home",
+        "Controllers": [ "certificates","addCertificate","viewCertificateFiles"],
+        "Services": ["certificates"],
+        "Styles": [ ],
+        "HasSideNav": true,
+        "IsEnable" : true,
+        "BasePath": "module/"
+
+    }
+     
+   
+]

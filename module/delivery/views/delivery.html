@@ -1,0 +1,61 @@
+<div ng-controller="deliveryController">
+    <!--BEGIN HEADER -->
+    <!-- HEADER > REFINERS -->
+    <div id="dvSelectedRefiner">
+        <b>SELECTED REFINER :</b>
+        <span ng-hide="selectedRefiners.length == 0" ng-repeat="refiner in selectedRefiners">
+            {{refiner.Parent}} | {{refiner.Value}}
+            <i class="fa fa-times" ng-click="removeRefiner(refiner)"></i>
+        </span>
+    </div>
+
+    <div class="row col-lg-12" style="padding-right:0px; margin-bottom:25px">
+        <!-- HEADER > TABS -->
+        <div ui-view="tabContainer" class="row col-lg-9"></div>
+         
+        <!-- HEADER > CustomizeView and ExportResults -->
+        <div class="smi-toolbar row col-lg-3 no-padding pull-right">
+            <!--<button class="btn btn-primary" type="button"><i class="fa fa-th"></i>Customize View</button>-->
+            <button class="btn btn-primary {{gridSelections.length > 0 ? '':'disabled'}}" type="button" ng-click="exportToExcel()" ng-disabled="!gridSelections.length > 0"><i class="fa fa-download"></i>Export Results</button>
+        </div>
+    </div>
+
+    <div class="text-align-right">
+        <button class="btn btn-primary" type="button" ng-click="getDeliveryWorkflow()">{{ workflowButtonLabel }}</button>
+    </div>
+
+    <div>
+        <div ng-if="displayWorkflow">
+            <div style="margin-top:20px; margin-bottom:20px">
+                Showing {{ deliveryWorkflow.length }} item(s)
+            </div>
+        </div>
+        <div ng-if="!displayWorkflow">
+            <div style="margin-top:20px; margin-bottom:20px">
+                Showing {{delivery.length}} item(s)
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div role="tabpanel" class="tab-pane active" id="general">
+                <div ui-view="alertTemplate"></div>
+                <div ng-if="displayWorkflow">
+                    <div ui-grid="deliveryWorkflowGrid" style="height:72vh" ui-grid-exporter ui-grid-selection ui-grid-resize-columns ui-grid-infinite-scroll
+                        ui-grid-resize-column ui-grid-auto-resize></div>
+                </div>
+                <div ng-if="!displayWorkflow">
+                    <div ui-grid="deliveryGrid" style="height:72vh" ui-grid-exporter ui-grid-selection ui-grid-resize-columns ui-grid-infinite-scroll
+                        ui-grid-resize-column ui-grid-auto-resize></div>
+                </div>
+            </div>
+
+            <div class="grid-loader" ng-hide="!showGridLoader">
+                <i class="fa fa-circle-o-notch fa-spin" area-hidden="true"></i>
+                <span>Loading...</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div ng-include src="modalTemplateUrl"></div>
+</div>

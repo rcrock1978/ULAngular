@@ -1,0 +1,560 @@
+﻿{
+  "Data": {
+
+    "Regions": [
+      {
+        "RegionId": "1",
+        "RegionName": "Pacific"
+      },
+      {
+        "RegionId": "2",
+        "RegionName": "Africa"
+      },
+      {
+        "RegionId": "3",
+        "RegionName": "Europe"
+      },
+      {
+        "RegionId": "4",
+        "RegionName": "Latin America"
+      },
+      {
+        "RegionId": "5",
+        "RegionName": "North America"
+      },
+      {
+        "RegionId": "6",
+        "RegionName": "Eurasia"
+      }
+    ],
+
+    "RegionalEconomicUnions": [
+      {
+        "RegionalEconomicUnionId": "1",
+        "RegionalEconomicUnionName": "Arab Maghreb Union (UMA)"
+      },
+      {
+        "RegionalEconomicUnionId": "2",
+        "RegionalEconomicUnionName": "Common Market for Eastern and Southern Africa (COMESA)"
+      },
+      {
+        "RegionalEconomicUnionId": "3",
+        "RegionalEconomicUnionName": "Community of Sahel- Saharan States (CEN-SAD)"
+      },
+      {
+        "RegionalEconomicUnionId": "4",
+        "RegionalEconomicUnionName": "East African Community (EAC)"
+      },
+      {
+        "RegionalEconomicUnionId": "5",
+        "RegionalEconomicUnionName": "Economic Community of Central African States (ECCAS)"
+      },
+      {
+        "RegionalEconomicUnionId": "6",
+        "RegionalEconomicUnionName": "Economic Community of West African States (ECOWAS)"
+      },
+      {
+        "RegionalEconomicUnionId": "7",
+        "RegionalEconomicUnionName": "Intergovernmental Authority on Development (IGAD)"
+      },
+      {
+        "RegionalEconomicUnionId": "8",
+        "RegionalEconomicUnionName": "Southern Africa Development Community (SADC)"
+      },
+      {
+        "RegionalEconomicUnionId": "9",
+        "RegionalEconomicUnionName": "Economic and Monetary Community of Central Africa"
+      },
+      {
+        "RegionalEconomicUnionId": "10",
+        "RegionalEconomicUnionName": "West African Economic and Monetary Union"
+      }
+    ],
+
+    "Countries": [
+      {
+        "CountryId": "1",
+        "CountryName": "Afghanistan"
+      },
+      {
+        "CountryId": "2",
+        "CountryName": "Albania"
+      },
+      {
+        "CountryId": "3",
+        "CountryName": "Algeria"
+      },
+      {
+        "CountryId": "4",
+        "CountryName": "Andorra"
+      }
+    ],
+
+    "SectorsRegulated": [
+      {
+        "SectorRegulatedId": "1",
+        "SectorRegulatedName": "Radio"
+      },
+      {
+        "SectorRegulatedId": "2",
+        "SectorRegulatedName": "Safety"
+      },
+      {
+        "SectorRegulatedId": "3",
+        "SectorRegulatedName": "EMC"
+      },
+      {
+        "SectorRegulatedId": "4",
+        "SectorRegulatedName": "Energy Efficiency"
+      },
+      {
+        "SectorRegulatedId": "4",
+        "SectorRegulatedName": "Environment"
+      }
+    ],
+
+    "CertificationPrograms": [
+      {
+        "CertificationProgramId": "1",
+        "CertificationProgramName": "China SRRC"
+      },
+      {
+        "CertificationProgramId": "2",
+        "CertificationProgramName": "Chile SUBTEL"
+      },
+      {
+        "CertificationProgramId": "3",
+        "CertificationProgramName": "Singapore iDA"
+      },
+      {
+        "CertificationProgramId": "4",
+        "CertificationProgramName": "Ukraine ???"
+      },
+      {
+        "CertificationProgramId": "5",
+        "CertificationProgramName": "Indonesia SDPPI"
+      },
+      {
+        "CertificationProgramId": "6",
+        "CertificationProgramName": "Taiwan NCC"
+      },
+      {
+        "CertificationProgramId": "7",
+        "CertificationProgramName": "Japan ???"
+      },
+      {
+        "CertificationProgramId": "8",
+        "CertificationProgramName": "Turkey BTK"
+      },
+      {
+        "CertificationProgramId": "9",
+        "CertificationProgramName": "No certification program exists"
+      }
+    ],
+
+    "CertificationOrganizations": [
+      {
+        "CertificationOrganizationId": "1",
+        "CertificationOrganizationName": "UL Japan"
+      },
+      {
+        "CertificationOrganizationId": "2",
+        "CertificationOrganizationName": "SRRC"
+      },
+      {
+        "CertificationOrganizationId": "3",
+        "CertificationOrganizationName": "SDPPI"
+      },
+      {
+        "CertificationOrganizationId": "4",
+        "CertificationOrganizationName": "iDA"
+      },
+      {
+        "CertificationOrganizationId": "5",
+        "CertificationOrganizationName": "Omega"
+      },
+      {
+        "CertificationOrganizationId": "6",
+        "CertificationOrganizationName": "SUBTEL"
+      },
+      {
+        "CertificationOrganizationId": "7",
+        "CertificationOrganizationName": "BTK"
+      },
+      {
+        "CertificationOrganizationId": "8",
+        "CertificationOrganizationName": "ETC"
+      },
+      {
+        "CertificationOrganizationId": "9",
+        "CertificationOrganizationName": "ATL"
+      }
+    ],
+
+    "ComplianceModels": [
+      {
+        "ComplianceModeleId": "1",
+        "ComplianceModelName": "Certification"
+      },
+      {
+        "ComplianceModelId": "2",
+        "ComplianceModelName": "Registration"
+      },
+      {
+        "ComplianceModelId": "3",
+        "ComplianceModelName": "Permission"
+      },
+      {
+        "ComplianceModelId": "4",
+        "ComplianceModelName": "Inspection"
+      },
+      {
+        "ComplianceModelId": "5",
+        "ComplianceModelName": "Pre-shipment inspection"
+      },
+      {
+        "ComplianceModelId": "6",
+        "ComplianceModelName": "Self declaration"
+      }
+    ],
+
+    "MandatoryOrVoluntary_List": [
+      {
+        "MandatoryOrVoluntaryId": "1",
+        "MandatoryOrVoluntaryName": "Mandatory"
+      },
+      {
+        "MandatoryOrVoluntaryId": "2",
+        "MandatoryOrVoluntaryName": "Voluntary"
+      },
+      {
+        "MandatoryOrVoluntaryId": "3",
+        "MandatoryOrVoluntaryName": "No Information"
+      },
+      {
+        "MandatoryOrVoluntaryId": "4",
+        "MandatoryOrVoluntaryName": "N/A"
+      }
+    ],
+
+    "ProductTypes": [
+      {
+        "ProductTypeId": "1",
+        "ProductTypeName": "A"
+      },
+      {
+        "ProductTypeId": "2",
+        "ProductTypeName": "B"
+      },
+      {
+        "ProductTypeId": "3",
+        "ProductTypeName": "C"
+      },
+      {
+        "ProductTypeId": "4",
+        "ProductTypeName": "D"
+      }
+    ],
+
+    "ProductSubTypes": [
+      {
+        "ProductSubTypeId": "1",
+        "ProductSubTypeName": "A"
+      },
+      {
+        "ProductSubTypeId": "2",
+        "ProductSubTypeName": "B"
+      },
+      {
+        "ProductSubTypeId": "3",
+        "ProductSubTypeName": "C"
+      },
+      {
+        "ProductSubTypeId": "4",
+        "ProductSubTypeName": "D"
+      }
+    ],
+
+    "ModularApprovals": [
+      {
+        "ModularApprovalId": "1",
+        "ModularApprovalName": "Yes"
+      },
+      {
+        "ModularApprovalId": "2",
+        "ModularApprovalName": "No"
+      },
+      {
+        "ModularApprovalId": "3",
+        "ModularApprovalName": "No Information"
+      },
+      {
+        "ModularApprovalId": "4",
+        "ModularApprovalName": "N/A"
+      }
+    ],
+
+    "ApplicationType": [
+      {
+        "ApplicationTypeId": "1",
+        "SampleRequirement_WirelessName": "New"
+      },
+      {
+        "ApplicationTypeId": "2",
+        "SampleRequirement_WirelessName": "Renew"
+      },
+      {
+        "ApplicationTypeId": "3",
+        "SampleRequirement_WirelessName": "CoC Modification"
+      }
+    ],
+
+    "AcceptedTestReportsWireless_List": [
+      {
+        "AcceptedTestReports_WirelessId": "1",
+        "AcceptedTestReports_WirelessName": "EN"
+      },
+      {
+        "AcceptedTestReports_WirelessId": "2",
+        "AcceptedTestReports_WirelessName": "FCC"
+      },
+      {
+        "AcceptedTestReports_WirelessId": "3",
+        "AcceptedTestReports_WirelessName": "CB"
+      },
+      {
+        "AcceptedTestReports_WirelessId": "4",
+        "AcceptedTestReports_WirelessName": "No Information"
+      },
+      {
+        "AcceptedTestReports_WirelessId": "5",
+        "AcceptedTestReports_WirelessName": "N/A"
+      }
+    ],
+
+    "AcceptedTestReportsSafety_List": [
+      {
+        "AcceptedTestReports_SafetyId": "1",
+        "AcceptedTestReports_SafetyName": "EN"
+      },
+      {
+        "AcceptedTestReports_SafetyId": "2",
+        "AcceptedTestReports_SafetyName": "FCC"
+      },
+      {
+        "AcceptedTestReports_SafetyId": "3",
+        "AcceptedTestReports_SafetyName": "CB"
+      },
+      {
+        "AcceptedTestReports_SafetyId": "4",
+        "AcceptedTestReports_SafetyName": "No Information"
+      },
+      {
+        "AcceptedTestReports_SafetyId": "5",
+        "AcceptedTestReports_SafetyName": "N/A"
+      }
+    ],
+
+    "AcceptedTestReportsEMC_List": [
+      {
+        "AcceptedTestReports_EMCId": "1",
+        "AcceptedTestReports_EMCName": "EN"
+      },
+      {
+        "AcceptedTestReports_EMCId": "2",
+        "AcceptedTestReports_EMCName": "FCC"
+      },
+      {
+        "AcceptedTestReports_EMCId": "3",
+        "AcceptedTestReports_EMCName": "CB"
+      },
+      {
+        "AcceptedTestReports_EMCId": "4",
+        "AcceptedTestReports_EMCName": "No Information"
+      },
+      {
+        "AcceptedTestReports_EMCId": "5",
+        "AcceptedTestReports_EMCName": "N/A"
+      }
+    ],
+
+    "SampleRequirementWireless_List": [
+      {
+        "SampleRequirement_WirelessId": "1",
+        "SampleRequirement_WirelessName": "Yes"
+      },
+      {
+        "SampleRequirement_WirelessId": "2",
+        "SampleRequirement_WirelessName": "No"
+      },
+      {
+        "SampleRequirement_WirelessId": "3",
+        "SampleRequirement_WirelessName": "No Information"
+      },
+      {
+        "SampleRequirement_WirelessId": "4",
+        "SampleRequirement_WirelessName": "N/A"
+      }
+    ],
+
+    "SampleRequirementSafety_List": [
+      {
+        "SampleRequirement_SafetyId": "1",
+        "SampleRequirement_SafetyName": "Yes"
+      },
+      {
+        "SampleRequirement_SafetyId": "2",
+        "SampleRequirement_SafetyName": "No"
+      },
+      {
+        "SampleRequirement_SafetyId": "3",
+        "SampleRequirement_SafetyName": "No Information"
+      },
+      {
+        "SampleRequirement_SafetyId": "4",
+        "SampleRequirement_SafetyName": "N/A"
+      }
+    ],
+
+    "SampleRequirementEMC_List": [
+      {
+        "SampleRequirement_EMCId": "1",
+        "SampleRequirement_EMCName": "Yes"
+      },
+      {
+        "SampleRequirement_EMCId": "2",
+        "SampleRequirement_EMCName": "No"
+      },
+      {
+        "SampleRequirement_EMCId": "3",
+        "SampleRequirement_EMCName": "No Information"
+      },
+      {
+        "SampleRequirement_EMCId": "4",
+        "SampleRequirement_EMCName": "N/A"
+      }
+    ],
+
+    "InCountryTestingSafety_List": [
+      {
+        "InCountryTesting_SafetyId": "1",
+        "InCountryTesting_SafetyName": "Yes"
+      },
+      {
+        "InCountryTesting_SafetyId": "2",
+        "InCountryTesting_SafetyName": "No"
+      },
+      {
+        "InCountryTesting_SafetyId": "3",
+        "InCountryTesting_SafetyName": "No Information"
+      },
+      {
+        "InCountryTesting_SafetyId": "4",
+        "InCountryTesting_SafetyName": "N/A"
+      }
+    ],
+
+    "InCountryTestingEMC_List": [
+      {
+        "InCountryTesting_EMCId": "1",
+        "InCountryTesting_EMCName": "Yes"
+      },
+      {
+        "InCountryTesting_EMCId": "2",
+        "InCountryTesting_EMCName": "No"
+      },
+      {
+        "InCountryTesting_EMCId": "3",
+        "InCountryTesting_EMCName": "No Information"
+      },
+      {
+        "InCountryTesting_EMCId": "4",
+        "InCountryTesting_EMCName": "N/A"
+      }
+    ],
+
+    "InCountryTestingWireless_List": [
+      {
+        "InCountryTesting_WirelessId": "1",
+        "InCountryTesting_WirelessName": "Yes"
+      },
+      {
+        "InCountryTesting_WirelessId": "2",
+        "InCountryTesting_WirelessName": "No"
+      },
+      {
+        "InCountryTesting_WirelessId": "3",
+        "InCountryTesting_WirelessName": "No Information"
+      },
+      {
+        "InCountryTesting_WirelessId": "4",
+        "InCountryTesting_WirelessName": "N/A"
+      }
+    ],
+
+    "LocalRepresentatives": [
+      {
+        "LocalRepresentativeId": "1",
+        "LocalRepresentativeName": "Yes"
+      },
+      {
+        "LocalRepresentativeId": "2",
+        "LocalRepresentativeName": "No"
+      },
+      {
+        "LocalRepresentativeId": "3",
+        "LocalRepresentativeName": "No Information"
+      },
+      {
+        "LocalRepresentativeId": "4",
+        "LocalRepresentativeName": "N/A"
+      }
+    ],
+
+    "LocalRepresentativeService": [
+      {
+        "LocalRepresentativeServiceId": "1",
+        "LocalRepresentativeServiceName": "Yes"
+      },
+      {
+        "LocalRepresentativeServiceId": "2",
+        "LocalRepresentativeServiceName": "No"
+      },
+      {
+        "LocalRepresentativeServiceId": "3",
+        "LocalRepresentativeServiceName": "No Information"
+      },
+      {
+        "LocalRepresentativeServiceId": "4",
+        "LocalRepresentativeServiceName": "N/A"
+      }
+    ],
+
+    "CertificateValidityPeriod": [
+      {
+        "CertificateValidityPeriodId": "1",
+        "CertificateValidityPeriodName": "No Expiration"
+      },
+      {
+        "CertificateValidityPeriodId": "2",
+        "CertificateValidityPeriodName": "Numbers (Unit: Years)"
+      },
+      {
+        "CertificateValidityPeriodId": "3",
+        "CertificateValidityPeriodName": "No Information"
+      },
+      {
+        "CertificateValidityPeriodId": "4",
+        "CertificateValidityPeriodName": "N/A"
+      }
+    ],
+
+    "PreferredChannel": [
+      {
+        "PreferredChannelId": "1",
+        "PreferredChannelName": "N/A"
+      }
+    ]
+
+  }
+}

@@ -1,0 +1,269 @@
+﻿<div>
+    <script type="text/ng-template" id="r2cModalDialog.html">
+
+        <div class="modal-header">
+            <h4 class="modal-title" style="font-size:14px;font-weight:bold">{{modalTitle}}</h4>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+            <p><small>*Marked fields are required</small></p>
+
+            <!--<div class="row">
+                    <div class="col-md-9">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#documentsAddEdit" aria-controls="home" role="tab" data-toggle="tab">Documents</a></li>
+                            <li role="presentation"><a href="#samplesAddEdit" aria-controls="profile" role="tab" data-toggle="tab">Samples</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group form-inline">
+                            <label for="language">
+                                Language:
+                            </label>
+                            <select class="form-control">
+                                <option>English</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>-->
+        </div>
+        <smi-modal-tabs datasource="tabs" selected="selectedTab" ontabchange="TabSelectionChange(val)"></smi-modal-tabs>
+
+        <div class="modal-body">
+            <form class="float-none" name="r2cForm">
+                <div class="col-sm-12 {{(selectedComplianceProgram.length == 0) && showErrors ? 'required': ''}}">
+                    <div class="col-sm-3" style="padding-right: 0px;width: 20%; padding-left:0px">
+                        <label class="control-label"><span class="required" ng-if="mode == 'add'">*</span>Compliance Program:</label>
+                        <span ng-show="(selectedComplianceProgram.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Compliance Program is Required"
+                            popover-append-to-body="true" popover-trigger="mouseenter"></span>
+                    </div>
+                    <div class="form-inline col-sm-4 " ng-show="mode != 'add'">
+                        <span><b>{{complienceProgramName}}</b></span>
+                    </div>
+                    <div class="form-inline col-sm-4 " ng-show="mode == 'add'">
+                        <smi-drop-down datasource="complianceProgramList" searchable="true" model="selectedComplianceProgram" onchange="onSelectionChanged()"></smi-drop-down>
+                    </div>
+                </div>
+                <div ng-show="selectedTab == 'Documents'">
+
+                    <div class="col-sm-12 ">
+                        <!--<label class="control-label">Sample Mode: </label>-->
+                        <div class="form-group custom-row col-sm-12 r2cContainer">
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th ng-show="mode !='viewWorkflow'"></th>
+                                        <th ng-show="canDelete && mode !='viewWorkflow'"></th>
+                                        <th ng-repeat="header in documentHeaders">{{header}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="docItem in documentSample">
+                                        <td style="width:10px;" ng-show="mode !='viewWorkflow'"><i class="btn fa {{docItem.IsSelected ? 'fa-circle':' fa-circle-o'}}" ng-click="setEvidenceItemSource(docItem,'documents')"></i></td>
+                                        <td style="width:10px;" ng-show="canDelete && mode !='viewWorkflow'"><i class="btn fa fa-trash" ng-click="DeleteDocumentSample(docItem)"></i></td>
+                                        <td><input type="text" class="form-control" ng-model="docItem.DocumentName" ng-disabled="readOnlyForm"
+                                            /></td>
+                                        <td>
+                                            <div ng-show="docItem.attachFile.name != null"><a>{{docItem.attachFile.name}}</a></div>
+                                            <div ng-show="docItem.attachFile.name == null"> <input type="text" class="form-control custom-read-only" ng-disabled="readOnlyForm"
+                                                    placeholder="Attach File" value="{{docItem.attachFile.name}}">
+                                                <label class="input-group-btn" ng-hide="readOnlyForm">
+                                                   <span class="btn btn-primary">
+                                                       <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;Browse&hellip;
+                                                       <input type="file" id="docItem.attachFile" ng-disabled="readOnlyForm" fileread="docItem.attachFile" modified="docItem.IsAFModified" style="display: none;" multiple readOnlyForm>
+                                                   </span>
+                                               </label></div>
+                                        </td>
+                                        <td><input type="text" class="form-control" ng-model="docItem.Remarks" ng-disabled="readOnlyForm"
+                                            /></td>
+                                        <td><input type="text" class="form-control" ng-model="docItem.NumberOfCopies" ng-disabled="readOnlyForm"
+                                            /></td>
+                                        <td>
+                                            <div id="drpFrequencyTechnology" ng-dropdown-multiselect="" options="freqTech" selected-model="docItem.FreqTech" extra-settings="multiselectSettings"
+                                                class="multi-Select" ng-dropdown-multiselect-disabled="readOnlyForm"></div>
+                                        </td>
+                                        <td>
+                                            <div id="drpProductType" ng-dropdown-multiselect="" options="productTypes" selected-model="docItem.ProductType" extra-settings="multiselectSettings"
+                                                class="multi-Select" ng-dropdown-multiselect-disabled="readOnlyForm"></div>
+                                        </td>
+                                        <td>
+                                            <select id="drpApplicationType" name="applicationType" ng-model="docItem.ApplicationType" ng-disabled="readOnlyForm" class="form-control">
+                                                   <option ng-selected="{{applicationType.ApplicationTypeId == docItem.ApplicationType}}"
+                                                           ng-repeat="applicationType in applicationTypeList"
+                                                           value="{{applicationType.ApplicationTypeId}}">
+                                                       {{applicationType.ApplicationTypeName}}
+                                                   </option>
+                                               </select>
+                                        </td>
+                                        <td>
+                                            <select id="drpDocumentType" name="documentType" ng-model="docItem.DocumentType" ng-disabled="readOnlyForm" class="form-control">
+                                                   <option ng-selected="{{documentType.DocumentTypeId == docItem.DocumentType}}"
+                                                           ng-repeat="documentType in documentTypeList"
+                                                           value="{{documentType.DocumentTypeId}}">
+                                                       {{documentType.DocumentTypeName}}
+                                                   </option>
+                                               </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="btn grid-btn" ng-click="AddDocumentSample()" ng-hide="mode != 'add'">
+                                <span class="fa fa-plus"> Click to add more</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div ng-show="selectedTab == 'Samples'">
+                    <div class="col-sm-12 ">
+                        <label class="control-label">Sample Mode: </label>
+
+                        <div class="form-group custom-row col-sm-12 r2cContainer">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th ng-show="mode !='viewWorkflow'"></th>
+                                        <th ng-show="canDelete && mode !='viewWorkflow'"></th>
+                                        <th ng-repeat="header in sampleModeHeaders">{{header}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in samples">
+                                        <td style="width:10px;" ng-show="mode !='viewWorkflow'"><i class="btn fa {{item.IsSelected ? 'fa-circle':' fa-circle-o'}}" ng-click="setEvidenceItemSource(item,'samples')"></i></td>
+                                        <td ng-show="canDelete && mode !='viewWorkflow'"><i class="btn fa fa-trash" ng-click="DeleteSample(item)"></i></td>
+                                        <!--<td id="drpCountry" ng-dropdown-multiselect="" options="countries" selected-model="certItem.SelectedCountries" extra-settings="multiselectSettings" class="multi-Select"></td>-->
+                                        <td>
+                                            <select id="drpApplicationType" name="applicationType" ng-model="item.FreqTech" ng-disabled="readOnlyForm" class="form-control">
+                                                <option ng-selected="{{freq.id == item.FreqTech}}" 
+                                                        ng-repeat="freq in freqTech" 
+                                                        value="{{freq.id}}">{{freq.label}}</option>
+                                            </select>
+                                            <!--<div id="drpFrequencyTechnology" ng-dropdown-multiselect="" options="freqTech" selected-model="item.FreqTech" extra-settings="multiselectSettings" class="multi-Select"></div>-->
+                                        </td>
+                                        <td>
+                                            <select id="drpSampleMode" name="sampleMode" ng-model="item.SampleMode" ng-disabled="readOnlyForm" class="form-control">
+                                                <option ng-selected="{{sampleMode.SampleModeId == item.SampleMode}}" 
+                                                        ng-repeat="sampleMode in sampleModeList" 
+                                                        value="{{sampleMode.SampleModeId}}">{{sampleMode.SampleModeName}}</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" ng-model="item.NumberOfUnitsRequired" ng-disabled="readOnlyForm"
+                                            /></td>
+                                        <td>
+                                            <select id="drpApplicationType" name="applicationType" ng-model="item.ApplicationType" ng-disabled="readOnlyForm" class="form-control">
+                                                <option ng-selected="{{applicationType.ApplicationTypeId == item.ApplicationType}}"
+                                                        ng-repeat="applicationType in applicationTypeList" 
+                                                        value="{{applicationType.ApplicationTypeId}}">{{applicationType.ApplicationTypeName}}</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="btn grid-btn" ng-click="AddSample()" ng-hide="mode != 'add'">
+                                <span class="fa fa-plus"> Click to add more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 ">
+                        <label class="control-label">Remarks: </label>
+                        <div class="form-group custom-row col-sm-12 r2cContainer">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th ng-show="mode !='viewWorkflow'"></th>
+                                        <th ng-show="canDelete && mode !='viewWorkflow'"></th>
+                                        <th ng-repeat="header in sampleRemarksHeaders">{{header}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="itemRemarks in sampleRemarks">
+                                        <td style="width:10px;" ng-show="mode !='viewWorkflow'"><i class="btn fa {{itemRemarks.IsSelected ? 'fa-circle':' fa-circle-o'}}" ng-click="setEvidenceItemSource(itemRemarks,'samples-remarks')"></i></td>
+                                        <td ng-show="canDelete && mode !='viewWorkflow'"><i class="btn fa fa-trash" ng-click="DeleteSampleRemarks(itemRemarks)"></i></td>
+                                        <!--<td id="drpCountry" ng-dropdown-multiselect="" options="countries" selected-model="certItem.SelectedCountries" extra-settings="multiselectSettings" class="multi-Select"></td>-->
+                                        <td>
+                                            <select id="drpApplicationType" name="applicationType" ng-model="itemRemarks.FreqTech" ng-disabled="readOnlyForm" class="form-control">
+                                                <option ng-selected="{{freq.id == itemRemarks.FreqTech}}"
+                                                        ng-repeat="freq in freqTech" 
+                                                        value="{{freq.id}}">{{freq.label}}</option>
+                                            </select>
+                                            <!--<div  ng-dropdown-multiselect="" options="freqTech" selected-model="itemRemarks.FreqTech" extra-settings="multiselectSettings" class="multi-Select"></div>-->
+                                        </td>
+                                        <td>
+                                            <select id="drpSampleMode" name="sampleMode" ng-model="itemRemarks.SampleMode" ng-disabled="readOnlyForm" class="form-control">
+                                                <option ng-selected="{{sampleMode.SampleModeId == itemRemarks.SampleMode}}" 
+                                                        ng-repeat="sampleMode in sampleModeList" 
+                                                        value="{{sampleMode.SampleModeId}}">{{sampleMode.SampleModeName}}</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" ng-model="itemRemarks.Remarks" ng-disabled="readOnlyForm"
+                                            /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="btn grid-btn" ng-click="AddSampleRemarks()" ng-hide="mode != 'add'">
+                                <span class="fa fa-plus"> Click to add more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 ">
+                        <label class="control-label">Common Remarks: </label>
+                        <div class="form-group custom-row col-sm-12 r2cContainer">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th ng-show="mode !='viewWorkflow'"></th>
+                                        <th ng-show="canDelete && mode !='viewWorkflow'"></th>
+                                        <th ng-repeat="header in commonRemarksHeaders">{{header}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="itemCommonRemarks in commonRemarks">
+                                        <td style="width:10px;" ng-show="mode !='viewWorkflow'"><i class="btn fa {{itemCommonRemarks.IsSelected ? 'fa-circle':' fa-circle-o'}}" ng-click="setEvidenceItemSource(itemCommonRemarks,'samples-common-remarks')"></i></td>
+                                        <td ng-show="canDelete && mode !='viewWorkflow'"><i class="btn fa fa-trash" ng-click="DeleteCommonRemarks(itemCommonRemarks)"></i></td>
+                                        <td><input type="text" class="form-control" ng-model="itemCommonRemarks.Remarks" ng-disabled="readOnlyForm"
+                                            /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="btn grid-btn" ng-click="AddCommonRemarks()" ng-hide="mode != 'add'">
+                                <span class="fa fa-plus"> Click to add more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <label class="control-label">Select a row to view or manage the evidence. </label>
+                <div ng-include src="evidenceTemplateUrl" ng-hide="selectedRowId == null"></div>
+                <div class="col-sm-12">
+                    <div class="form-group custom-row col-sm-12">
+                        <div ng-show="mode == 'viewWorkflow' && canReviewWF" class="center-block">
+
+                            <div class="radio">
+                                <label style="line-height:1.8"><input type="radio" ng-click="ToggleApproveStatus(true)" checked="checked"  name="optradio">Approve</label>
+                            </div>
+                            <div class="radio">
+                                <label style="line-height:1.8"><input type="radio"  ng-click="ToggleApproveStatus(false)" name="optradio">Reject</label>
+                            </div>
+                            <div ng-hide="!showCommentBox"><span>Comments : </span> <br /><textarea ng-model="approverComment"></textarea></div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-12" style="margin-bottom: 10px;">
+                    <div class="modal-footer">
+                        <center>
+                            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">{{mode == 'viewWorkflow' ? 'Close' : 'Cancel'}}</button>
+                            <button class="btn btn-primary" type="button" ng-click="Save()" ng-show="showSave">{{submitText}} </button>
+                        </center>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

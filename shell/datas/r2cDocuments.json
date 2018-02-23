@@ -1,0 +1,177 @@
+﻿[
+
+    {
+
+      "ComplienceProgram": [
+        {
+          "CertificateProgramId": "7",
+          "CertificateProgramName": "BRAZIL ANATEL"
+        }
+      ],
+      "FrequencyTechnology": [
+        {
+          "FrequencyTechId": "22",
+          "FrequencyTechName": "WLAN_2.4G"
+        }
+      ],
+      "ProductType": [
+        {
+          "ProductTypeId": "2",
+        "ProductName": "Consumer Electronics"
+        }
+      ],
+        "Info": [
+            {
+                "Region": "Europe",
+                "SectorRegulated": "Wireless",
+                "CertificationOrganization": "XYZ",
+                "ProductCategory": "ABCD",
+                "FrequencyAndTechnology": "WLAN 2.4G",
+                "ApplicationType": "New",
+                "Renewable": "Yes",
+                "RegionalEconomicUnion": "EU",
+                "Country": "EU",
+                "ProductType": "Consumer Electronics",
+                "ProductSubtype": "Game Console"
+            }
+        ],
+        "Documents": [
+            {
+                "DocumentName": "Tsil Eman Cod Trohs",
+                "Remarks": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "NumberOfCopies": "1234",
+                "DocumentType": "Country Specific",
+              "ApplicationTypeId": "1"
+            },
+            {
+                "DocumentName": "Praesent mi lacus",
+                "Remarks": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "NumberOfCopies": "5678",
+                "DocumentType": "Common",
+                "ApplicationTypeId": "2"
+            }
+        ],
+        "Samples": [
+            {
+                "SampleMode": "Etiam faucibis tristique",
+                "Remarks": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "RemarksCountrySpecific": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "NumberOfUnitsRequired": "123456",
+              "SampleRequirement": "Y",
+              "ApplicationTypeId": "1"
+            },
+            {
+                "SampleMode": "Etiam faucibis tristique",
+                "Remarks": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "RemarksCountrySpecific": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "NumberOfUnitsRequired": "789012",
+              "SampleRequirement": "N",
+              "ApplicationTypeId": "2"
+            },
+            {
+                "SampleMode": "Etiam faucibis tristique",
+                "Remarks": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "RemarksCountrySpecific": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "NumberOfUnitsRequired": "345678",
+              "SampleRequirement": "Y",
+              "ApplicationTypeId": "3"
+            },
+            {
+                "SampleMode": "Etiam faucibis tristique",
+                "Remarks": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "RemarksCountrySpecific": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "NumberOfUnitsRequired": "901234",
+              "SampleRequirement": "Y",
+              "ApplicationTypeId": "1"
+            }
+
+        ]
+
+    },
+
+    {
+
+      "ComplienceProgram": [
+        {
+          "CertificateProgramId": "6",
+          "CertificateProgramName": "China CCC"
+        }
+      ],
+      "FrequencyTechnology": [
+        {
+          "FrequencyTechId": "22",
+          "FrequencyTechName": "WLAN_2.4G"
+        }
+      ],
+      "ProductType": [
+        {
+          "ProductTypeId": "2",
+        "ProductName": "Consumer Electronics"
+        }
+      ],
+        "Info": [
+            {
+                "Region": "Europe",
+                "SectorRegulated": "Safety",
+                "CertificationOrganization": "XYZ",
+                "ProductCategory": "ABCD",
+                "FrequencyAndTechnology": "WLAN 2.4G",
+                "ApplicationType": "New",
+                "Renewable": "Yes",
+                "RegionalEconomicUnion": "EU",
+                "Country": "EU",
+                "ProductType": "Consumer Electronics",
+                "ProductSubtype": "Game Console"
+            }
+        ],
+        "Documents": [
+            {
+                "DocumentName": "Tsil Eman Cod Trohs",
+                "Remarks": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "NumberOfCopies": "1234",
+                "DocumentType": "Country Specific",
+                "ApplicationTypeId": "2"
+            },
+            {
+                "DocumentName": "Praesent mi lacus",
+                "Remarks": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "NumberOfCopies": "5678",
+                "DocumentType": "Common",
+                "ApplicationTypeId": "3"
+            }
+        ],
+        "Samples": [
+            {
+                "SampleMode": "Etiam faucibis tristique",
+                "Remarks": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "RemarksCountrySpecific": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "NumberOfUnitsRequired": "123456",
+                "SampleRequirement": "Y"
+            },
+            {
+                "SampleMode": "Etiam faucibis tristique",
+                "Remarks": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "RemarksCountrySpecific": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "NumberOfUnitsRequired": "789012",
+                "SampleRequirement": "N"
+            },
+            {
+                "SampleMode": "Etiam faucibis tristique",
+                "Remarks": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "RemarksCountrySpecific": "Interdum et malesauda fames ac ante ipsum primis in faucibus.",
+                "NumberOfUnitsRequired": "345678",
+                "SampleRequirement": "Y"
+            },
+            {
+                "SampleMode": "Etiam faucibis tristique",
+                "Remarks": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "RemarksCountrySpecific": "Maecenas lacus purus, euismod vitae metus sed, tincidunt suscript metus",
+                "NumberOfUnitsRequired": "901234",
+                "SampleRequirement": "Y"
+            }
+
+        ]
+
+    }
+
+]

@@ -1,0 +1,592 @@
+﻿{
+  "Data": {
+    "AcceptedTestReports": [
+      {
+        "AcceptedTestReportsId": "1",
+        "RefinerName": "EN"
+      },
+      {
+        "AcceptedTestReportsId": "2",
+        "RefinerName": "FCC"
+      },
+      {
+        "AcceptedTestReportsId": "3",
+        "RefinerName": "CB"
+      },
+      {
+        "AcceptedTestReportsId": "4",
+        "RefinerName": "No Information"
+      },
+      {
+        "AcceptedTestReportsId": "5",
+        "RefinerName": "N/A"
+      }
+    ],
+    "AcceptedTestReports_EMC": [
+      {
+        "AcceptedTestReports_EMCId": "1",
+        "RefinerName": "EN"
+      },
+      {
+        "AcceptedTestReports_EMCId": "2",
+        "RefinerName": "FCC"
+      },
+      {
+        "AcceptedTestReports_EMCId": "3",
+        "RefinerName": "CB"
+      },
+      {
+        "AcceptedTestReports_EMCId": "4",
+        "RefinerName": "No Information"
+      },
+      {
+        "AcceptedTestReports_EMCId": "5",
+        "RefinerName": "N/A"
+      }
+    ],
+    "AcceptedTestReports_Safety": [
+      {
+        "AcceptedTestReports_SafetyId": "1",
+        "RefinerName": "EN"
+      },
+      {
+        "AcceptedTestReports_SafetyId": "2",
+        "RefinerName": "FCC"
+      },
+      {
+        "AcceptedTestReports_SafetyId": "3",
+        "RefinerName": "CB"
+      },
+      {
+        "AcceptedTestReports_SafetyId": "4",
+        "RefinerName": "No Information"
+      },
+      {
+        "AcceptedTestReports_SafetyId": "5",
+        "RefinerName": "N/A"
+      }
+    ],
+    "AcceptedTestReports_Wireless": [
+      {
+        "AcceptedTestReports_WirelessId": "1",
+        "RefinerName": "EN"
+      },
+      {
+        "AcceptedTestReports_WirelessId": "2",
+        "RefinerName": "FCC"
+      },
+      {
+        "AcceptedTestReports_WirelessId": "3",
+        "RefinerName": "CB"
+      },
+      {
+        "AcceptedTestReports_WirelessId": "4",
+        "RefinerName": "No Information"
+      },
+      {
+        "AcceptedTestReports_WirelessId": "5",
+        "RefinerName": "N/A"
+      }
+    ],
+    "ApplicationType": [
+      {
+        "ApplicationTypeId": "1",
+        "RefinerName": "New"
+      },
+      {
+        "ApplicationTypeId": "2",
+        "RefinerName": "Renew"
+      },
+      {
+        "ApplicationTypeId": "3",
+        "RefinerName": "CoC Modification"
+      }
+    ],
+    "CertificateValidityPeriod": [
+      {
+        "CertificateValidityPeriodId": "1",
+        "RefinerName": "No Expiration"
+      },
+      {
+        "CertificateValidityPeriodId": "2",
+        "RefinerName": "Numbers (Unit: Years)"
+      },
+      {
+        "CertificateValidityPeriodId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "CertificateValidityPeriodId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "CertificationOrganization": [
+      {
+        "CertificationOrganizationId": "1",
+        "RefinerName": "UL Japan"
+      },
+      {
+        "CertificationOrganizationId": "2",
+        "RefinerName": "SRRC"
+      },
+      {
+        "CertificationOrganizationId": "3",
+        "RefinerName": "SDPPI"
+      },
+      {
+        "CertificationOrganizationId": "4",
+        "RefinerName": "iDA"
+      },
+      {
+        "CertificationOrganizationId": "5",
+        "RefinerName": "Omega"
+      },
+      {
+        "CertificationOrganizationId": "6",
+        "RefinerName": "SUBTEL"
+      },
+      {
+        "CertificationOrganizationId": "7",
+        "RefinerName": "BTK"
+      },
+      {
+        "CertificationOrganizationId": "8",
+        "RefinerName": "ETC"
+      },
+      {
+        "CertificationOrganizationId": "9",
+        "RefinerName": "ATL"
+      }
+    ],
+    "CertificationProgram": [
+      {
+        "CertificationProgramId": "1",
+        "RefinerName": "China SRRC"
+      },
+      {
+        "CertificationProgramId": "2",
+        "RefinerName": "Chile SUBTEL"
+      },
+      {
+        "CertificationProgramId": "3",
+        "RefinerName": "Singapore iDA"
+      },
+      {
+        "CertificationProgramId": "4",
+        "RefinerName": "Ukraine ???"
+      },
+      {
+        "CertificationProgramId": "5",
+        "RefinerName": "Indonesia SDPPI"
+      },
+      {
+        "CertificationProgramId": "6",
+        "RefinerName": "Taiwan NCC"
+      },
+      {
+        "CertificationProgramId": "7",
+        "RefinerName": "Japan ???"
+      },
+      {
+        "CertificationProgramId": "8",
+        "RefinerName": "Turkey BTK"
+      },
+      {
+        "CertificationProgramId": "9",
+        "RefinerName": "No certification program exists"
+      }
+    ],
+    "ComplianceModel": [
+      {
+        "ComplianceModeleId": "1",
+        "RefinerName": "Certification"
+      },
+      {
+        "ComplianceModelId": "2",
+        "RefinerName": "Registration"
+      },
+      {
+        "ComplianceModelId": "3",
+        "RefinerName": "Permission"
+      },
+      {
+        "ComplianceModelId": "4",
+        "RefinerName": "Inspection"
+      },
+      {
+        "ComplianceModelId": "5",
+        "RefinerName": "Pre-shipment inspection"
+      },
+      {
+        "ComplianceModelId": "6",
+        "RefinerName": "Self declaration"
+      }
+    ],
+    "Country": [
+      {
+        "CountryId": "1",
+        "RefinerName": "Azerbaijan"
+      },
+      {
+        "CountryId": "2",
+        "RefinerName": "Australia"
+      },
+      {
+        "CountryId": "3",
+        "RefinerName": "Bahrain"
+      },
+      {
+        "CountryId": "4",
+        "RefinerName": "Bangladesh"
+      },
+      {
+        "CountryId": "5",
+        "RefinerName": "Belgium"
+      },
+      {
+        "CountryId": "6",
+        "RefinerName": "Brunei Darussalam"
+      },
+      {
+        "CountryId": "7",
+        "RefinerName": "Canada"
+      },
+      {
+        "CountryId": "8",
+        "RefinerName": "Colombia"
+      },
+      {
+        "CountryId": "9",
+        "RefinerName": "Denmark"
+      },
+      {
+        "CountryId": "10",
+        "RefinerName": "El Salvador"
+      },
+      {
+        "CountryId": "11",
+        "RefinerName": "France"
+      },
+      {
+        "CountryId": "12",
+        "RefinerName": "Hungary"
+      },
+      {
+        "CountryId": "13",
+        "RefinerName": "Mauritius"
+      },
+      {
+        "CountryId": "14",
+        "RefinerName": "Singapore"
+      },
+      {
+        "CountryId": "15",
+        "RefinerName": "Thailand"
+      },
+      {
+        "CountryId": "16",
+        "RefinerName": "United Kingdom"
+      },
+      {
+        "CountryId": "17",
+        "RefinerName": "United States"
+      }
+    ],
+    "FrequencyAndTechnology": [
+      {
+        "FrequencyAndTechnologyId": "1",
+        "RefinerName": "N/A"
+      }
+    ],
+    "InCountryTesting": [
+      {
+        "InCountryTestingId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "InCountryTestingId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "InCountryTestingId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "InCountryTestingId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "InCountryTesting_EMC": [
+      {
+        "InCountryTesting_EMCId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "InCountryTesting_EMCId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "InCountryTesting_EMCId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "InCountryTesting_EMCId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "InCountryTesting_Safety": [
+      {
+        "InCountryTesting_SafetyId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "InCountryTesting_SafetyId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "InCountryTesting_SafetyId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "InCountryTesting_SafetyId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "InCountryTesting_Wireless": [
+      {
+        "InCountryTesting_WirelessId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "InCountryTesting_WirelessId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "InCountryTesting_WirelessId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "InCountryTesting_WirelessId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "LocalRepresentative": [
+      {
+        "LocalRepresentativeId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "LocalRepresentativeId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "LocalRepresentativeId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "LocalRepresentativeId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "LocalRepresentativeService": [
+      {
+        "LocalRepresentativeServiceId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "LocalRepresentativeServiceId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "LocalRepresentativeServiceId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "LocalRepresentativeServiceId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "MandatoryOrVoluntary": [
+      {
+        "MandatoryOrVoluntaryId": "1",
+        "RefinerName": "Mandatory"
+      },
+      {
+        "MandatoryOrVoluntaryId": "2",
+        "RefinerName": "Voluntary"
+      },
+      {
+        "MandatoryOrVoluntaryId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "MandatoryOrVoluntaryId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "ModularApproval": [
+      {
+        "ModularApprovalId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "ModularApprovalId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "ModularApprovalId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "ModularApprovalId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "PowerConnectionType": [
+      {
+        "PowerConnectionTypeId": "1",
+        "RefinerName": "N/A"
+      }
+    ],
+    "PreferredChannel": [
+      {
+        "PreferredChannelId": "1",
+        "RefinerName": "N/A"
+      }
+    ],
+    "ProductCategory": [
+      {
+        "ProductCategoryId": "1",
+        "RefinerName": "N/A"
+      }
+    ],
+    "ProductSubType": [
+      {
+        "ProductSubTypeId": "1",
+        "RefinerName": "N/A"
+      }
+    ],
+    "ProductType": [
+      {
+        "ProductTypeId": "1",
+        "RefinerName": "N/A"
+      }
+    ],
+    "Region": [
+      {
+        "RegionId": "1",
+        "RefinerName": "Africa"
+      },
+      {
+        "RegionId": "2",
+        "RefinerName": "Americas"
+      },
+      {
+        "RegionId": "3",
+        "RefinerName": "Asia"
+      },
+      {
+        "RegionId": "4",
+        "RefinerName": "Europe"
+      },
+      {
+        "RegionId": "5",
+        "RefinerName": "Middle East"
+      },
+      {
+        "RegionId": "6",
+        "RefinerName": "Oceania"
+      }
+    ],
+    "SampleRequirement": [
+      {
+        "SampleRequirementId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "SampleRequirementId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "SampleRequirementId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "SampleRequirementId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "SampleRequirement_EMC": [
+      {
+        "SampleRequirement_EMCId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "SampleRequirement_EMCId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "SampleRequirement_EMCId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "SampleRequirement_EMCId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "SampleRequirement_Safety": [
+      {
+        "SampleRequirement_SafetyId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "SampleRequirement_SafetyId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "SampleRequirement_SafetyId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "SampleRequirement_SafetyId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "SampleRequirement_Wireless": [
+      {
+        "SampleRequirement_WirelessId": "1",
+        "RefinerName": "Yes"
+      },
+      {
+        "SampleRequirement_WirelessId": "2",
+        "RefinerName": "No"
+      },
+      {
+        "SampleRequirement_WirelessId": "3",
+        "RefinerName": "No Information"
+      },
+      {
+        "SampleRequirement_WirelessId": "4",
+        "RefinerName": "N/A"
+      }
+    ],
+    "SectorRegulated": [
+      {
+        "SectorRegulatedId": 1,
+        "RefinerName": "Wireless"
+      },
+      {
+        "SectorRegulatedId": 2,
+        "RefinerName": "EMC"
+      },
+      {
+        "SectorRegulatedId": 3,
+        "RefinerName": "EE"
+      },
+      {
+        "SectorRegulatedId": 4,
+        "RefinerName": "Safety"
+      }
+    ]
+  }
+}

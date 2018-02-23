@@ -1,0 +1,35 @@
+
+<div ng-controller="certificatesController">
+    <div id="dvSelectedRefiner">
+        <b>SELECTED REFINER :</b>
+        <span ng-hide="selectedRefiners.length == 0" ng-repeat="refiner in selectedRefiners">
+            {{refiner.Parent}} | {{ refiner.IsDateRange ? (refiner.Items[0].Value | date:'dd MMM yyyy').toString() + ' to ' + (refiner.Items[1].Value | date:'dd MMM yyyy').toString() :  refiner.Value}}
+            <i class="fa fa-times" ng-click="removeRefiner(refiner)"></i>
+        </span>
+    </div>
+   
+    <div class="row col-lg-12" style="padding-right:0px">
+        <div ui-view="tabContainer" class="row col-lg-9"></div>
+        <div class="smi-toolbar row col-lg-3 no-padding pull-right">
+            <!--<button class="btn btn-primary" type="button" disabled><i class="fa fa-th"></i>Custom View</button>-->
+            <button class="btn btn-primary {{gridSelections.length > 0 ? '':'disabled'}}" type="button" ng-click="Export()" ng-disabled="!gridSelections.length > 0"><i class="fa fa-download"></i>Export Results</button>
+        </div>
+    </div>
+
+    <div class="text-align-right">
+        <button class="btn btn-primary" type="button" ng-click="AddCertificate()" ng-if="canAddCertificate"><i class="fa fa-plus"></i>ADD CERTIFICATE</button>
+    </div>
+    Showing {{certificates.length}} item(s)
+    <div class="page-content" >
+        <div ui-view="alertTemplate"></div>
+        <div ui-grid="certificatesGrid" style="height:72vh" ui-grid-exporter ui-grid-selection ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column ui-grid-auto-resize></div>
+      
+        <div class="grid-loader" ng-hide="!showGridLoader">
+            <i class="fa fa-circle-o-notch fa-spin" area-hidden="true"></i>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <div ng-include src="modalTemplateUrl"></div>
+    <div ng-include src="viewCertificateFileTemplateUrl"></div>
+</div>

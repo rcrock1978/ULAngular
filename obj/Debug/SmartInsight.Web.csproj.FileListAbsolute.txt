@@ -1,0 +1,6 @@
+C:\Users\80702\UL\SmartInsightsVer4\SmartInsight.Web\bin\SmartInsight.Webhost.dll.config
+C:\Users\80702\UL\SmartInsightsVer4\SmartInsight.Web\bin\SmartInsight.Webhost.dll
+C:\Users\80702\UL\SmartInsightsVer4\SmartInsight.Web\bin\SmartInsight.Webhost.pdb
+C:\Users\80702\UL\SmartInsightsVer4\SmartInsight.Web\obj\Debug\SmartInsight.Web.csprojResolveAssemblyReference.cache
+C:\Users\80702\UL\SmartInsightsVer4\SmartInsight.Web\obj\Debug\SmartInsight.Webhost.dll
+C:\Users\80702\UL\SmartInsightsVer4\SmartInsight.Web\obj\Debug\SmartInsight.Webhost.pdb

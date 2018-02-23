@@ -1,0 +1,446 @@
+﻿[
+  {
+    "NewsId": "1",
+    "Author": "Adam Warlock",
+    "Caption": "Caption 1",
+    "Image": "",
+    "Details": "<p><strong>Resolution 171/2016</strong> is going to replace Res 508/2015 on October 4th, 2016.</p> <p>Scope remains the same. Local entities only as Certificate Holders remains. Full in-country testing remains.</p> <p style='padding-left: 30px;'>There are some parts will be affected, please see as below:</p> <ol> <li> <div style='padding-left:30px;'>Marking requirements for low voltage products (&lt;50V&gt; are withdrawn. New TYPE/LOT marking is withdrawn.</div> </li> <li>Market Surveillance is simplified: detailed process and requirements for 1 sample only.</li> <li>Local entities (importers/representatives) as Certified Holders have the Surveillance process simplified.</li> <li>More products are included in the list for using MARK Certification System only.</li> </ol> <p>Kitchen appliances, Power supplies, TV and monitors, Audio equipment, AIO computers must obtain MARK certification only (TYPE is not an option anymore)</p>",
+    "Posted": "06 OCT 2016",
+    "SectorRegulated": [
+      {
+        "SectorRegulatedId": "1",
+        "SectorRegulatedName": "Wireless"
+      }
+    ],
+    "Title": "Argentina",
+    "Summary": "Sample summary of Argentina",
+    "Note": "Sample Note of Argentina",
+    "SourceInfo": "Authority",
+    "LinkToNews": "Sample Link To News of Argentina",
+    "Remarks": "Sample Remarks of Argentina",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "1",
+    "ProductType": "1",
+    "RegionalEU": "1",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "1",
+        "CountryName": "Argentina"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "1",
+        "ComplianceProgramName": "CDC"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 1
+      },
+      {
+        "FrequencyTechnologyId": 2
+      }
+    ]
+  },
+  {
+    "NewsId": "2",
+    "Author": "Stephen Vincent Strange",
+    "Caption": "Caption 2",
+    "Image": "",
+    "Details": "<p>On your query if accumulators, battery packs and galvanic cells (see below) - those detached, as well as those built-in (non-removable) attached into the final product,</p> <p style='padding-left: 30px;'>-- Acid Accumulators and battery packs;</p> <p style='padding-left: 30px;'>-- Alkaline Accumulators and Battery packs;</p> <p style='padding-left: 30px;'>-- Nickel-Iron Accumulators and battery packs;</p> <p style='padding-left: 30px;'>-- Nickel-Cadmium Accumulators and Battery packs;</p> <p style='padding-left: 30px;'>-- Elements and galvanic cells;</p> <p>adn battery packs and galvanic cells for househols appliances and general uses which are subjects of mandatory assessment.</p> <p>We inform the following:</p> <p>The above mentioned products are included into <em>'Unified list of products for which confirmation of conformity is to be executed in the format of accepting of declaration of conformity'</em> adopted by Russian Governmental Decree dated 01.12.09 No.982 (with changes), and as such Declaration of Conformity is required to be submitted.</p> <p>Simultaneously we inform that the above mentioned products DO NOT come within Customs Union Technical Regulation <em>'On Safety of Low Voltage Equipment'</em> (<a href='CU TR 004/2011'>CU TR 004/2011</a>), adopted by Decision of Customs Union Committee dated 16.08.2011 No.768 (with changes) and Customs Union Technical Regulation <em>'Electromagnetic Compatibility of Technical Devices'</em> (<a href='CU TR 020/2011'>CU TR 020/2011</a>), adopted by Decision of Customs Union Committee dated 09.12.2011 No.879 (with changes). Certificate of conformity or Declaration of conformity to comply with the requirements of the above Technical regulations is not required.</p>",
+    "Posted": "04 OCT 2016",
+    "SectorRegulated": [
+      {
+        "SectorRegulatedId": "2",
+        "SectorRegulatedName": "Safety"
+      }
+    ],
+    "Title": "Russia - GOST",
+    "Summary": "Sample summary of Russia",
+    "Note": "Sample Note of Russia",
+    "SourceInfo": "Authority",
+    "LinkToNews": "Sample Link To News of Russia",
+    "Remarks": "Sample Remarks of Russia",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "1",
+    "ProductType": "1",
+    "RegionalEU": "1",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "1",
+        "CountryName": "Russia"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "1",
+        "ComplianceProgramName": "CSAT"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 1
+      }
+    ]
+  },
+
+  {
+    "NewsId": "3",
+    "Author": "Susan Storm",
+    "Caption": "Caption 3",
+    "Image": "",
+    "Details": "<p><strong>Mutual Recognition Agreement</strong> (MRA) between UL and one of local designed Lab in Mexico for <a href='NOM-032-ener-2013'>NOM-032-ener-2013</a>&nbsp;had been approved and published, and is now perational immediately. Data generated at our UL laboratories (ex: UL TW) or in accordance with our <strong>Data Acceptance Program</strong> (DPA) (Applicants could test at their facility) will now be accepted via this MRA.</p> ",
+    "Posted": "03 OCT 2016",
+    "SectorRegulated": [
+      {
+        "SectorRegulatedId": "2",
+        "SectorRegulatedName": "Safety"
+      }
+    ],
+    "Title": "Mexico",
+    "Summary": "Sample summary of Mexico",
+    "Note": "Sample Note of Russia",
+    "SourceInfo": "Authority",
+    "LinkToNews": "Sample Link To News of Mexico",
+    "Remarks": "Sample Remarks of Mexico",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "1",
+    "ProductType": "1",
+    "RegionalEU": "1",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "1",
+        "CountryName": "Mexico"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "1",
+        "ComplianceProgramName": "CWP"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 1
+      }
+    ]
+  },
+  {
+    "NewsId": "4",
+    "Author": "Reed Richards",
+    "Caption": "Caption 4",
+    "Image": "",
+    "Details": "<p>Nepal, NTA announce <strong>Type Approval Working Precedure</strong> (TAP-04) for <a href='Customr Premises Radio Telecommunication Equipment'>Customr Premises Radio Telecommunication Equipment</a>.</p> <p>There are following main changes brought by the new process (TAP-04):</p> <ol> <li>For a renewal application, it must be submitted at least 30 days prior to the date of expiry.</li> <li>Technical Specifications of mobile handset.</li> </ol> <p style='padding-left: 30px;'>a.) Specific Absorption Rate: The handset shall have the SAR standard of maximum 2 W/Kg, averaged over 10gm of tissue.</p> <p style='padding-left: 30px;'>b.) Min. Receiver Sensitivity: -102 dBm</p> <p style='padding-left: 30px;'>c.) Maximum EIRP: Maximum EIRP: 33+/-2 dBm</p> <p style='padding-left: 30px;'>d.) Minimum Carging Capacity of Battery:</p> <ul> <li>600mAh (for Bar Phone i.e. Normal Keypad phone)</li> <li>1000mAh (for Smart Phone)</li> </ul> <p>&nbsp;</p> ",
+    "Posted": "02 OCT 2016",
+    "SectorRegulated": [
+      {
+        "SectorRegulatedId": "1",
+        "SectorRegulatedName": "Wireless"
+      }
+    ],
+    "Title": "Nepal",
+    "Summary": "Sample summary of Nepal",
+    "Note": "Sample Note of Russia",
+    "SourceInfo": "Authority",
+    "LinkToNews": "Sample Link To News of Nepal",
+    "Remarks": "Sample Remarks of Nepal",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "2",
+    "ProductType": "2",
+    "RegionalEU": "2",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "2",
+        "CountryName": "Nepal"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "2",
+        "ComplianceProgramName": "IGC"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 2
+      }
+    ]
+  },
+  
+  {
+    "NewsId": "5",
+    "Title": "Title 5",
+    "Posted": "12 SEP 2016",
+    "Image": "",
+    "Details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "SectorRegulated": [
+    {
+      "id": "1",
+      "option": "Wireless"
+    }
+  ],
+    "Author": "J.K. Rowling",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "2",
+    "ProductType": "2",
+    "RegionalEU": "2",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "2",
+        "CountryName": "Nepal"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "2",
+        "ComplianceProgramName": "IGC"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 2
+      }
+    ]
+  },
+  {
+    "NewsId": "6",
+    "Title": "Title 6",
+    "Posted": "11 SEP 2016",
+    "Image": "",
+    "Details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "SectorRegulated": [
+    {
+      "id": "1",
+      "option": "Wireless"
+    }
+  ],
+    "Author": "John Green",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "2",
+    "ProductType": "2",
+    "RegionalEU": "2",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "2",
+        "CountryName": "Nepal"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "2",
+        "ComplianceProgramName": "IGC"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 2
+      }
+    ]
+  },
+  
+  {
+  
+    "Title": "Title 7",
+    "Posted": "10 SEP 2016",
+    "Image": "",
+    "Details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "SectorRegulated": [
+    {
+      "id": "2",
+      "option": "Safety"
+    }
+  ],
+    "Author": "Sidney Sheldon",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "2",
+    "ProductType": "2",
+    "RegionalEU": "2",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "2",
+        "CountryName": "Nepal"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "2",
+        "ComplianceProgramName": "IGC"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 2
+      }
+    ]
+  },
+  
+  {
+  
+    "Title": "Title 8",
+    "Posted": "09 SEP 2016",
+    "Image": "",
+    "Details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "SectorRegulated": [
+    {
+      "id": "2",
+      "option": "Safety"
+    }
+  ],
+    "Author": "Christian Wolff",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "2",
+    "ProductType": "2",
+    "RegionalEU": "2",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "2",
+        "CountryName": "Nepal"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "2",
+        "ComplianceProgramName": "IGC"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 2
+      }
+    ]
+  },
+  
+  {
+  
+    "Title": "Title 9",
+    "Posted": "08 SEP 2016",
+    "Image": "",
+    "Details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "SectorRegulated": [
+    {
+      "id": "2",
+      "option": "Safety"
+    }
+  ],
+    "Author": "Ana Gray",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "2",
+    "ProductType": "2",
+    "RegionalEU": "2",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "2",
+        "CountryName": "Nepal"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "2",
+        "ComplianceProgramName": "IGC"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 2
+      }
+    ]
+  },
+  
+  {
+  
+    "Title": "Title 10",
+    "Posted": "07 SEP 2016",
+    "Image": "",
+    "SectorRegulated": [
+    {
+      "id": "2",
+      "option": "Safety"
+    }
+  ],
+    "Author": "Gillian Flynn",
+    "Category": {
+      "CategoryId": "1",
+      "CategoryName": "Regulation"
+    },
+    "Source": "2",
+    "ProductType": "2",
+    "RegionalEU": "2",
+    "Region": "1",
+    "DocumentType": "1",
+    "EffectiveDate": "2016-12-01 00:00:00",
+    "Country": [
+      {
+        "CountryId": "2",
+        "CountryName": "Nepal"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "2",
+        "ComplianceProgramName": "IGC"
+      }
+    ],
+    "FrequencyTechnology": [
+      {
+        "FrequencyTechnologyId": 2
+      }
+    ]
+  }
+]
+
+  

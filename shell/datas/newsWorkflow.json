@@ -1,0 +1,29 @@
+﻿[
+  {
+    "View": "View Details",
+    "RegulatoryCategory": "Wireless",
+    "Region": "Asia",
+    "Country": "China",
+    "ComplianceProgram": "ChinaCCC",
+    "OriginalInformation": "Sample Only",
+    "UpdatedInformation": "Sample ONly - Updated",
+    "NewsSource": "Sample Source" ,
+    "Links": "docName.pdf",
+    "WorkflowStatus": "Approver Review",
+    "DateSubmitted": "31 MAR 2017"
+  },
+
+  {
+  "View": "View Details",
+  "RegulatoryCategory": "Wireless",
+  "Region": "Asia",
+  "Country": "China",
+  "ComplianceProgram": "ChinaCCC",
+  "OriginalInformation": "Sample Only",
+  "UpdatedInformation": "Sample ONly - Updated",
+  "NewsSource": "Sample Source",
+  "Links": "docName.pdf",
+  "WorkflowStatus": "Approver Review",
+  "DateSubmitted": "31 MAR 2017"
+  }
+]

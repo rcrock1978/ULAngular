@@ -1,0 +1,328 @@
+﻿<div>
+    <script type="text/ng-template" id="AddCertificateDialog.html">
+      
+        <div class="modal-header">
+            <h4 class="modal-title">{{modalTitle}}</h4><i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+            <p><small>*Marked fields are required</small></p>
+        </div>
+        <div class="modal-body">
+            <div id="top"></div>
+            <div class="alert {{alertType.Type}} shell-alert {{alertMessage == '' ? 'display-none' : ''}}" role="alert" style="padding-bottom:5px;padding-top:5px">
+                {{alertMessage}}
+                <!--<i class="fa fa-times pull-right" style="cursor:pointer" ng-click="CloseAlert()"></i>-->
+            </div>
+            <form  name="certificateForm">
+                <div class="col-sm-12">
+					<br />
+                    <div class="form-group custom-row col-sm-12">
+                        <div class="col-sm-4">
+                            <label for="txtOrderNumber" class="control-label">Project/Order #</label>
+                            <div>
+                                <input type="text" class="form-control" id="txtOrderNumber" name="ordernumber" placeholder="" ng-model="certItem.OrderNumber" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 {{(certItem.CertificateSchemaId == undefined || certItem.CertificateSchemaId.length == 0) && showErrors ? 'required': ''}}">
+                            <label for="drpCertificationScheme" class="control-label"><span class="required">*</span>Compliance Program:</label>
+                            <span ng-show="(certItem.CertificateSchemaId == undefined || certItem.CertificateSchemaId.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Compliance Program is Required" popover-trigger="mouseenter"></span>
+                            <div>
+                                <smi-drop-down datasource="certificationSchemes" searchable="true" model="certItem.CertificateSchemaId"></smi-drop-down>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 {{(certItem.SelectedSectors == undefined || certItem.SelectedSectors.length == 0) && showErrors ? 'required': ''}}">
+
+                            <label for="drpSectors" class="control-label"><span class="required">*</span>Regulatory Category:</label>
+                            <span ng-show="(certItem.SelectedSectors == undefined || certItem.SelectedSectors.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Sector(s) is Required" popover-trigger="mouseenter" popover-placement="right"></span>
+                            <div>
+                                <div id="drpSectors" ng-dropdown-multiselect="" options="sectors" selected-model="certItem.SelectedSectors" 
+                                     events="{onItemSelect: ToggleWirelessOptions, onItemDeselect: ToggleWirelessOptions, onSelectAll: ToggleWirelessOptions, onDeselectAll: ToggleWirelessOptions}" 
+                                     extra-settings="multiselectSettings"  class="multi-Select"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--LINE2-->
+                    <div class="form-group custom-row col-sm-12">
+                        <div class="col-sm-4 {{(certItem.RegionId == undefined || certItem.RegionId.length == 0) && showErrors ? 'required': ''}}">
+
+                            <label for="dprRegions" class="control-label"><span class="required">*</span>Regions:</label>
+                            <span ng-show="(certItem.RegionId == undefined || certItem.RegionId.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Region is Required" popover-trigger="mouseenter" popover-placement="right"></span>
+                            <div>
+                                <smi-drop-down datasource="regions" searchable="true" model="certItem.RegionId" onchange="LoadCountries()"></smi-drop-down>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 {{(certItem.SelectedCountries == undefined || certItem.SelectedCountries.length == 0) && showErrors ? 'required': ''}}">
+
+                            <label for="drpCountry" class="control-label"><span class="required">*</span>Country:</label>
+                            <span ng-show="(certItem.SelectedCountries == undefined || certItem.SelectedCountries.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Country(s) is Required" popover-trigger="mouseenter" popover-placement="right"></span>
+                            <div>
+                                <div id="drpCountry" ng-dropdown-multiselect="" name="drpCountry" options="countries" selected-model="certItem.SelectedCountries" extra-settings="multiselectSettings" class="multi-Select"></div>
+                            </div>
+
+                        </div>
+                      
+                        <div class="col-sm-4">
+
+                            <label for="dprCertOrg" class="control-label">Certificate Organization:</label>
+                            <div>
+                                <smi-drop-down datasource="certificateOrganizations" searchable="true" model="certItem.CertificateOrganizationId"></smi-drop-down>
+                             
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--LINE3-->
+                    <div class="form-group custom-row col-sm-12">
+                        <div class="col-sm-4 {{(certItem.customer == undefined || certItem.customer.length == 0) && showErrors ? 'required': ''}}">
+                            <label class="control-label"><span class="required">*</span>Customer:</label>
+                            <span ng-show="(certItem.customer.CompanyItemId == undefined || certItem.customer.CompanyItemId.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Customer is Required" popover-trigger="mouseenter"></span>
+                            <input type="text" name="companyName" class="form-control" ng-change="updateCompany()" ng-model="certItem.customer" uib-typeahead="company as company.CompanyName for company in GetCompany($viewValue)"
+                                   typeahead-loading="loadingCompanies" typeahead-no-results="noResults" typeahead-on-select="typeAheadSelect($item, $model, $label, $event)" typeahead-min-length="3" required />
+                            <i ng-show="loadingCompanies" class="glyphicon glyphicon-refresh"></i>
+                            <div ng-show="noResults">
+                                <i class="glyphicon glyphicon-remove"></i> No Results Found
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="txtManufacturer" class="control-label">Manufacturer:</label>
+                            <div>
+                                <input type="text" class="form-control" id="txtManufacturer" placeholder="" ng-model="certItem.Manufacturer" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 {{certificateForm.certificateNumber.$error.required && showErrors ? 'required': ''}}">
+                            <label for="txtCertificateNumber" class="control-label"><span class="required">*</span>Certificate Number</label>
+                            <span ng-show="certificateForm.certificateNumber.$error.required && showErrors" class="required fa fa-exclamation-circle" uib-popover="Certificate Number is Required" popover-trigger="mouseenter"></span>
+                            <div>
+                                <input type="text" class="form-control" id="txtCertificateNumber" name="certificateNumber" placeholder="" ng-model="certItem.CertificateNumber" maxlength="100" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--LINE4-->
+                    <div class="form-group custom-row col-sm-12">
+                        <div class="col-sm-4">
+                            <div class="col-sm-12 no-padding">
+                                <label for="txtLicenseHolder" class="control-label">License Holder:</label>
+                                <div>
+                                    <input type="text" class="form-control" id="txtLicenseHolder" placeholder="" ng-model="certItem.LicenseHolder" maxlength="100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 {{certificateForm.model.$error.required && showErrors ? 'required': ''}}">
+                            <!--<div class="col-sm-12 no-padding">-->
+                            <label for="txtModel" class="control-label"><span class="required">*</span>Model:</label>
+                            <span ng-show="certificateForm.model.$error.required && showErrors" class="required fa fa-exclamation-circle" uib-popover="Model is Required" popover-trigger="mouseenter"></span>
+                            <div>
+                                <input type="text" class="form-control" id="txtModel" name="model" placeholder="" ng-model="certItem.Model" maxlength="255" required>
+                            </div>
+                            <!--</div>-->
+                        </div>
+                        
+                        <div class="col-sm-8">
+                            <label for="txtFactory" class="control-label">Factory:</label>
+                            <div>
+                                <textarea class="form-control" id="txtFactory" placeholder="" ng-model="certItem.Factory" style="height:100px" maxlength="255"></textarea>
+                            </div>
+                        </div>
+
+                       
+                    </div>
+                    <!--LINE5-->
+                    <div class="form-group custom-row col-sm-12">
+                        <div class="col-sm-12">
+                            <label for="txtBrandName" class="control-label">Brand Name:</label>
+                            <div>
+                                <input type="text" class="form-control" id="txtBrandName" placeholder="" ng-model="certItem.BrandName" maxlength="100">
+                            </div>
+                        </div>
+
+                   
+                    </div>
+                    
+                    <!--LINE6-->
+                    <div class="form-group custom-row col-sm-12">
+                        <div class="col-sm-4 {{(ValidateIssueDate(certificateForm.issueDate.$error.required))  && showErrors ? 'required': ''}}">
+                            <label for="dtpIssueDate" class="control-label"><span class="required">*</span>Issue Date:</label>
+                            <span ng-show="ValidateIssueDate(certificateForm.issueDate.$error.required) && showErrors" class="required fa fa-exclamation-circle" uib-popover="{{validateIssueDateMessage}}" popover-trigger="mouseenter"></span>
+
+                            <div>
+                                <input id="dtpIssueDate" type="text" name="issueDate" kendo-date-picker onkeydown="return false"
+                                       style="width: 100%;"                                       
+                                       placeholder="DD MMM YYYY"                                                                              
+                                       ng-model="certItem.IssueDateString"
+                                       k-format="'dd MMM yyyy'"
+                                       k-ng-model="certItem.IssueDate"
+                                       k-max="certItem.IssueDateMaxDate"
+                                       k-rebind="certItem.IssueDateMaxDate"
+                                       k-on-change="FromDateChanged()" />
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 {{(ValidateExpirationDate(certificateForm.expirationDate.$error.required)) && showErrors ? 'required': ''}}">
+                            <label for="dtpExpirationDate" class="control-label"><span class="required" ng-show="certItem.IsExpirationDateNotApplicable"></span><span ng-hide="hideme" class="required">*</span>Expiration Date:</label>
+                            <span ng-show="ValidateExpirationDate(certificateForm.expirationDate.$error.required) && showErrors" class="required fa fa-exclamation-circle" uib-popover="{{validateExpirationDateMessage}}" popover-trigger="mouseenter"></span>
+                            <div>
+                                <input id="dtpExpirationDate" type="text" ng-disabled="hideme" name="expirationDate" kendo-date-picker onkeydown="return false"
+                                       style="width: 100%;"                                       
+                                       placeholder="DD MMM YYYY"
+                                       ng-model="certItem.ExpirationDateString"
+                                       k-format="'dd MMM yyyy'"
+                                       k-ng-model="certItem.ExpirationDate"                                       
+                                       k-min="certItem.ExpirationDateMinDAte"
+                                       k-rebind="certItem.ExpirationDateMinDAte"
+                                       k-on-change="ToDateChanged()"
+                                       />
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="radIsExpirationApplicable" class="control-label"></label>
+                            <div>
+                                <input type="checkbox" name="radIsExpirationApplicable" ng-model="certItem.IsExpirationDateNotApplicable" ng-change="ToggleExpirationDate()"> Expiration date not applicable
+                            </div>
+                            
+                         </div>
+                    </div>
+
+                    <!--LINE7-->
+                    <div class="form-group custom-row col-sm-12">
+                        <div class="col-sm-4 {{(certItem.Status == undefined || certItem.Status.length == 0) && showErrors ? 'required': ''}}">
+
+                            <label for="drpStatusCertificate" class="control-label"><span class="required">*</span>Status(Certificate):</label>
+                            <span ng-show="(certItem.Status == undefined || certItem.Status.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Status (Certificate) is Required" popover-trigger="mouseenter"></span>
+                            <div>
+                                <smi-drop-down datasource="certificateStatus" searchable="true" model="certItem.Status"></smi-drop-down>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4">
+
+                            <label for="drpStatusBusiness" class="control-label">Status(Business):</label>
+                            <div>
+
+                                <smi-drop-down datasource="certificateBusinessStatus" searchable="true" model="certItem.CertificateBusinessStatusTypeId"></smi-drop-down>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4">
+
+                            <label for="drpAgent" class="control-label">Agent:</label>
+                            <div>
+                                <input type="text" class="form-control" id="txtAgent" placeholder="" ng-model="certItem.AgentName" maxlength="200">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--LINE8-->
+                    <div class="form-group custom-row col-sm-12">
+
+                        <div class="col-sm-6">
+
+                            <label for="drpSubContractor" class="control-label">Subcontractor:</label>
+                            <div>
+                                <smi-drop-down datasource="subContractors" searchable="true" model="certItem.SubContractorItemId"></smi-drop-down>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+
+                            <label for="drpPointOfCustomer" class="control-label">PoC Region:</label>
+                            <div>
+                                <smi-drop-down datasource="pocs" searchable="true" model="certItem.POCId"></smi-drop-down>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--LINE9-->
+                    <div class="form-group custom-row col-sm-12">
+
+                        <div class="col-sm-6">
+
+                            <label for="drpProductType" class="control-label">Product Type:</label>
+                            <div>
+                                <smi-drop-down datasource="productTypes" searchable="true" model="certItem.ProductTypeId"></smi-drop-down>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+
+                            <label for="drpProductSubType" class="control-label">Product Sub Type:</label>
+                            <div>
+                                <smi-drop-down datasource="productSubTypes" searchable="true" model="certItem.ProductSubTypeId"></smi-drop-down>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--LINE10-->
+                    <div class="form-group custom-row col-sm-12 ">
+
+                        <div class="col-sm-6">
+
+                            <label for="drpWirelessTech" class="control-label">Wireless Technology:</label>
+                            <div>                                
+                                <div id="drpWirelessTech" ng-dropdown-multiselect="" options="wireless" selected-model="certItem.SelectedWireless" 
+                                     ng-dropdown-multiselect-disabled="disableWireless" extra-settings="multiselectSettings" class="multi-Select"></div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+
+                            <label for="drpStandards" class="control-label">Standards:</label>
+                            <div>
+                                <div id="drpStandards" ng-dropdown-multiselect="" options="optionStandards" selected-model="certItem.SelectedStandards"
+                                     ng-dropdown-multiselect-disabled="optionStandards.length == 0" extra-settings="multiselectSettings" class="multi-Select"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--FILE BROWSER-->
+                    <div class="form-group custom-row-inline  col-sm-12 {{(primaryFile.name.length == 0 || primaryFile.name == undefined) && showErrors ? 'required' : ''}}">
+                        <div class="col-sm-3">
+                            <label><span class="required">*</span>Primary File :</label>
+                            <span ng-show="(primaryFile.name.length == 0 || primaryFile.name == undefined) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Primary File is Required" popover-trigger="mouseenter"></span>
+                            <span ng-show="(invalidFilename && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidFilename}}" popover-trigger="mouseenter"></span>
+                            <span ng-show="(invalidFilesize && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidFilesize}}" popover-trigger="mouseenter"></span>
+                        </div>
+                        <div class="input-group col-sm-9">
+                            <input type="text" class="form-control custom-read-only" name="primaryFile" value="{{primaryFile.name}}" required/>
+                            <span class="input-group-btn">
+                                <label class="btn btn-default btn-file">
+                                    <i class="fa fa-folder"></i> Browse... <input type="file" id="myFile" fileread="primaryFile" 
+                                                                                  accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, 
+                                                                                  text/plain, application/pdf, image/*"
+                                                                                  modified="isPFModified" style="display:none">
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group custom-row-inline col-sm-12 {{(invalidRelatedFileName.length != 0 || invalidRelatedFilesize.length != 0) && showErrors ? 'required' : ''}}">
+                        <div class="col-sm-3">
+                            <label>Related Files :</label>
+                            <span ng-show="(invalidRelatedFileName.length != 0 && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidRelatedFilename}}" popover-trigger="mouseenter"></span>
+                            <span ng-show="(invalidRelatedFilesize.length != 0 && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidRelatedFilesize}}" popover-trigger="mouseenter"></span>
+                        </div>
+                        <div class="input-group col-sm-9">
+                            <smi-file-upload datasource="relatedFiles"></smi-file-upload>
+                        </div>
+                    </div>
+                </div>
+               
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="Save((certificateForm.$invalid))">Save</button>
+
+        </div>
+    </script>
+
+</div>

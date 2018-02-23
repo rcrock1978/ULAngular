@@ -1,0 +1,17 @@
+﻿<div id="modalTablContainer">
+    <ul class="nav nav-tabs">
+        <li ng-repeat="tab in datasource" class="{{tab == selected  ? 'active' : ''}}">
+            <a ng-click="SelectionChange(tab)">{{tab}}</a>
+        </li>
+        <li role="presentation" class="pull-right" style="margin-right:8px">
+            <a>
+                Language : 
+                <!--<smi-drop-down datasource="languages" searchable="true" model="language"></smi-drop-down>-->
+                <!--<select ng-options="item.Id as item.Text for item in languages track by item.Id" ng-model="selectedLanguage"></select>-->
+                <select>
+                    <option ng-repeat="item in languages">{{item.Text}}</option>
+                </select>
+            </a>
+        </li>
+    </ul>
+</div>

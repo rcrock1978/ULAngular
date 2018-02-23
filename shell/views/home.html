@@ -1,0 +1,318 @@
+<div id="homePage" class="col-lg-12">
+    <div class="left-pane row col-lg">
+        <div class="content">
+            <div class="header">
+                <span>WELCOME TO</span>
+                <h1>SmartInsight</h1>
+            </div>
+            <form class="float-none" name="homeForm">
+                <div ui-view="alertTemplate"></div>
+
+                <!--1st row-->
+                <div class="row">
+                    <div class="col-sm-4 {{homeForm.selectedScope.$error.required && showErrors ? 'required': ''}}">
+
+                        <label for="dprRegions" class="control-label">*Scope:</label>
+                        <div>
+                            <select name="selectedScope" class="form-control" ng-model="selectedScope" ng-change="onScopeSelect()" required>
+                                <option ng-repeat="item in scopes" value="{{item.AppName}}">{{item.LinkText}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-4">
+
+                        <label ng-class="{'control-label disabledLabel' : !showCountry, 'control-label' : showCountry}" for="dprCountry">Country:</label>
+                        <div>
+                            <div id="multiselectCountry" ng-dropdown-multiselect="" options="countries" selected-model="selectedCountry" extra-settings="countrySettings" ng-dropdown-multiselect-disabled="!showCountry"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-4">
+
+                        <label ng-class="{'control-label disabledLabel' : !showSector, 'control-label' : showSector}" for="dprSector">Regulatory Category:</label>
+                        <div>
+                            <div id="multiselectSector" ng-dropdown-multiselect="" options="sectors" selected-model="selectedSector" extra-settings="sectorSettings" ng-dropdown-multiselect-disabled="!showSector" events="{onItemSelect: onSectorChange, onItemDeselect: onSectorChange, onSelectAll: onSectorChange, onDeselectAll: disableProductType}"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--2nd row-->
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-sm-4">
+                        <label ng-class="{'control-label disabledLabel' : !showComplianceProgram, 'control-label' : showComplianceProgram}" for="dprCertificationProgram">Compliance Program:</label>
+                        <div>
+                            <div id="multiselectComplianceProgram" ng-dropdown-multiselect="" options="compliancePrograms" selected-model="selectedComplianceProgram" extra-settings="complianceSettings" ng-dropdown-multiselect-disabled="!showComplianceProgram"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label ng-class="{'control-label disabledLabel' : !showApplicationType, 'control-label' : showApplicationType}" for="dprApplicationType">Application Type:</label>
+                        <div>
+                            <div id="multiselectApplicationType" ng-dropdown-multiselect="" options="applicationTypes" selected-model="selectedApplicationType" extra-settings="applicationTypeSettings" ng-dropdown-multiselect-disabled="!showApplicationType"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--3rd row-->
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-sm-4">
+                        <label ng-class="{'control-label disabledLabel' : !showProductType, 'control-label' : showProductType}" for="dprProductType">Product Type:</label>
+                        <div>
+                            <div id="multiselectProductType" ng-dropdown-multiselect="" options="productTypes" selected-model="selectedProductType" extra-settings="productTypeSettings" ng-dropdown-multiselect-disabled="!showProductType" events="{onItemSelect: onProductTypeChange, onItemDeselect: onProductTypeChange, onSelectAll: onProductTypeChange, onDeselectAll: disableProductSubType}"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label ng-class="{'control-label disabledLabel' : !showProductSubType, 'control-label' : showProductSubType}" for="dprProductSubType">Product Sub-Type:</label>
+                        <div>
+                            <div id="multiselectProductSubType" ng-dropdown-multiselect="" options="productSubTypes" selected-model="selectedProductSubType" extra-settings="productSubTypeSettings" ng-dropdown-multiselect-disabled="!showProductSubType"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label ng-class="{'control-label disabledLabel' : !showPowerSource, 'control-label' : showPowerSource}" for="dprPower">Power Source:</label>
+                        <div>
+                            <div id="multiselectPowerSource" ng-dropdown-multiselect="" options="powerSources" selected-model="selectedPowerSource" extra-settings="powerSourceSettings" ng-dropdown-multiselect-disabled="!showPowerSource"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--4th row-->
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-sm-4">
+                        <label ng-class="{'control-label disabledLabel' : !showFreqTech, 'control-label' : showFreqTech}" for="dprFrequencyAndTechnology">Frequency and Technology:</label>
+                        <div>
+                            <div id="multiselectFrequencyTechnology" ng-dropdown-multiselect="" options="freqTechs" selected-model="selectedFreqTech" extra-settings="freqTechSettings" ng-dropdown-multiselect-disabled="!showFreqTech"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label ng-class="{'control-label disabledLabel' : !showCustomer, 'control-label' : showCustomer}" for="dprCustomer">Customer:</label>
+                        <div>
+                            <div id="multiselectSector" ng-dropdown-multiselect="" options="customers" selected-model="selectedCustomer" extra-settings="customerSettings" ng-dropdown-multiselect-disabled="!showCustomer"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-align-right">
+                    <button id="cmdGo" class="btn btn-primary" type="button" ng-click="goToMain(homeForm.$invalid)" ng-disabled="selectedScope === ''">GO</button>
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="bg-overlay" ng-hide="!showSpinner">
+        <div style="height:30%"></div>
+        <div class="center">
+            <span class="fa fa-circle-o-notch fa-spin">
+            </span>
+            <p>Loading...</p>
+        </div>
+        <div style="height:30%"> </div>
+    </div>
+</div>
+<div ui-view="rightpane" class="no-padding right-pane"></div>
+<div ui-view="changeRequestForm"></div>
+
+<!--Preferences-->
+<script type="text/ng-template" id="Settings.html">
+    <div class="modal-header">
+        <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+        <h4 class="modal-title">SMARTINSIGHT SETTINGS</h4>
+        <!--<p><small>*Marked fields are required</small></p>-->
+        <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+    </div>
+    <div class="modal-body" style="line-height:2;">
+        <div class="row">
+            <div class="col-md-6">
+                <label>Choose default Language:</label>
+            </div>
+            <div class="col-md-6">
+                <select class="form-control" ng-model="userSelectedLanguage">
+                    <!--<option>English</option>-->
+                    <option ng-repeat="item in languages" ng-selected="item.CultureTypeId == userSelectedLanguage" value="{{item.CultureTypeId}}">{{item.CultureTypeDesc}}</option>
+                </select>
+            </div>
+        </div><br />
+
+        <div class="row">
+            <div class="col-md-12">
+                <label>Choose default Regulatory Category:</label><br />
+            </div>
+        </div>
+        <div class="form-group custom-row col-sm-12">
+            <span class="col-sm-4" ng-repeat="sector in userSelectedSector">
+                <label  class="checkbox" for="{{sector.CoveredSectorId}}">
+                    <input type="checkbox" value="{{sector.CoveredSectorId}}" ng-model="sector.selected" name="group" id="{{sector.CoveredSectorId}}">
+                    {{sector.CoveredSector}}
+                </label>
+            </span>
+
+            <!--<div class="col-md-12">
+            <div class="col-md-4">
+                <input type="checkbox" id="chkRegulatoryEE"/>&nbsp;<label>EE</label><br />
+            </div>
+            <div class="col-md-4">
+                <input type="checkbox" id="chkRegulatoryTelecom"/>&nbsp;<label>TELECOM</label><br />
+            </div>
+            <div class="col-md-4">
+                <input type="checkbox" id="chkRegulatorySafety"/>&nbsp;<label>SAFETY</label><br />
+            </div>
+        </div> <br />
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <input type="checkbox" id="chkRegulatoryEMC"/>&nbsp;<label>EMC</label><br />
+            </div>
+            <div class="col-md-4">
+                <input type="checkbox" id="chkRegulatoryWireless"/>&nbsp;<label>WIRELESS</label><br />
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>-->
+    </div>
+            <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Notifications:</label><br />
+                </div>
+            </div>
+            <div class="row" style="padding-left:25px;">
+                <div class="col-md-12">
+                    <table class="table table-condensed table-striped">
+                        <tr>
+                            <th align="center">Scope</th>
+                            <th align="center">Regulatory Category</th>
+                        </tr>
+                        <tr title="news">
+                            <td>
+                                <label class="checkbox" for="news">
+                                    <input type="checkbox" name="notificationModules" ng-model="notificationModules[1]" value="news" />
+                                    News
+                                </label>
+                            </td>
+                            <td>
+                                <div ng-dropdown-multiselect="" options="sectorNews" selected-model="selectedSectorNews" extra-settings="sectorSettings"></div>
+                            </td>
+                        </tr>
+                        <tr title="contacts" ng-if="!isSalesReader">
+                            <td>
+                                <label class="checkbox" for="contacts">
+                                    <input type="checkbox" name="notificationModules" ng-model="notificationModules[2]" value="contacts" />
+                                    Contacts
+                                </label>
+                            </td>
+                            <td>
+                                <div ng-dropdown-multiselect="" options="sectorContacts" selected-model="selectedSectorContacts" extra-settings="sectorSettings"></div>
+                            </td>
+                        </tr>
+                        <tr title="delivery" ng-if="!isSalesReader">
+                            <td>
+                                <label class="checkbox" for="delivery">
+                                    <input type="checkbox" name="notificationModules" ng-model="notificationModules[3]" value="delivery" />
+                                    Delivery
+                                </label>
+                            </td>
+                            <td>
+                                <div ng-dropdown-multiselect="" options="sectorDelivery" selected-model="selectedSectorDelivery" extra-settings="sectorSettings"></div>
+                            </td>
+                        </tr>
+                        <tr title="r2c">
+                            <td>
+                                <label class="checkbox" for="r2c">
+                                    <input type="checkbox" name="notificationModules" ng-model="notificationModules[4]" value="r2c" />
+                                    Required Items
+                                </label>
+                            </td>
+                            <td>
+                                <div ng-dropdown-multiselect="" options="sectorR2C" selected-model="selectedSectorR2C" extra-settings="sectorSettings"></div>
+                            </td>
+                        </tr>
+                        <tr title="certificates">
+                            <td>
+                                <label class="checkbox" for="certificates">
+                                    <input type="checkbox" name="notificationModules" ng-model="notificationModules[5]" value="certificates" />
+                                    Certificates
+                                </label>
+                            </td>
+                            <td>
+                                <div ng-dropdown-multiselect="" options="sectorCertificates" selected-model="selectedSectorCertificates" extra-settings="sectorSettings"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <div class="modal-footer">
+        <center>
+            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">CANCEL</button>
+            <button class="btn btn-primary" type="button" ng-click="SaveSettings()">SAVE</button>
+        </center>
+    </div>
+</script>
+
+<!--Add Favorites-->
+<script type="text/ng-template" id="addFavorites.html">
+    <div class="modal-header">
+        <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+        <h4 class="modal-title">ADD FAVORITE</h4>
+        <i class="fa fa-times pull-right close" ng-click="closeDialog()"></i>
+    </div>
+    <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
+        <form class="float-none" name="fileForm" novalidate>
+            <div class="col-sm-12  float-none">
+                <div class="form-group custom-row-inline  col-sm-12 float-none">
+                    <div class="row">
+                        <label>Save search criteria as a favorite.</label>
+                    </div>
+                    <div class="input-group">
+                        <label>Favorite's Name:</label>
+                        <input type="text" class="form-control" placeholder="Type favorite's name" ng-model="favorite" />
+                    </div>
+                    <label class="required" ng-show="isExisting">Favorite name already existing.</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" type="button" ng-click="closeDialog()">Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="saveFile()" ng-disabled="favorite.length === 0">Save</button>
+
+    </div>
+</script>
+
+<!--Manage Favorites-->
+<script type="text/ng-template" id="manageFavorites.tpl.html">
+    <div class="modal-header">
+        <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+        <h4 class="modal-title">ALL FAVORITES</h4>
+        <i class="fa fa-times pull-right close" ng-click="closeDialog()"></i>
+    </div>
+    <div class="modal-body">    
+        <div class="row">
+            <div class="col-md-9">
+                <div ui-grid="favoritesGrid" ui-grid-selection ui-grid-cellnav ui-grid-edit ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column style="height: 250px; width: 100%; line-height: 1.4285;"></div>
+            </div>
+            <div class="col-md-3" style="vertical-align: middle">
+                <div style="vertical-align: middle">
+                    <button class="btn btn-default" ng-click="moveUp()" style="width: 100px;">Move Up</button><br />
+                    <button class="btn btn-default" ng-click="moveDown()" style="width: 100px;">Move Down</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" type="button" ng-click="closeDialog()">Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="saveFavorites()">Save</button>
+
+    </div>
+</script>

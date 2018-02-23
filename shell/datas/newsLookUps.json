@@ -1,0 +1,114 @@
+﻿{
+  "Data": {
+    "SectorRegulated": [
+      {
+        "SectorRegulatedId": "1",
+        "SectorRegulatedName": "Wireless"
+      },
+
+      {
+        "SectorRegulatedId": "2",
+        "SectorRegulatedName": "Safety"
+      }
+    ],
+
+    "Category": [
+      {
+        "CategoryId": "1",
+        "CategoryName": "Regulation"
+      },
+      {
+        "CategoryId": "2",
+        "CategoryName": "Category 2"
+      }
+    ],
+
+    "Regions": [
+      {
+        "RegionId": "1",
+        "RegionName": "Region 1"
+      },
+      {
+        "RegionId": "2",
+        "RegionName": "Region 2"
+      }
+    ],
+
+    "RegionalEconomicUnion": [
+      {
+        "RegionalEconomicUnionId": "1",
+        "RegionalEconomicUnionName": "Regional Economic Union 1"
+      },
+      {
+        "RegionalEconomicUnionId": "2",
+        "RegionalEconomicUnionName": "Regional Economic Union 2"
+      }
+    ],
+
+    "Countries": [
+      {
+        "CountryId": "1",
+        "CountryName": "Country 1"
+      },
+      {
+        "CountryId": "2",
+        "CountryName": "Country 2"
+      }
+    ],
+
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "1",
+        "ComplianceProgramName": "Compliance Program 1"
+      },
+      {
+        "ComplianceProgramId": "2",
+        "ComplianceProgramName": "Compliance Program 2"
+      }
+    ],
+
+    "FrequencyAndTechnology": [
+      {
+        "FrequencyAndTechnologyId": "1",
+        "FrequencyAndTechnologyName": "Frequency and Technology 1"
+      },
+      {
+        "FrequencyAndTechnologyId": "2",
+        "FrequencyAndTechnologyName": "Frequency and Technology 2"
+      }
+    ],
+
+    "ProductType": [
+      {
+        "ProductTypeId": "1",
+        "ProductTypeName": "Product Type 1"
+      },
+      {
+        "ProductTypeId": "2",
+        "ProductTypeName": "Product Type 2"
+      }
+    ],
+
+    "DocumentType": [
+      {
+        "DocumentTypeId": "1",
+        "DocumentTypeName": "Document Type 1"
+      },
+      {
+        "DocumentTypeId": "2",
+        "DocumentTypeName": "Document Type 2"
+      }
+    ],
+
+    "Source": [
+      {
+        "SourceId": "1",
+        "SourceName": "Source 1" 
+      },
+      {
+        "SourceId": "2",
+        "SourceName": "Source 2" 
+      }
+    ]
+  }
+}

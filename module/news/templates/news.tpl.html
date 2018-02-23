@@ -1,0 +1,992 @@
+﻿<div>
+    <script type="text/ng-template" id="newsAddEditDialog.html">
+        <!--Add News-->
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+            <p><small>*Marked fields are required</small></p>
+        </div>
+        <!--<smi-modal-tabs datasource="tabs"></smi-modal-tabs>-->
+        <div id="modalTablContainer">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="pull-right" style="margin-right:8px">
+                    <a>
+                        <label for="language">
+                            Language:
+                        </label>
+                        <select ng-model="selectedLanguage">
+                            <option ng-repeat="language in languageList"
+                                    value="{{language.CultureTypeId}}">
+                                {{language.CultureTypeDesc}}
+                            </option>
+                        </select>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-body" style="line-height:2;">
+            <div class="alert alert-danger shell-alert" ng-hide="!showErrors">
+                Please fill up all the required fields
+            </div>
+            <div class="alert alert-danger shell-alert" ng-hide="!ArticleErrors">
+                Only JPG/JPEG or PNG file is acceptable
+            </div>
+            <form class="float-none" name="newsForm">
+                <div class="container-fluid">
+                    <div class="col-md-12 col-lg-12" style="padding: 0px;">
+                        <div class="col-md-7 col-lg-7" style="padding-left: 0px;">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-2 col-lg-2 {{newsForm.title.$error.required && showErrors ? 'required': ''}}">
+                                        <label for="txtTitle"><span class="required">*</span><b>Title:</b></label>
+                                        <span ng-show="newsForm.title.$error.required && showErrors"
+                                              class="required fa fa-exclamation-circle"
+                                              uib-popover="Title is Required"
+                                              popover-trigger="mouseenter"
+                                              popover-placement="right"></span>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-10 col-lg-10 {{newsForm.title.$error.required && showErrors ? 'required': ''}}">
+                                        <input type="text" class="form-control" id="txtTitle" name="title" ng-model="newsItem.Title" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group {{newsForm.summary.$error.required && showErrors ? 'required': ''}}">
+                                <label for="txtSummary"><span class="required">*</span><b>Summary:</b></label>
+                                <span ng-show="newsForm.summary.$error.required && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Summary is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <textarea class="form-control" rows="4" id="txtSummary" name="summary" ng-model="newsItem.Summary" required></textarea>
+                            </div>
+
+                            <div class="form-group {{newsForm.details.$error.required && showErrors ? 'required': ''}}">
+                                <label for="txtDetails"><span class="required">*</span><b> Detail: </b></label>
+                                <span ng-show="newsForm.details.$error.required && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Details are Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <textarea id="txtDetails" name="details" ui-tinymce="tinymceOptions" ng-model="newsItem.Details" required></textarea>
+                                <br />
+                                <!--{{newsItem.Details}}-->
+                                <!--<div ng-bind-html="tinymceModel"></div>-->
+                            </div>
+
+                            <div class="form-group">
+                                <label><b> Article Picture:</b></label><br />
+                                <!--<input type="file"  /> &nbsp;-->
+                                <div class="input-group pull-left" style="width: 80%;">
+                                    <input type="text" class="form-control" placeholder="Upload Image File" value="{{articlePicture.name}}" readonly>
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;Browse&hellip; 
+                                            <input type="file" id="articlePicture" fileread="articlePicture" modified="isAPModified" style="display: none;" multiple>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="pull-right" style="width: 20%;">
+                                    <button type="button" class="btn btn-default" style="background: #8c8c8c; color: white;" ng-click="RemovePicture()">
+                                        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;&nbsp;Remove
+                                    </button>
+                                </div>
+                            </div>
+                            <br />
+
+                            <div class="form-group">
+                                <label><b> Image Caption: </b></label><br />
+                                <input type="text" class="form-control" ng-model="newsItem.ImageCaption" max="100" />
+                            </div>
+
+                            <div class="form-group">
+                                <label><b> Note: </b></label><br />
+                                <input type="text" class="form-control" ng-model="newsItem.Note" />
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-5 col-lg-5" style="border-style: dotted; padding-bottom: 10px; margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label for="dtpEffectiveDate" class="control-label">Effective Date:</label>
+                                <div>
+                                    <input id="dtpEffectiveDate" type="text" name="effectiveDate" kendo-date-picker
+                                           k-format="'dd MMM yyyy'"
+                                           placeholder="DD MMM YYYY"
+                                           style="width: 100%;"
+                                           ng-model="newsItem.EffectiveDateString"
+                                           k-ng-model="newsItem.EffectiveDate"
+                                           k-max="newsItem.EffectiveDateMaxDate"
+                                           k-rebind="newsItem.EffectiveDateMaxDate"
+                                           k-on-change="FromDateChanged()" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group {{(ValidateExpirationDate()) && showErrors ? 'required': ''}}">
+                                <label for="dtpExpirationDate" class="control-label"><span class="required">*</span>Expiration Date:</label>
+                                <span ng-show="ValidateExpirationDate() && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="{{validateExpirationDateMessage}}"
+                                      popover-trigger="mouseenter"></span>
+                                <div>
+                                    <input id="dtpExpirationDate" type="text" name="expirationDate" kendo-date-picker
+                                           style="width: 100%;"
+                                           k-format="'dd MMM yyyy'"
+                                           placeholder="DD MMM YYYY"
+                                           k-ng-model="newsItem.ExpirationDate"
+                                           ng-model="newsItem.ExpirationDateString"
+                                           k-min="newsItem.ExpirationDateMinDate"
+                                           k-rebind="newsItem.ExpirationDateMinDate"
+                                           k-on-change="ToDateChanged()" />
+                                </div>
+                            </div>
+
+                            <div class="form-group {{(selectedSector.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpSectorRegulated"><span class="required">*</span><b>Regulatory Category:</b></label>
+                                <span ng-show="(selectedSector.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Regulatory Category is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <div id="drpSectorRegulated" ng-dropdown-multiselect="" options="sectors" selected-model="selectedSector" extra-settings="multiselectSettings" class="multi-Select"></div>
+                                <!--<select id="drpSectorRegulated"
+                                        name="sectorRegulated"
+                                        ng-model="selectedSector"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="sectorRegulated in sectorRegulatedList" value="{{sectorRegulated.SectorRegulatedId}}">{{sectorRegulated.SectorRegulatedName}}</option>
+                                </select>-->
+                            </div>
+
+                            <div class="form-group {{(selectedCategory.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpCategory"><span class="required">*</span><b>Category:</b></label>
+                                <span ng-show="(selectedCategory.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Category is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <select id="drpCategory"
+                                        name="category"
+                                        ng-model="selectedCategory"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="category in categoryList" value="{{category.ModuleId}}">{{category.ModuleName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group {{(selectedSource.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpSource"><span class="required">*</span><b>News Source:</b></label>
+                                <span ng-show="(selectedSource.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Source is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <select id="drpSource"
+                                        name="source"
+                                        ng-model="selectedSource"
+                                        class="form-control">
+                                    <option ng-repeat="source in sourceList" value="{{source.NewSourceId}}">{{source.NewSourceDescription}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group {{(selectedRegion.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpRegion"><span class="required">*</span><b>Region:</b></label>
+                                <span ng-show="(selectedRegion.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Region is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <select id="drpRegion"
+                                        name="region"
+                                        ng-model="selectedRegion"
+                                        class="form-control"
+                                        ng-change="LoadCountry()"
+                                        required>
+                                    <option ng-repeat="region in regionList" value="{{region.RegionId}}">{{region.RegionName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="drpRegionalEU"><b>Regional Economic Union:</b></label>
+                                <br />
+                                <select id="drpRegionalEU"
+                                        name="regionalEU"
+                                        ng-model="selectedRegionalEU"
+                                        class="form-control">
+                                    <option ng-repeat="regionalEconomicUnion in regionalEconomicUnionList" value="{{regionalEconomicUnion.CountryTradeGroupId}}">{{regionalEconomicUnion.Name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group {{(selectedCountry.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpCountry"><span class="required">*</span><b>Countries:</b></label>
+                                <span ng-show="(selectedCountry.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Country is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <div id="drpCountry" ng-dropdown-multiselect="" options="countries" selected-model="selectedCountry" extra-settings="multiselectSettings" class="multi-Select"></div>
+                                <!--<select id="drpCountry"
+                                        name="country"
+                                        ng-model="selectedCountry"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="country in countryList" value="{{country.CountryId}}">{{country.CountryName}}</option>
+                                </select>-->
+                            </div>
+
+                            <div class="form-group {{(selectedComplianceProgram.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpComplianceProgram"><span class="required">*</span><b>Compliance Program:</b></label>
+                                <span ng-show="(selectedComplianceProgram.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Compliance Program is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <div id="drpComplianceProgram" ng-dropdown-multiselect="" options="compliancePrograms" selected-model="selectedComplianceProgram" extra-settings="multiselectSettings" class="multi-Select"></div>
+                                <!--<select id="drpCertificationProgram"
+                                        name="certificationProgram"
+                                        ng-model="selectedCertificationProgram"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="certificationProgram in certificationProgramList" value="{{certificationProgram.ComplianceProgramId}}">{{complianceProgram.ComplianceProgramName}}</option>
+                                </select>-->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="drpFrequencyTechnology"><b>Frequency and Technology:</b></label>
+                                <br />
+                                <div id="drpFrequencyTechnology" ng-dropdown-multiselect="" options="freqTech" selected-model="selectedFrequencyTechnology" extra-settings="multiselectSettings" class="multi-Select"></div>
+                                <!--<select id="drpFrequencyTechnology"
+                                        name="frequencyTechnology"
+                                        ng-model="selectedFrequencyTechnology"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="frequencyTechnology in frequencyTechnologyList" value="{{frequencyTechnology.FrequencyTechnologyId}}">{{frequencyTechnology.FrequencyTechnologyName}}</option>
+                                </select>-->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="drpProductType"><b>Product Type:</b></label>
+                                <br />
+                                <div id="drpProductType" ng-dropdown-multiselect="" options="productTypes" selected-model="selectedProductType" extra-settings="multiselectSettings" class="multi-Select"></div>
+                                <!--<select id="drpProductCategory"
+                                        name="productCategory"
+                                        ng-model="selectedProductCategory"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="productCategory in productCategoryList" value="{{productType.PeoductTypeId}}">{{productType.ProductTypeName}}</option>
+                                </select>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12" id="dvSelectedRefiner" style="padding-left: 0px;">
+                        <b>Existing Evidence :</b>
+                        <span ng-hide="evidences.length == 0" ng-repeat="doc in evidences" style="line-height:1.5">
+                            <a href="" ng-click="openEvidenceDocument(doc)">{{doc.Filename}}</a>
+                            <i class="fa fa-times" ng-click="removeEvidence(doc)"></i>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label for="drpCategory"><b>Source:</b></label>
+                            </div>
+                            <div class="col-md-9 col-lg-9">
+                                <select id="drpCategory"
+                                        name="category"
+                                        ng-model="evidenceSelectedSource"
+                                        class="form-control">
+                                    <option ng-repeat="source in evidenceSourceList" value="{{source.SourceId}}">{{source.SourceName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label for="dtpUpdateDate" class="control-label">Update Date:</label>
+                            </div>
+                            <div class="col-md-9 col-lg-9">
+                                <input id="dtpUpdateDate"
+                                       type="text"
+                                       name="updateDate"
+                                       kendo-date-picker
+                                       k-format="'dd MMM yyyy'"
+                                       placeholder="DD MMM YYYY"
+                                       style="width: 100%;"
+                                       ng-model="newsItem.UpdateDate"
+                                       k-ng-model="UpdateDate"
+                                       k-max="UpdateDateMaxDate"
+                                       k-rebind="UpdateDateMaxDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label><b> Attach Evidence Documents:</b></label>
+                            </div>
+                            <div class="col-md-9 col-lg-9">
+                                <div class="input-group pull-left" style="width: 100%;">
+                                    <input type="text" class="form-control" placeholder="Upload Evidence Document" value="{{evidenceDocument.name}}" readonly>
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;Browse&hellip;
+                                            <input type="file" id="articlePicture" fileread="evidenceDocument" modified="isAPModified" style="display: none;" multiple>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="drpCategory"><b>Document Type:</b></label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="drpCategory"
+                                        name="category"
+                                        ng-model="selectedDocumentType"
+                                        class="form-control">
+                                    <option ng-repeat="documentType in documentTypeList" value="{{documentType.DocumentTypeId}}">{{documentType.DocumentTypeName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <div class="row">
+                            <!--<div class="col-md-2">
+                <button class="btn btn-primary" ng-disabled="isAdd" ng-click="addAnotherEvidence()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Another Evidence Item</button>
+            </div>-->
+                            <div class="col-md-2 pull-right" style="margin-right: 10px;">
+                                <button class="btn btn-primary" ng-disabled="isAdd" ng-click="applyEvidence()">Apply Evidence</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <center>
+                <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Cancel</button>
+                <button class="btn btn-primary" type="button" ng-click="Save((newsForm.$invalid))">{{buttonTitle}}</button>
+            </center>
+        </div>
+    </script>
+
+    <!--AddFavorite-->
+    <script type="text/ng-template" id="NewsAddFavoriteDialog.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <!--<p><small>*Marked fields are required</small></p>-->
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+        </div>
+        <div class="modal-body" style="line-height:2;">
+            <div class="alert alert-danger shell-alert" ng-hide="!showErrors">
+                Please fill up all the required fields
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Save search criteria as a favorite.</label>
+
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="form-group">
+                                <label for="favoritename">Favorite's Name</label>
+                                <input type="text" class="form-control" placeholder="Type favorite's name" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <center>
+                <button class="btn btn-warning" type="button" ng-click="CloseDialog()">CANCEL</button>
+                <button class="btn btn-primary" type="button" ng-click="Save((certificateForm.$invalid))">ADD</button>
+            </center>
+        </div>
+    </script>
+
+    <!--ExportToPDFConfirmation-->
+    <script type="text/ng-template" id="NewsExportToPDFDialog.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <!--<p><small>*Marked fields are required</small></p>-->
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+        </div>
+        <div class="modal-body" style="line-height:2;">
+            <div class="row">
+                <div class="col-md-12">
+                    <center>
+                        <label>The selected results will be exported to PDF.</label>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <center>
+                <button class="btn btn-warning" type="button" ng-click="CloseDialog()">CANCEL</button>
+                <button class="btn btn-primary" type="button" ng-click="ExportNewsToPDF()">OK</button>
+            </center>
+        </div>
+    </script>
+
+    <!--News Title Preview-->
+    <script type="text/ng-template" id="NewsTitlePreview.html">
+        <div id="dvSelectedRefiner">
+            <b>SELECTED REFINER :</b>
+            <span ng-hide="selectedRefiners.length == 0" ng-repeat="refiner in selectedRefiners">
+                {{refiner.Parent}} | {{ refiner.IsDateRange ? (refiner.Items[0].Value | date:'dd MMM yyyy').toString() + ' to ' + (refiner.Items[1].Value | date:'dd MMM yyyy').toString() :  refiner.Value}}
+                <i class="fa fa-times" ng-click="removeRefiner(refiner)"></i>
+            </span>
+        </div>
+
+        <div class="row col-lg-12" style="padding-right:0px">
+            <div ui-view="tabContainer"></div>
+            <div class="smi-toolbar row col-lg-4" id="rightButtonNews">
+                <!--<button class="btn btn-primary" type="button" ng-click="AddFavoriteNews()"><i class="fa fa-plus"></i>ADD FAVORITES</button>-->
+                <button class="btn btn-primary" type="button" ng-click="AddNews()" ng-if="canAddNews"><i class="fa fa-plus"></i>ADD NEWS</button>
+                <button class="btn btn-primary" type="button" ng-click="ExportNewsToPDF()" ng-disabled="!(news|filter:{IsChecked:true}).length"><i class="fa fa-download"></i>EXPORT NEWS</button>
+                <!--<button class="btn btn-primary" type="button" ng-click="WorkflowTracking()"><i class="fa fa-plus"></i>WORKFLOW TRACKING</button>-->
+                <!--<button class="btn btn-primary" type="button" ng-click="Preferences()">PREFERENCES</button>-->
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <hr style="margin: 0px 0px 0px 0px;" width="100%" />
+        <div style="max-height:639px; overflow-y:scroll; overflow-x:hidden;" load-more-on-scroll-down on-scroll="LoadMore()" scroll-threshold="200" time-threshold="600">
+            <div ng-repeat="detailednews in news | limitTo : newsLimit" id="{{detailednews.ElementId}}">
+                <!--content page-->
+                <div class="row" style="padding:20px;">
+                    <!--<div ng-class="$even ? 'even col-md-9 col-lg-9' : 'odd col-md-9 col-lg-9'">-->
+                    <div ng-class="{'col-md-12 col-lg-12' : detailednews.Image == 'data:image/png;base64,bnVsbA=='
+                     , 'odd col-md-9 col-lg-9' : ($index+1) % 2 == 0 && detailednews.Image != 'data:image/png;base64,bnVsbA=='
+                     , 'even col-md-9 col-lg-9' : ($index+1) % 2 != 0 && detailednews.Image != 'data:image/png;base64,bnVsbA=='}">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <label for="cb" class="pure-checkbox">
+                                    <input type="checkbox" ng-model="detailednews.IsChecked" id="cbxTitle" /> &nbsp;
+                                    <label id="titleFontStyle">{{detailednews.Title}}</label>
+                                </label>
+                            </div>
+                            <div class="col-md-6 col-lg-6" style="word-break:break-all;">
+                                <p id="rightTextAlignNews">
+                                    <small>
+                                        Posted: {{detailednews.Posted | date:'dd MMM yyyy' }} | Regulatory Category: <span>{{detailednews.SectorRegulatedName}}</span> | Country: <span>{{detailednews.CountryName}}</span>
+                                        <br />
+                                        Compliance Program: <span>{{detailednews.ComplianceProgramName}}</span> | Category: {{detailednews.Category}} | <span class="glyphicon glyphicon-user"></span> {{detailednews.PostedBy}}
+                                        <br />
+                                        <button class="btn btn-primary" type="button" ng-click="EditNews(detailednews.NewsId)" id="editButton" ng-if="canAddNews">EDIT</button>
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                        <br />
+                        <div ng-bind-html="detailednews.Details"></div>
+                    </div>
+
+                    <!--photos-->
+                    <div ng-show="detailednews.Image != 'data:image/png;base64,bnVsbA=='" ng-class="$even ? 'pull-right' : 'pull-left'">
+                        <span ng-show="detailednews.Image == 'data:image/png;base64,bnVsbA=='" class="glyphicon glyphicon-picture">
+                        </span>
+                        <img class="img-responsive" ng-src="{{detailednews.Image}}" id="imageSize" />
+                        <div id="captions">
+                            <small>
+                                {{detailednews.ImageCaption}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <hr width="100%" />
+            </div>
+        </div>
+
+        <div ng-include src="modalTemplateUrl"></div>
+    </script>
+
+    <!--WORKFLOW VIEW DETAILS-->
+    <script type="text/ng-template" id="newsWorkflowDetails.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+            <p><small>*Marked fields are required</small></p>
+        </div>
+        <!--<smi-modal-tabs datasource="tabs"></smi-modal-tabs>-->
+        <div id="modalTablContainer">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="pull-right" style="margin-right:8px">
+                    <a>
+                        <label for="language">
+                            Language:
+                        </label>
+                        <select ng-model="selectedLanguage" ng-change="isEnable(selectedLanguage)">
+                            <option ng-repeat="language in languageList"
+                                    value="{{language.CultureTypeId}}">
+                                {{language.CultureTypeDesc}}
+                            </option>
+                        </select>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-body" style="line-height:2;">
+            <div id="approveRejectNull" class="alert alert-danger shell-alert" ng-hide="!showErrors">
+                Please select if APPROVE or REJECT
+            </div>
+            <div id="newsRejectEmpty" class="alert alert-danger shell-alert" ng-hide="!RemarksError">
+                For REJECT, Remarks field is required
+            </div>
+            <form class="float-none" name="newsForm">
+                <div class="container-fluid">
+                    <div class="col-md-12 col-lg-12" style="padding: 0px;">
+                        <div class="col-md-7 col-lg-7" style="padding-left: 0px;">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-2 col-lg-2 {{newsForm.title.$error.required && showErrors ? 'required': ''}}">
+                                        <label for="txtTitle"><span class="required">*</span><b>Title:</b></label>
+                                        <span ng-show="newsForm.title.$error.required && showErrors"
+                                              class="required fa fa-exclamation-circle"
+                                              uib-popover="Title is Required"
+                                              popover-trigger="mouseenter"
+                                              popover-placement="right"></span>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-10 col-lg-10 {{newsForm.title.$error.required && showErrors ? 'required': ''}}">
+                                        <input type="text" class="form-control" id="txtTitle" name="title" ng-model="newsItem.Title" required ng-disabled="isDisabled"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group {{newsForm.summary.$error.required && showErrors ? 'required': ''}}">
+                                <label for="txtSummary"><span class="required">*</span><b>Summary:</b></label>
+                                <span ng-show="newsForm.summary.$error.required && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Summary is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <textarea class="form-control" rows="4" id="txtSummary" name="summary" ng-model="newsItem.Summary" required ng-disabled="isDisabled"></textarea>
+                            </div>
+
+                            <div class="form-group {{newsForm.details.$error.required && showErrors ? 'required': ''}}">
+                                <label for="txtDetails"><span class="required">*</span><b> Detail: </b></label>
+                                <span ng-show="newsForm.details.$error.required && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Details are Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <textarea id="txtDetails" name="details" ui-tinymce="tinymceWorkflowOptions" ng-model="newsItem.Details" required ng-disabled="isDisabled"></textarea>
+                                <br />
+                                <!--{{newsItem.Details}}-->
+                                <!--<div ng-bind-html="tinymceModel"></div>-->
+                            </div>
+
+                            <div class="form-group">
+                                <label><b> Article Picture:</b></label><br />
+                                <!--<input type="file"  /> &nbsp;-->
+                                <div class="input-group pull-left" style="width: 80%;">
+                                    <input type="text" class="form-control" placeholder="Upload Image File" value="{{articlePicture.name}}" readonly>
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-primary" ng-disabled="isApproverReview">
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;Browse&hellip;
+                                            <input type="file" id="articlePictureWorkFlow" fileread="articlePicture" modified="isAPModified" style="display: none;" multiple ng-disabled="isApproverReview">
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="pull-right" style="width: 20%;">
+                                    <button type="button" class="btn btn-default" style="background: #8c8c8c; color: white;" ng-click="RemovePicture()" ng-disabled="isApproverReview">
+                                        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>&nbsp;&nbsp;Remove
+                                    </button>
+                                </div>
+                            </div>
+                            <br />
+
+                            <div class="form-group">
+                                <label><b> Image Caption: </b></label><br />
+                                <input type="text" class="form-control" ng-model="newsItem.ImageCaption" max="100" ng-disabled="isDisabled"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label><b> Note: </b></label><br />
+                                <input type="text" class="form-control" ng-model="newsItem.Note" ng-disabled="isDisabled"/>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-5 col-lg-5" style="border-style: dotted; padding-bottom: 10px; margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label for="dtpEffectiveDate" class="control-label">Effective Date:</label>
+                                <span ng-show="ValidateEffectiveDate()"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="{{validateEffectiveDateMessage}}"
+                                      popover-trigger="mouseenter"></span>
+                                <div>
+                                    <input id="dtpEffectiveDate" type="text" name="effectiveDate" kendo-date-picker
+                                           k-format="'dd MMM yyyy'"
+                                           placeholder="DD MMM YYYY"
+                                           style="width: 100%;"
+                                           ng-model="newsItem.EffectiveDateString"
+                                           k-ng-model="newsItem.EffectiveDate"
+                                           k-max="newsItem.EffectiveDateMaxDate"
+                                           k-rebind="newsItem.EffectiveDateMaxDate"
+                                           k-on-change="FromDateChanged()" ng-disabled="isApproverReview"/>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group {{(ValidateExpirationDate()) && showErrors ? 'required': ''}}">
+                                <label for="dtpExpirationDate" class="control-label"><span class="required">*</span>Expiration Date:</label>
+                                <span ng-show="ValidateExpirationDate() && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="{{validateExpirationDateMessage}}"
+                                      popover-trigger="mouseenter"></span>
+                                <div>
+                                    <input id="dtpExpirationDate" type="text" name="expirationDate" kendo-date-picker
+                                           style="width: 100%;"
+                                           k-format="'dd MMM yyyy'"
+                                           placeholder="DD MMM YYYY"
+                                           k-ng-model="newsItem.ExpirationDate"
+                                           ng-model="newsItem.ExpirationDateString"
+                                           k-min="newsItem.ExpirationDateMinDate"
+                                           k-rebind="newsItem.ExpirationDateMinDate"
+                                           k-on-change="ToDateChanged()" ng-disabled="isApproverReview"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group {{(selectedSector.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpSectorRegulated"><span class="required">*</span><b>Regulatory Category:</b></label>
+                                <span ng-show="(selectedSector.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Regulatory Category is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <div id="drpSectorRegulated" ng-dropdown-multiselect="" options="sectors" selected-model="selectedSector" extra-settings="multiselectSettings" class="multi-Select" ng-dropdown-multiselect-disabled="isMultiSelectDisabled"></div>
+                                <!--<select id="drpSectorRegulated"
+                                        name="sectorRegulated"
+                                        ng-model="selectedSector"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="sectorRegulated in sectorRegulatedList" value="{{sectorRegulated.SectorRegulatedId}}">{{sectorRegulated.SectorRegulatedName}}</option>
+                                </select>-->
+                            </div>
+
+                            <div class="form-group {{(selectedCategory.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpCategory"><span class="required">*</span><b>Category:</b></label>
+                                <span ng-show="(selectedCategory.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Category is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <select id="drpCategory"
+                                        name="category"
+                                        ng-model="selectedCategory"
+                                        class="form-control"
+                                        required ng-disabled="isApproverReview">
+                                    <option ng-repeat="category in categoryList" value="{{category.ModuleId}}">{{category.ModuleName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group {{(selectedSource.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpSource"><span class="required">*</span><b>News Source:</b></label>
+                                <span ng-show="(selectedSource.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Source is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <select id="drpSource"
+                                        name="source"
+                                        ng-model="selectedSource"
+                                        class="form-control" ng-disabled="isApproverReview">
+                                    <option ng-repeat="source in sourceList" value="{{source.NewSourceId}}">{{source.NewSourceDescription}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group {{(selectedRegion.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpRegion"><span class="required">*</span><b>Region:</b></label>
+                                <span ng-show="(selectedRegion.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Region is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <select id="drpRegion"
+                                        name="region"
+                                        ng-model="selectedRegion"
+                                        class="form-control"
+                                        ng-change="LoadCountry()"
+                                        required ng-disabled="isApproverReview">
+                                    <option ng-repeat="region in regionList" value="{{region.RegionId}}">{{region.RegionName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="drpRegionalEU"><b>Regional Economic Union:</b></label>
+                                <br />
+                                <select id="drpRegionalEU"
+                                        name="regionalEU"
+                                        ng-model="selectedRegionalEU"
+                                        class="form-control"
+                                        ng-disabled="isApproverReview">
+                                    <option ng-repeat="regionalEconomicUnion in regionalEconomicUnionList" value="{{regionalEconomicUnion.CountryTradeGroupId}}">{{regionalEconomicUnion.Name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group {{(selectedCountry.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpCountry"><span class="required">*</span><b>Countries:</b></label>
+                                <span ng-show="(selectedCountry.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Country is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <div id="drpCountry" ng-dropdown-multiselect="" options="countries" selected-model="selectedCountry" extra-settings="multiselectSettings" class="multi-Select" ng-dropdown-multiselect-disabled="isMultiSelectDisabled"></div>
+                                <!--<select id="drpCountry"
+                                        name="country"
+                                        ng-model="selectedCountry"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="country in countryList" value="{{country.CountryId}}">{{country.CountryName}}</option>
+                                </select>-->
+                            </div>
+
+                            <div class="form-group {{(selectedComplianceProgram.length == 0) && showErrors ? 'required': ''}}">
+                                <label for="drpComplianceProgram"><span class="required">*</span><b>Compliance Program:</b></label>
+                                <span ng-show="(selectedComplianceProgram.length == 0) && showErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Compliance Program is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <br />
+                                <div id="drpComplianceProgram" ng-dropdown-multiselect="" options="compliancePrograms" selected-model="selectedComplianceProgram" extra-settings="multiselectSettings" class="multi-Select" ng-dropdown-multiselect-disabled="isMultiSelectDisabled"></div>
+                                <!--<select id="drpCertificationProgram"
+                                        name="certificationProgram"
+                                        ng-model="selectedCertificationProgram"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="certificationProgram in certificationProgramList" value="{{certificationProgram.ComplianceProgramId}}">{{complianceProgram.ComplianceProgramName}}</option>
+                                </select>-->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="drpFrequencyTechnology"><b>Frequency and Technology:</b></label>
+                                <br />
+                                <div id="drpFrequencyTechnology" ng-dropdown-multiselect="" options="freqTech" selected-model="selectedFrequencyTechnology" extra-settings="multiselectSettings" class="multi-Select" ng-dropdown-multiselect-disabled="isMultiSelectDisabled"></div>
+                                <!--<select id="drpFrequencyTechnology"
+                                        name="frequencyTechnology"
+                                        ng-model="selectedFrequencyTechnology"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="frequencyTechnology in frequencyTechnologyList" value="{{frequencyTechnology.FrequencyTechnologyId}}">{{frequencyTechnology.FrequencyTechnologyName}}</option>
+                                </select>-->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="drpProductType"><b>Product Type:</b></label>
+                                <br />
+                                <div id="drpProductType" ng-dropdown-multiselect="" options="productTypes" selected-model="selectedProductType" extra-settings="multiselectSettings" class="multi-Select" ng-dropdown-multiselect-disabled="isMultiSelectDisabled"></div>
+                                <!--<select id="drpProductCategory"
+                                        name="productCategory"
+                                        ng-model="selectedProductCategory"
+                                        class="form-control"
+                                        required>
+                                    <option ng-repeat="productCategory in productCategoryList" value="{{productType.PeoductTypeId}}">{{productType.ProductTypeName}}</option>
+                                </select>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12" id="dvSelectedRefiner" style="padding-left: 0px;">
+                        <b>Existing Evidence :</b>
+                        <span ng-hide="evidences.length == 0" ng-repeat="doc in evidences" style="line-height:1.5">
+                            <a href="" ng-click="openEvidenceDocument(doc)">{{doc.Filename}}</a>
+                            <i class="fa fa-times" ng-hide="isEvidenceDisabled" ng-click="removeEvidence(doc)"></i>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label for="drpCategory"><b>Source:</b></label>
+                            </div>
+                            <div class="col-md-9 col-lg-9">
+                                <select id="drpCategory"
+                                        name="category"
+                                        ng-model="evidenceSelectedSource"
+                                        class="form-control"
+                                        ng-disabled="isEvidenceDisabled">
+                                    <option ng-repeat="source in evidenceSourceList" value="{{source.SourceId}}">{{source.SourceName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label for="dtpUpdateDate" class="control-label">Update Date:</label>
+                            </div>
+                            <div class="col-md-9 col-lg-9">
+                                <input id="dtpUpdateDate"
+                                       type="text"
+                                       name="updateDate"
+                                       kendo-date-picker
+                                       k-format="'dd MMM yyyy'"
+                                       placeholder="DD MMM YYYY"
+                                       style="width: 100%;"
+                                       ng-model="newsItem.UpdateDate"
+                                       k-ng-model="UpdateDate"
+                                       k-max="UpdateDateMaxDate"
+                                       k-rebind="UpdateDateMaxDate"
+                                       ng-disabled="isEvidenceDisabled" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label><b> Attach Evidence Documents:</b></label>
+                            </div>
+                            <div class="col-md-9 col-lg-9">
+                                <div class="input-group pull-left" style="width: 100%;">
+                                    <input type="text" class="form-control" placeholder="Upload Evidence Document" value="{{evidenceDocument.name}}" readonly>
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-primary" ng-disabled="isEvidenceDisabled">
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;Browse&hellip;
+                                            <input type="file" id="articlePicture" fileread="evidenceDocument" modified="isAPModified" style="display: none;" multiple ng-disabled="isEvidenceDisabled">
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="drpCategory"><b>Document Type:</b></label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="drpCategory"
+                                        name="category"
+                                        ng-model="selectedDocumentType"
+                                        class="form-control"
+                                        ng-disabled="isEvidenceDisabled">
+                                    <option ng-repeat="documentType in documentTypeList" value="{{documentType.DocumentTypeId}}">{{documentType.DocumentTypeName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <div class="row">
+                            <!--<div class="col-md-2">
+                <button class="btn btn-primary" ng-disabled="isAdd" ng-click="addAnotherEvidence()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Another Evidence Item</button>
+            </div>-->
+                            <div class="col-md-2 pull-right" style="margin-right: 10px;">
+                                <button class="btn btn-primary" ng-disabled="isAdd" ng-click="applyEvidence()">Apply Evidence</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12" ng-if="coordinatorAdmin">
+                        <div class="radio">
+                            <label>
+                                <b>
+                                    <input ng-change="statusChange(value)" ng-model="value" type="radio" name="rdoResult" value="approve">
+                                    Approve
+                                </b>
+                            </label>
+                        </div>
+                            <div class="radio">
+                                <div class="col-md-1" style="padding:0px;">
+                                    <label>
+                                        <b>
+                                            <input ng-change="statusChange(value)" ng-model="value" type="radio" name="rdoResult" value="reject">
+                                            Reject
+                                        </b>
+                                    </label>
+                                </div>
+                                <div class="col-md-11">
+                                    <textarea ng-if="statusRejected" class="form-control" rows="4" ng-model="newsItem.Remarks" maxlength="255"></textarea>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <center>
+                <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Close</button>
+                <button ng-if="canSubmitItem" ng-disabled="isButtonDisabled" class="btn btn-primary" type="button" ng-click="Save()">{{buttonTitle}}</button>
+            </center>
+        </div>
+    </script>
+
+    <!--FIELD CHANGES (ORIGINAL AND UPDATED INFORMATION)-->
+    <script type="text/ng-template" id="workflowFieldChanges.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <i class="fa fa-times pull-right close" ng-click="closeDialog()"></i>
+        </div>
+        <div class="modal-body">
+            <form class="float-none" name="fileForm" novalidate>
+                <div class="col-sm-12  float-none">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Original Information</h5>
+                            <div class="panel panel-default">
+                                <ul class="list-group">
+                                    <li class="list-group-item" ng-repeat="info in row.WorkflowOriginal track by $index">{{info}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Updated Information</h5>
+                            <div class="panel panel-default">
+                                <ul class="list-group">
+                                    <li class="list-group-item" ng-repeat="info in row.WorkflowUpdated track by $index">{{info}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="closeDialog()">Close</button>
+        </div>
+    </script>
+</div>

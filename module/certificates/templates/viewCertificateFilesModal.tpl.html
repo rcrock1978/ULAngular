@@ -1,0 +1,40 @@
+﻿
+<div >
+    <script type="text/ng-template" id="viewCertificateFilesDialog.html">
+        <div class="modal-header">
+            <h4 class="modal-title" style="font-size:14px;font-weight:bold">{{modalTitle}}</h4>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+        </div>
+        <div class="modal-body">
+            <div class="row float-none col-lg-12" id="certificate-view-document">
+                <div class="form-group custom-row col-sm-12 float-none no-padding">
+                    <div class="col-sm-3">
+                        <label class="control-label">Primary Document:</label>
+
+                    </div>
+                    <div class="col-sm-9">
+                        <ul style="padding-left:50px">
+                            <li ng-repeat="file in primaryFiles.files"><a ng-click="Download(file,'PrimaryFiles', primaryFiles.certificateItemId)">{{file}}</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="form-group custom-row col-sm-12 float-none no-padding">
+                    <div class="col-sm-3">
+                        <label class="control-label">Related Documents:</label>
+
+                    </div>
+                    <div class="col-sm-9">
+                        <ul style="padding-left:50px">
+                            <li ng-repeat="file in relatedFiles.files"><a ng-click="Download(file,'RelatedFiles', relatedFiles.certificateItemId)">{{file}}</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </script>
+
+</div>

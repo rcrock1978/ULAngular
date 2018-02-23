@@ -1,0 +1,9 @@
+﻿<div id="tabContainer">
+    <ul class="nav nav-tabs">
+        <li role="presentation" ng-repeat="module in modules" class="{{module.Selected ? 'active': ''}} {{module.IsEnable ? '':'disabled'}}">
+            <a ng-click="TabClick(module)">{{module.LinkText}}</a>
+        </li>
+    </ul>
+    <!--<div class="tab-content">
+    </div>-->
+</div>

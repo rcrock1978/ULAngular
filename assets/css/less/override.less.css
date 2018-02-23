@@ -1,0 +1,158 @@
+﻿
+.modal-dialog{
+    margin-top:5% !important;
+}
+.modal-content {
+    border-radius:0px !important;
+}
+
+.modal-header{
+    background:@teal;
+    max-height:51px;
+    color:@white;
+    .close{
+           float: right !important;
+            text-align: right;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+            margin-top: -13px;
+            cursor: pointer;
+              &:hover{
+                         font-weight:bold;
+                     }  
+     }
+
+    .icon{
+        float: left;
+        margin-right: 10px;
+        font-size: 15px;
+    }
+
+    p{
+         margin-top: -6px;
+    }
+}
+
+.modal-title{
+   margin-top: -6px;
+    color: white;
+    i{
+         padding:5px;
+     }
+}
+
+.modal-title-confirm{
+    margin-top: -6px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding-top: 9px;
+    i{
+         padding:5px;
+     }
+
+
+}
+
+.modal-confirm-textfield{
+    padding-left: 31px;
+    line-height: 2;
+    font-size: 14px;
+    padding-right: 0px;
+}
+
+.modal-body{
+   min-height: 94px;
+    line-height: 3;
+    max-height:500px;
+    overflow-y:auto;
+   
+}
+
+ .modal-confirm-icon {
+        i {
+          color: #FFD32A;
+            font-size: 56px;
+            border: 1px saddlebrown;
+         }
+    } 
+
+.modal-footer{
+    max-height:51px;
+   padding: 10px;
+   .btn{
+           border-radius:0px !important;
+           min-width:70px !important;
+       }
+}
+
+.modal-dialog{
+    /*margin: 14% auto !important;*/
+}
+
+.modal-sm{
+    width:400px;
+}
+
+.nav-tabs{
+    /*border-bottom:1px solid @gray !important;*/
+    border-bottom:0px !important;
+}
+.btn > i{
+    padding-right: 8px;
+} 
+
+.btn-primary{
+    background-color:@teal !important;
+}
+
+.btn-primary-blue{
+    width: 100%;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+
+    &:hover{
+                color: #fff;
+           }
+}
+
+.btn-warning{
+    background-color:#7D7D7D !important;
+}
+.btn-file{
+    background-color:@teal !important;
+    color:@white;
+    &hover{
+              color:@white;
+            }
+}
+.table>thead>tr>th{
+    background:#F0F0F0;
+    vertical-align: middle;
+    text-align:left;
+    border:1px solid #E8E8E8;
+}
+
+.input-group-btn{
+    btn{
+           color : @teal !important;
+       }
+}
+
+.dropdown-multiselect{
+    width:100%!important;
+    button,ul{
+               width:100% !important;
+           }
+}
+
+.k-picker-wrap .k-input{
+    height:27px !important;
+}
+
+.ui-grid-render-container-body .ui-grid-viewport,.ui-grid-render-container-body .ui-grid-header-viewport{
+    width:auto !important;
+}
+

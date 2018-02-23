@@ -1,0 +1,87 @@
+﻿
+<div ng-controller="r2cEvidenceController">
+        <div class="col-sm-12">
+            
+            <div class="form-group custom-row col-sm-12 r2cContainer">
+                <div class="col-sm-12" id="dvSelectedRefiner">
+                    <b>Existing Evidence :</b>
+                    <span ng-hide="evidences.length == 0" ng-repeat="doc in evidences" style="line-height:1.5">
+                        {{doc.Filename}}
+                        <i class="fa fa-times" ng-click="removeEvidence(doc)"></i>
+                    </span>
+                </div>
+                <div class="col-sm-12 no-padding custom-row">
+                    <div class="col-sm-3">
+                        <label  class="control-label">Source :</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <smi-drop-down datasource="evidenceSource" searchable="true" model="evidenceSelectedSource" onchange="onSeletedSourceChange()"></smi-drop-down>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 no-padding custom-row">
+                    <div class="col-sm-3">
+                        <label class="control-label">Update Date :</label>
+                   </div>
+                    <div class="col-sm-9">
+                        <input type="text" kendo-date-picker onkeydown="return false"
+                               style="width: 100%;"
+                               k-format="'dd MMM yyyy'"
+                               placeholder="DD MMM YYYY"
+                               ng-model="evidenceUpdateDate" />
+                                        <!--ng-model="refiner.Items[0].Items[0].ValueString"
+                          k-ng-model="refiner.Items[0].Items[0].Value"
+                          k-max="refiner.Items[0].Items[0].MaxDate"
+                          k-rebind="refiner.Items[0].Items[0].MaxDate"
+                          k-on-change="FromDateChanged(refiner.Items[0])" />-->
+                    </div>
+                </div>
+                <div class="col-sm-12 no-padding custom-row">
+                    <div class="col-sm-3">
+                        <label><span class="required">*</span>Attach Evidence Document :</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <input type="text" class="form-control custom-read-only" name="primaryFile" value="{{evidenceFile.name}}" required />
+                            <span class="input-group-btn">
+                                <label class="btn btn-default btn-file">
+                                    <i class="fa fa-folder"></i> Browse... <input type="file" id="myFile" fileread="evidenceFile"
+                                                                                  accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                                                                  text/plain, application/pdf, image/*"
+                                                                                  modified="isPFModified" style="display:none">
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <div class="col-sm-12 no-padding custom-row">
+                    <div class="col-sm-3">
+                        <label class="control-label">Document Type :</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <smi-drop-down datasource="evidenceDocumentTypes" searchable="true" model="evidenceSelectedDocumentType" onchange="onSeletedDocChange()"></smi-drop-down>
+                       
+                    </div>
+                   
+                </div>
+            
+                <div class="col-sm-12 no-padding custom-row">
+                    <div class="col-sm-6">
+                        <div class="btn btn-primary" ng-click="AddAnotherEvidence()">
+                            <span class="fa fa-plus"> Add Another Evidence Document</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn btn-primary pull-right" ng-click="SaveEvidence()">
+                            <span>Apply Evidence</span>
+                        </div>
+                    </div>
+                 
+                </div>
+              
+            </div>
+        </div>
+
+</div>

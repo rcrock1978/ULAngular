@@ -1,0 +1,13 @@
+﻿<div>
+    <div class="alert {{type}} shell-alert" role="alert" ng-hide="message.length == 0">
+        <i class="fa fa-times pull-right" style="cursor:pointer" ng-click="close()"></i>
+        <ul ng-hide="!isMultiple">
+            <li ng-repeat="item in message" class="{{item.IsSuccess ? 'green' : 'red' }}" style="list-style-type:none">
+              <i class="fa {{item.IsSuccess ? 'fa-check-circle':'fa-times-circle'}}"></i> {{item.Message}}
+            </li>
+        </ul>
+        {{isMultiple ? '' : message}}      
+    </div>
+</div>
+
+    

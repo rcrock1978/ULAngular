@@ -1,0 +1,16 @@
+﻿<div class="file-uploader">
+    <div class="file-uploader-actions">
+        <label class="btn btn-default btn-file">
+            <i class="fa fa-plus"></i> Add More Files <input type="file" style="display:none" datasource="browsedFiles" multiple>
+        </label>
+        <button class="btn btn-danger" type="button" ng-click="ClearAll()" ng-hide="files.length == 0"><i class="fa fa-trash-o"></i> Clear All</button>
+    </div>
+
+    <div class="file-uploader-items-container">
+        <div ng-repeat="file in files" class="file-uploader-items">
+            <span class="file-icon {{file.fileTypeIcon}}" aria-hidden="true"></span>
+            <span>{{file.name}}</span>
+            <i class="fa fa-trash-o pull-right close-icon" ng-click="Remove(file)" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>

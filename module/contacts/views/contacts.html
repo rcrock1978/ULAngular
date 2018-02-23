@@ -1,0 +1,593 @@
+﻿<!--<style>
+    .nav-tabs > li.active > a {
+        background-color: #eee !important;
+    }
+
+    .nav-tabs > li > a {
+        font-size: 13.5px !important;
+    }
+</style>-->
+<div ng-controller="contactsController">
+    <div id="dvSelectedRefiner">
+        <b>SELECTED REFINER :</b>
+        <span ng-hide="selectedRefiners.length == 0" ng-repeat="refiner in selectedRefiners">
+            {{refiner.Parent}} | {{refiner.Value}}
+            <i class="fa fa-times" ng-click="removeRefiner(refiner)"></i>
+        </span>
+    </div>
+    <div class="row col-lg-12" style="padding-right:0px">
+        <div ui-view="tabContainer" class="row col-lg-9"></div>
+        <div class="smi-toolbar row col-lg-3 no-padding pull-right">
+            <!--<button class="btn btn-primary" type="button" disabled><i class="fa fa-th"></i>Custom View</button>-->
+            <button class="btn btn-primary {{gridSelections.length > 0 ? '':'disabled'}}" type="button" ng-click="downloadToExcel()" ng-disabled="!gridSelections.length > 0"><i class="fa fa-download"></i>Export Results</button>
+        </div>
+    </div>
+
+    <div class="text-align-right">
+        <button class="btn btn-primary" ng-if="isUserContributor" type="button" ng-click="showAddEditWindow()"><i class="fa fa-plus"></i>ADD CONTACT</button>
+        <button class="btn btn-primary" ng-if="isUserContributor" type="button" ng-click="showManageCompaniesWindow()">MANAGE COMPANIES</button>
+    </div>
+    Showing {{contacts.length}} item(s)
+    <div class="page-content">
+        <div ui-grid="contactGrid" style="height:72vh; text-align:left;" ui-grid-selection ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column></div>
+        <div class="grid-loader" ng-hide="!showGridLoader">
+            <i class="fa fa-circle-o-notch fa-spin" area-hidden="true"></i>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+
+    <script type="text/ng-template" id="AddContactDialog.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+            <p><small>*Marked fields are required</small></p>
+        </div>
+        <div class="modal-body" style="max-height: none;">
+            <div class="alert alert-danger shell-alert" ng-hide="!showErrors">
+                Email Address already exists
+            </div>
+            <form class="float-none" name="contactsForm">
+                <div class="col-sm-12 float-none">
+                    <div class="form-group">
+                        <!--1st row-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Regulatory Category:</label>
+                                <div>
+                                    <!--<select id="sectorId" name="sector" class="form-control" ng-model="items.SectorId" required ng-change="validate()" disabled>
+                                        <option value="0"></option>
+                                        <option ng-repeat="sector in Sectors" value="{{sector.CoveredSectorId}}">{{sector.CoveredSector}}</option>
+                                    </select>-->
+                                    <input type="text" class="form-control" ng-model="items.Sector" disabled />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Region:</label>
+                                <div>
+                                    <!--<select id="regionId" name="region" class="form-control" ng-model="items.RegionId" required ng-change="validate()" disabled>
+                                        <option value="0"></option>
+                                        <option ng-repeat="region in Regions" value="{{region.RegionId}}">{{region.RegionName}}</option>
+                                    </select>-->
+                                    <input type="text" class="form-control" ng-model="items.Region" disabled />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Country:</label>
+                                <div>
+                                    <!--<select id="countryId" name="country" class="form-control" ng-model="items.CountryId" required ng-change="validate()" disabled>
+                                        <option value="0"></option>
+                                        <option ng-repeat="country in Countries" value="{{country.CountryItemId}}">{{country.CountryName}}</option>
+                                    </select>-->
+                                    <input type="text" class="form-control" ng-model="items.Country" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <!--2nd row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Organization Type:</label>
+                                <div>
+                                    <!--<select id="organizationType" name="organizationType" class="form-control" ng-model="items.OrganizationType" required ng-change="validate()" disabled>
+                                        <option value="0"></option>
+                                        <option value="1">Person</option>
+                                        <option value="2">Department</option>
+                                    </select>-->
+                                    <input type="text" class="form-control" ng-model="items.OrganizationType" disabled />
+                                </div>
+
+
+                                <!--<div ng-class="{ 'has-error' : contactsForm.name.$invalid && !contactsForm.name.$pristine }">
+                                    <label><a style="color:red;">*</a>Name:</label>
+                                    <input type="text" class="form-control" ng-model="items.Name" required name="name" />
+                                </div>-->
+                            </div>
+                            <div class="col-md-6 {{companyHasErrors === true ? 'required' : ''}}">
+                                <div>
+                                    <label><span style="color:red;" ng-hide="mode == 'edit'">*</span>Company Name:</label>
+                                    <span ng-show="companyHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="Company Name is Required"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <input type="text" name="companyName" class="form-control" ng-change="updateCompany()" ng-model="items.Company" uib-typeahead="company as company.CompanyName for company in GetCompany($viewValue)"
+                                           typeahead-loading="loadingCompanies" typeahead-no-results="noResults" typeahead-on-select="typeAheadSelect($item, $model, $label, $event)" typeahead-min-length="2" required
+                                           ng-disabled="mode == 'edit'" />
+                                    <i ng-show="loadingCompanies" class="glyphicon glyphicon-refresh"></i>
+                                    <div ng-show="noResults">
+                                        <i class="glyphicon glyphicon-remove"></i> No Results Found
+                                    </div>
+                                </div>
+                                <!--<label>Address:</label>
+                                <input type="text" class="form-control" ng-model="items.Address" />-->
+                            </div>
+                        </div>
+                        <!--3rd row-->
+                        <div class="row">
+                            <div class="col-md-4 {{firstnameHasErrors === true ? 'required' : ''}}">
+                                <label><span style="color:red;">*</span>First Name:</label>
+                                <span ng-show="firstnameHasErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="First Name is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.Firstname" required />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 {{lastnameHasErrors === true ? 'required' : ''}}">
+                                <label><span style="color:red;">*</span>Last Name</label>
+                                <span ng-show="lastnameHasErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Last Name is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.Lastname" required />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 {{contactTypeHasErrors === true ? 'required' : ''}}">
+                                <label><span style="color:red;">*</span>Contact Type</label>
+                                <span ng-show="contactTypeHasErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Contact Type is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <div>
+                                    <select class="form-control" ng-model="items.ContactTypeId" required>
+                                        <option value="0"></option>
+                                        <option ng-repeat="contactType in ContactTypes" ng-selected="contactType.ContactTypeId == items.ContactTypeId" value="{{contactType.ContactTypeId}}">{{contactType.Description}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--4th row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Address</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.Address" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <!--5th row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>City</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.City" disabled />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Postal Code</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.PostalCode" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <!--6th row-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Telephone Number:</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.TelNo" si-max-input-length="20" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Mobile Number:</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.Mobile" si-max-input-length="20" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Skype ID:</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.Skype" si-max-input-length="250" />
+                                </div>
+                            </div>
+                        </div>
+                        <!--7th row-->
+                        <div class="row">
+                            <div class="col-md-4 {{emailAddressHasErrors === true ? 'required' : ''}}">
+                                <label><span style="color:red;">*</span>Email Address:</label>
+                                <span ng-show="emailAddressHasErrors"
+                                      class="required fa fa-exclamation-circle"
+                                      uib-popover="Email Address is Required"
+                                      popover-trigger="mouseenter"
+                                      popover-placement="right"></span>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.Email" si-max-input-length="250" required />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Title:</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.Title" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Website:</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.Website" disabled />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Note:</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="items.Note" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="Save((contactsForm.$invalid))">Save</button>
+
+        </div>
+    </script>
+
+
+
+<script type="text/ng-template" id="ManageCompaniesDialog.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+            <p><small>*Marked fields are required</small></p>
+        </div>
+        <div class="modal-body" style="max-height: none;">
+            <div class="alert alert-danger shell-alert" ng-hide="!showErrors">
+                Please correct below errors
+            </div>
+            <form class="float-none" name="companyForm">
+                <div class="col-sm-12 float-none">
+                    <div class="form-group">
+                        <!--1st row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input type="text" name="companyName" class="form-control" ng-model-options="{updateOn : 'change blur'}" ng-model="items.CompanyToSearchFor" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" ng-click="search()" style="margin-left: 10px;" type="button">Search</button>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--2nd row-->
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="padding:6px; border: 6px solid #E0E0E0; margin: 1px;">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 70%;">Company Name</th>
+                                                <th>Enable for Contacts</th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat="company in searchResults">
+                                            <td>
+                                                {{company.CompanyName}}
+                                            </td>
+                                            <td>
+                                                <a ng-click="editCompany(company.CompanyName, company.CompanyItemId)" href="javascript:void(0);">Edit Company</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--3rd row-->
+                        <div class="row" style="margin-top: 10px; text-align: right; margin-right: 1px;">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary" type="button" ng-click="showAddCompanySection()"><i class="fa fa-plus"></i>Add New Company</button>
+                            </div>
+                        </div>
+
+                        <!--4th row (add company section)-->
+                        <div ng-show="addCompanySectionVisible">
+                            <div class="row" style="margin: 10px 0 0 10px;">
+                                <label style="font-size: 15px;">Add Company</label>
+                            </div>
+                            <div class="row" style="background-color: #E0E0E0; padding: 15px; margin: -10px -4px 0 5px;">
+                                <div class="col-md-12">
+                                    <label><span style="color:red;">*</span>Company Name:</label>
+                                    <span ng-show="nameHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="Company Name is Required"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <div>
+                                        <input type="text" class="form-control" ng-model="items.CompanyName" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label><span style="color:red;">*</span>Address:</label>
+                                    <span ng-show="addressHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="Address is Required"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <div>
+                                        <input type="text" class="form-control" ng-model="items.Address" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><span style="color:red;">*</span>City:</label>
+                                    <span ng-show="cityHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="City is Required"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <div>
+                                        <input type="text" class="form-control" ng-model="items.City" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><span style="color:red;">*</span>Postal Code:</label>
+                                    <span ng-show="postalCodeHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="Postal Code is Required"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <div>
+                                        <input type="text" class="form-control" ng-model="items.PostalCode" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><span style="color:red;">*</span>Country:</label>
+                                    <span ng-show="countryHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="Country is Required"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <div>
+                                        <select id="countryId" name="country" class="form-control" ng-model="items.Country" required>
+                                            <option ng-repeat="country in Countries" value="{{country.CountryItemId}}">{{country.CountryName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><span style="color:red;">*</span>Region:</label>
+                                    <span ng-show="regionHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="Region is Required"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <div>
+                                        <select id="regionId" name="region" class="form-control" ng-model="items.Region" required>
+                                            <option ng-repeat="region in Regions" value="{{region.RegionId}}">{{region.RegionName}}</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><span style="color:red;">*</span>Organization Type:</label>
+                                    <span ng-show="organizationTypeHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="Organization Type is Required"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <div>
+                                        <select id="organizationType" name="organizationType" class="form-control" ng-model="items.OrganizationType" required>
+                                            <option ng-repeat="organizationType in OrganizationTypes" value="{{organizationType.Id}}">{{organizationType.Name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><span style="color:red;">*</span>Regulatory Category:</label>
+                                    <span ng-show="regulatoryCategoryHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="Regulation Category is Required"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <div>
+                                        <div>
+                                            <select id="sectorId" name="sector" class="form-control" ng-model="items.RegulatoryCategory" required>
+                                                <option ng-repeat="sector in Sectors" value="{{sector.CoveredSectorId}}">{{sector.CoveredSector}}</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Website:</label>
+                                    <span ng-show="websiteHasErrors"
+                                          class="required fa fa-exclamation-circle"
+                                          uib-popover="Website must be a valid URL"
+                                          popover-trigger="mouseenter"
+                                          popover-placement="right"></span>
+                                    <div>
+                                        <input type="text" class="form-control" ng-model="items.Website" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="text-align:center; margin-top: 20px;">
+                                    <button class="btn btn-primary" style="padding: 10px; width: 117px; font-size: 15px; font-weight: bold; letter-spacing: 1px;" type="button" ng-click="Save()">SAVE</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--5th row (edit company section)-->
+                        <div ng-show="editCompanySectionVisible">
+                            <div class="row" style="margin: 10px 0 0 10px;">
+                                <label style="font-size: 15px;">Edit Company</label>
+                            </div>
+                            <div class="row" style="background-color: #E0E0E0; margin: -10px -4px 0 5px;">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-tabs" style="margin-left: -14px;">
+                                        <li class="active"><a data-toggle="tab" href="#menu1">Contacts</a></li>
+                                        <li><a data-toggle="tab" href="#menu2">Company Details</a></li>
+                                    </ul>
+                                    <div class="tab-content" style="margin-top: 5px;">
+                                        <div id="menu1" class="tab-pane fade in active" style="margin-top: 18px; line-height: 10px;">
+                                            <div class="row" ng-repeat="contact in items.Contacts">
+                                                <div class="col-md-6">
+                                                    <p style="margin: 0 0 -16px;">{{contact.Firstname}}&nbsp;{{contact.Lastname}}</p>
+                                                </div>
+                                                <div class="col-md-6" style="text-align: right;">
+                                                    <p>Already Enabled</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="menu2" class="tab-pane fade">
+                                            <div class="row" style="background-color: #E0E0E0;">
+                                                <div class="col-md-12">
+                                                    <label><span style="color:red;">*</span>Company Name:</label>
+                                                    <span ng-show="nameHasErrors"
+                                                          class="required fa fa-exclamation-circle"
+                                                          uib-popover="Company Name is Required"
+                                                          popover-trigger="mouseenter"
+                                                          popover-placement="right"></span>
+                                                    <div>
+                                                        <input type="text" class="form-control" ng-model="items.CompanyName" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label><span style="color:red;">*</span>Address:</label>
+                                                    <span ng-show="addressHasErrors"
+                                                          class="required fa fa-exclamation-circle"
+                                                          uib-popover="Address is Required"
+                                                          popover-trigger="mouseenter"
+                                                          popover-placement="right"></span>
+                                                    <div>
+                                                        <input type="text" class="form-control" ng-model="items.Address" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label><span style="color:red;">*</span>City:</label>
+                                                    <span ng-show="cityHasErrors"
+                                                          class="required fa fa-exclamation-circle"
+                                                          uib-popover="City is Required"
+                                                          popover-trigger="mouseenter"
+                                                          popover-placement="right"></span>
+                                                    <div>
+                                                        <input type="text" class="form-control" ng-model="items.City" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label><span style="color:red;">*</span>Postal Code:</label>
+                                                    <span ng-show="postalCodeHasErrors"
+                                                          class="required fa fa-exclamation-circle"
+                                                          uib-popover="Postal Code is Required"
+                                                          popover-trigger="mouseenter"
+                                                          popover-placement="right"></span>
+                                                    <div>
+                                                        <input type="text" class="form-control" ng-model="items.PostalCode" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label><span style="color:red;">*</span>Country:</label>
+                                                    <span ng-show="countryHasErrors"
+                                                          class="required fa fa-exclamation-circle"
+                                                          uib-popover="Country is Required"
+                                                          popover-trigger="mouseenter"
+                                                          popover-placement="right"></span>
+                                                    <div>
+                                                        <select id="countryId" name="country" class="form-control" ng-model="items.Country" required>
+                                                            <option ng-repeat="country in Countries" value="{{country.CountryItemId}}">{{country.CountryName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label><span style="color:red;">*</span>Region:</label>
+                                                    <span ng-show="regionHasErrors"
+                                                          class="required fa fa-exclamation-circle"
+                                                          uib-popover="Region is Required"
+                                                          popover-trigger="mouseenter"
+                                                          popover-placement="right"></span>
+                                                    <div>
+                                                        <select id="regionId" name="region" class="form-control" ng-model="items.Region" required>
+                                                            <option ng-repeat="region in Regions" value="{{region.RegionId}}">{{region.RegionName}}</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label><span style="color:red;">*</span>Organization Type:</label>
+                                                    <span ng-show="organizationTypeHasErrors"
+                                                          class="required fa fa-exclamation-circle"
+                                                          uib-popover="Organization Type is Required"
+                                                          popover-trigger="mouseenter"
+                                                          popover-placement="right"></span>
+                                                    <div>
+                                                        <select id="organizationType" name="organizationType" class="form-control" ng-model="items.OrganizationType" required>
+                                                            <option ng-repeat="organizationType in OrganizationTypes" value="{{organizationType.Id}}">{{organizationType.Name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label><span style="color:red;">*</span>Regulatory Category:</label>
+                                                    <span ng-show="regulatoryCategoryHasErrors"
+                                                          class="required fa fa-exclamation-circle"
+                                                          uib-popover="Regulation Category is Required"
+                                                          popover-trigger="mouseenter"
+                                                          popover-placement="right"></span>
+                                                    <div>
+                                                        <div>
+                                                            <select id="sectorId" name="sector" class="form-control" ng-model="items.RegulatoryCategory" required>
+                                                                <option ng-repeat="sector in Sectors" value="{{sector.CoveredSectorId}}">{{sector.CoveredSector}}</option>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Website:</label>
+                                                    <span ng-show="websiteHasErrors"
+                                                          class="required fa fa-exclamation-circle"
+                                                          uib-popover="Website must be a valid URL"
+                                                          popover-trigger="mouseenter"
+                                                          popover-placement="right"></span>
+                                                    <div>
+                                                        <input type="text" class="form-control" ng-model="items.Website" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12" style="text-align:center; margin-top: 20px;">
+                                                    <button class="btn btn-primary" style="padding: 10px; width: 117px; font-size: 15px; font-weight: bold; letter-spacing: 1px;" type="button" ng-click="Save()">SAVE</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </div>
+        <div class="modal-footer text-align-center">
+            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Close</button>
+        </div>
+    </script>
+
+</div>

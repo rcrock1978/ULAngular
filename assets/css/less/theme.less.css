@@ -1,0 +1,84 @@
+﻿
+
+/*--Colors--*/
+@white: #ffffff;
+@teal:#047E89;
+@gray:#eeeeee;
+
+@headerColor : #be0f34;
+@navigationHoverColor: #3493BF;
+@navigationBgColor:#F7F7F7;
+
+
+/*-TAB-*/
+@selectedTabColor :#ffffff;
+@tabContainerBg:#fff;
+@tabFontColor:#ffffff;
+/*-END-*/
+
+/*--SIDE NAV-- left*/
+@sideNavBg:#4D4D4D;
+@sideNavHeader-primary:#373737;
+@sideNavHeader-secondary:#18506B;
+
+/*--SIDE NAV RIGHT*/
+@rightNavHeader-primary:#959595;
+@rightNavHeader-secondary:#959595;
+@rightNavBg:#F0F0F0;
+
+@rpToggleBg:#5D5F5D;
+
+@sideNavBorderColor-bottom:#e7e7e7;
+@sideNavFontColor:#ffffff;
+@sideNavHoverFontColor:#ffffff;
+@saveSearchesFontColor:#ffffff;
+
+@navBarActionsFontColor:#FFFFFF;
+@navSearchBgColor:#be0f34;
+
+@linkColor:#56ACA9;
+
+
+@headerBg:#45484d;
+
+/*@sideNavBg: url('../../../img/theme/side-nav-internal.png');
+@headerBg:url('../../../img/theme/bg-header-internal.png');*/
+/*--End Colors--*/
+
+@appLogoWidth:39px;
+
+.navBarActionsHover {
+    background: #3493BF!important;
+}
+.selectedTabColor{
+	
+	background:@selectedTabColor !important;
+	/*color:@white !important;*/
+    color:black;
+    font-weight:bold;
+}
+
+.selectedTabBorderColor{
+	border-top:3px solid #A2A2A2!important;
+}
+.text-align-right{
+   text-align:right;
+}
+
+.headerBg{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#45484d+0,000000+100;Black+3D+%231 */
+    background: #45484d; /* Old browsers */
+    background: -moz-linear-gradient(top,  #45484d 0%, #000000 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #45484d 0%,#000000 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
+}
+
+
+
+
+/*RIGHT NAVIGATION*/
+@rightNavHeaderColor :#18506B;
+
+@import (less) "../shell.less.css";

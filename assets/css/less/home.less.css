@@ -1,0 +1,47 @@
+﻿#homePage{
+    background:@white;
+	height:100%;
+	width:100%;
+    border: 1px solid gray;
+    overflow:hidden;
+    padding:0px;
+
+
+    /*.left-pane{
+        width: 84%;
+        height: 100%;
+        position:fixed;
+    }
+     .right-pane{
+         width:16%;
+         position:fixed;
+     }*/
+
+     .content{
+         margin: 5% 7% 7% 5%;
+        /*margin: 14%;*/
+        /*height: 40%;*/
+        padding: 30px;
+        background:url('../../img/world-map-background.svg');
+        background-color:gray;
+        width:73%;
+     }
+     .header{
+        color:@white;
+     }
+
+     form{
+        background: black;
+        /*height: 62%;*/
+        padding: 20px;
+        color:@white;
+        background: rgba(7, 8, 1, 0.5);
+     }
+
+     .disabledLabel{
+         color: gray;
+     }
+     /*#cmdGo{
+             margin-top: 8%;
+     }*/
+}

@@ -1,0 +1,202 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+    <meta name="viewport" content="user-scalable=no" />
+    <!--<meta http-equiv="CACHE-CONTROL" content="NO-CACHE">-->
+    <title>SmartInsight</title>
+  
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet/less" type="text/css"  href="assets/css/less/theme.less.css" />
+    <link rel ="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/animations.css"/>
+
+    <!--kendoUI css-->
+    <link href="assets/css/kendoUI/kendo.common.min.css" rel="stylesheet" />
+    <link href="assets/css/kendoUI/kendo.dataviz.office365.min.css" rel="stylesheet" />
+    <link href="assets/css/kendoUI/kendo.office365.min.css" rel="stylesheet" />
+    <!--<link href="assets/css/kendoUI/kendo.dataviz.min.css" rel="stylesheet" />
+    <link href="assets/css/kendoUI/kendo.default.min.css" rel="stylesheet" />
+    <link href="assets/css/kendoUI/kendo.dataviz.default.min.css" rel="stylesheet" />-->
+
+    <script src="shell/libs/jquery-1.11.3.min.js"></script>
+    <script src="shell/libs/bootstrap.js"></script>
+    <script src="shell/libs/angular/angular.min.js"></script>
+    <script src ="shell/libs/angular/angular-route.min.js"></script>
+    <script src="shell/libs/angular/angular-ui/angular-ui-router.js"></script>
+    <script src="shell/libs/angular/angular-cookies.min.js"></script>
+    <script src="shell/libs/angular/angular-touch.min.js"></script>
+    <script src="shell/libs/angular/angular-animate.min.js"></script>
+    <script src="shell/libs/modules/lodash.min.js"></script>
+    <script src="shell/libs/modules/angularjs-dropdown-multiselect.js"></script>
+    <script src="shell/libs/pdfmake.min.js"></script>
+    <script src="shell/libs/vfs_fonts.js"></script>
+
+    <!--<script src="shell/libs/ng-infinite-scroll.min.js"></script>-->
+
+    <!--ui-grid css-->
+    <link href="assets/css/ui-grid.min.css" rel="stylesheet" />
+    <link href="assets/css/uiselect.css" rel="stylesheet" />
+    <link href="assets/css/select2.css" rel="stylesheet" />
+    <!--ui-grid css-->
+    <script src="shell/libs/ui-grid.min.js"></script>
+    <script src="shell/libs/ui-grid-InlineEdit.js"></script>
+
+    <script src="shell/libs/ui-bootstrap-tpls.min.js"></script>
+    <script src="shell/libs/kendoUI/kendo.all.min.js"></script>
+    <script src="shell/libs/kendoUI/jszip.js"></script>
+
+    <script src="shell/libs/kernel.client.js"></script>
+
+    <script src="shell/libs/dirPagination/dirPagination.js"></script>
+
+    <script src="shell/libs/tinyMCE/tinymce.min.js"></script>
+    <script src="shell/libs/tinyMCE/ui-tinymce.min.js"></script>
+
+    <!--<script src="shell/libs/ui-bootstrap-tpls-2.1.4.min.js"></script>-->
+    <script src="shell/libs/less.js-2.5.0/dist/less.js"></script>
+    <script src="shell/libs/async.min.js"></script>
+    <script type="text/javascript">
+    /*global less configuration*/
+        less = {
+            async: true
+        };
+
+    var channel = new kernel.messaging.channel(window.parent);
+    function IsBusy(value) {
+     
+       var message = {
+           message: 'IsBusy',
+           arg: value
+       };
+
+        channel.send(message);
+    };
+
+    function DisableKernelNavs(value) {
+
+       var message = {
+           message: 'DisableNavs',
+           arg: value
+       };
+
+        channel.send(message);
+    };
+
+    
+
+    function getParameterByName(name, url) {
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    };
+
+    var subscriber = new kernel.messaging.subscriber('SmartInsight', 'setTokens', function (command) {
+        window.localStorage.wresult = command.arg.wresult;
+        window.location.href = window.location = window.location.pathname;
+        window.localStorage.userName = command.arg.username;
+        window.localStorage.userId = command.arg.userid;
+    });
+
+    channel.register(subscriber);
+
+    subscriber = new kernel.messaging.subscriber('SmartInsight', 'clearStorage', function (command) {
+        window.localStorage.clear();
+    });
+
+    channel.register(subscriber);
+
+    if (getParameterByName('token') == null) {
+
+    } else {
+        var message = {
+            message: 'sendTokens',
+        };
+
+        channel.send(message);
+    };
+
+    function toggleSearchButtons(toggle) {
+        //toggle search button visibility
+        var channel = new kernel.messaging.channel(window.parent);
+
+        channel.send({
+            message: 'ShowSearch',
+            arg: toggle
+        });
+    };
+
+    function populateTypeAheadSearch(searchDS) {
+        var channel = new kernel.messaging.channel(window.parent);
+
+        channel.send({
+            message: 'typeahead',
+            list: searchDS
+        });
+    };
+    function populateGearMenu() {
+       // console.log("POPULATE GEAR MENU");
+        var data = [{
+            gearID: 'action-smartinsight-settings',
+            gearDisplay: '',
+            gearText: 'SmartInsight Settings',
+            command: 'smartInsight:ToggleSettings',
+            argument: 'smartinsightSettings()'
+        }];
+
+        channel.send({
+            message: 'PopulateGearMenu',
+            arg: data
+        });
+        
+    };
+
+    function resizePage() {
+        var leftPane = document.getElementById("leftPane") == null ? 0 : document.getElementById("leftPane").offsetWidth;
+        var rightPane = document.getElementById("rightPane") == null ? 0 : document.getElementById("rightPane").offsetWidth;
+
+        var lp = document.getElementById("lp");
+        var rp = document.getElementById("rp");
+
+
+        var content = document.getElementById("content");
+        var vpw = window.innerWidth;
+        if (content) {
+            lp.style.width = leftPane + "px";
+            rp.style.width = rightPane + "px";
+            content.style.width = vpw - (leftPane + rightPane + 20) + "px";
+        }
+        
+    };
+
+    $(window).resize(function () {
+        resizePage();
+    }).resize();
+
+
+    $(document).ready(function () {
+        resizePage();
+    });
+
+ 
+    </script>
+    
+    <script data-main="main" src="shell/libs/require.js"></script>
+    
+  
+</head>
+
+<body>
+   <div id ="wrapper" ui-view></div>    
+</body>
+    
+</html>
+
+

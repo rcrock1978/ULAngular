@@ -1,0 +1,88 @@
+﻿<div>
+    <div id="leftPane" class="navbar-left {{IsOpen ? 'sideNavWith-Open':''}}">
+        <div class="leftPane-item">
+            <div class="op-accordion">
+                <div class="op-accordion-header">
+                    <span ng-hide="!IsOpen"><i class="fa {{loading ? 'fa-spinner fa-spin':'fa-filter'}}"></i>SEARCH REFINER</span>
+                    <i class="fa {{IsOpen ? 'fa-angle-double-left pull-right':'fa-filter'}}"
+                       ng-click="togglePane()"></i>
+                </div>
+                <div id="dvRefiners" ng-hide="!IsOpen">
+                    <div ng-repeat="refiner in refiners">
+                        <div class="op-accordion-title">
+                            <span><b>{{refiner.Category}} </b></span><br />
+                            <i class="fa {{refiner.IsOpen ? 'fa-minus-circle':'fa-plus-circle'}} pull-right" ng-click="refiner.IsOpen =!refiner.IsOpen"></i>
+                        </div>
+                        <div class="op-accordion-items-no-hover" ng-if="refiner.IsDateRange" ng-hide="!refiner.IsOpen">
+                            <div style="padding-bottom:23px">
+                                <label class="control-label">from</label>
+                                <div>
+                                    <input type="text" kendo-date-picker onkeydown="return false"
+                                           style="width: 96%;"
+                                           k-format="'dd MMM yyyy'"
+                                           placeholder="DD MMM YYYY"
+                                           ng-model="refiner.Items[0].Items[0].ValueString"
+                                           k-ng-model="refiner.Items[0].Items[0].Value"
+                                           k-max="refiner.Items[0].Items[0].MaxDate"
+                                           k-rebind="refiner.Items[0].Items[0].MaxDate"
+                                           k-on-change="FromDateChanged(refiner.Items[0])" />
+                                </div>
+                                <label class="control-label">to</label>
+                                <div>
+                                    
+                                    <input type="text" kendo-date-picker onkeydown="return false"
+                                           style="width: 96%;"
+                                           k-format="'dd MMM yyyy'"
+                                           placeholder="DD MMM YYYY"
+                                           ng-model="refiner.Items[0].Items[1].ValueString"
+                                           k-ng-model="refiner.Items[0].Items[1].Value"
+                                           k-min="refiner.Items[0].Items[1].MinDate"
+                                           k-rebind="refiner.Items[0].Items[1].MinDate"
+                                           k-on-change="ToDateChanged(refiner.Items[0])" />
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="op-accordion-items-no-hover" ng-if="!refiner.IsDateRange" ng-hide="!refiner.IsOpen">
+                            <div style="height:145px;overflow-y:auto" load-more-on-scroll-down on-scroll="LoadMore(obj)" param="refiner" scroll-threshold="10">
+
+
+                                <div ng-repeat="item in refiner.Items | limitTo : refiner.ItemsPerPage">
+                                    <!--<div ng-repeat="item in refiner.Items.slice(((refiner.CurrentPage-1)*refiner.ItemsPerPage), ((refiner.CurrentPage)*refiner.ItemsPerPage))">-->
+                                    <div class="checkbox" ng-if="!refiner.IsSingleSelect">
+                                        <label>
+                                            <input type="checkbox" ng-click="RefinerChecked(item)" ng-model="item.Checked">  {{item.Value}}
+                                        </label>
+                                    </div>
+
+                                    <div class="dropdown" ng-if="refiner.IsSingleSelect">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            --Select one--
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li ng-repeat="item in refiner.Items"><a href="#">{{item.Value}}</a></li>
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <!--<div class="refiner-actions modal-footer" ng-hide="refiner.Items.length <= refiner.ItemsPerPage">
+            <button class="btn btn-primary" type="button" ng-click="Prev(refiner)" ng-hide="!refiner.PrevVisibility">Prev</button>
+            <button class="btn btn-primary" type="button" ng-click="Next(refiner)" ng-hide="!refiner.NextVisibility">Next</button>
+        </div>-->
+                            </div>
+                            <div class="refiner-actions modal-footer" ng-hide="refiner.Items.length <= 5">
+                                <button class="btn btn-primary" type="button" ng-click="Clear(refiner)">Clear</button>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

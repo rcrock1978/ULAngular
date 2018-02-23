@@ -1,0 +1,51 @@
+﻿<script type="text/ng-template" id="r2cWorkflowFieldChanges.html">
+    <div class="modal-header">
+        <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+        <h4 class="modal-title">Field Changes</h4>
+        <i class="fa fa-times pull-right close" ng-click="closeDialog()"></i>
+    </div>
+    <div class="modal-body">
+        <form class="float-none" name="fileForm" novalidate>
+            <div class="col-sm-12  float-none">
+                <div class="row">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th> Field Name</th>
+                                <th> Original Information</th>
+                                <th> Updated Information</th>
+                            </tr>
+                           
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in info track by $index">
+                                <td>{{item.FieldName}}</td>
+                                <td>{{item.OriginalValue}}</td>
+                                <td>{{item.UpdatedValue}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--<div class="col-md-6">
+                        <h5>Original Information</h5>
+                        <div class="panel panel-default">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="item in info track by $index">{{item.FieldName}} : {{item.OriginalValue}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Updated Information</h5>
+                        <div class="panel panel-default">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="item in info track by $index">{{item.FieldName}} : {{item.UpdatedValue}}</li>
+                            </ul>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" type="button" ng-click="closeDialog()">Close</button>
+    </div>
+</script>

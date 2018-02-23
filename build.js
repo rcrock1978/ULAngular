@@ -1,0 +1,62 @@
+﻿({
+    baseUrl: ".",
+    //mainConfigFile: 'main.js',
+    paths: {
+        'app': 'empty:',
+        'text': 'empty:',
+        'ngStorage': 'empty:',
+        'ngCookies': 'empty:',
+        //Utility
+        'baseService': 'shell/services/baseService',
+        'enums': 'shell/enum/enums',
+        'dialogService': 'shell/services/dialogService',
+        'globalUtility': 'shell/common/globalUtility',
+        'routeResolver': 'shell/common/routeResolver',
+        //Directives
+        'processOnEnter': 'shell/directives/input/processOnEnter',
+        'fileread': 'shell/directives/input/fileUploadReader',
+        'loadMoreOnScorllDown': 'shell/directives/scroll/loadMoreOnScorllDown',
+        'batchFileUpload': 'shell/directives/input/batchFileUpload',
+        'maxInputLength': 'shell/directives/input/siMaxInputLength',
+        'ngDropdownMultiselectDisabled': 'shell/directives/input/ngDropdownMultiselectDisabled',
+        'smiFileUpload': 'empty:',
+        'smiDropDown': 'empty:',
+        'smiModalTabs': 'empty:',
+        'uiSelectWrap': 'shell/directives/input/uiSelectWrap',
+        //Services
+        'authService': 'shell/services/authService',
+        'crudService': 'shell/services/crudService',
+        'moduleService': 'shell/services/moduleService',
+        'homeService': 'shell/services/homeService',
+        'homeConfigService': 'shell/services/homeConfigService',
+        'bsAlertService': 'shell/services/bsAlertService',
+        'exportService': 'shell/services/exportService',
+        //Controllers
+        'masterpageController': 'shell/controllers/masterpageController',
+        'contentController': 'shell/controllers/contentController',
+        'homeController': 'shell/controllers/homeController',
+        'bsAlertController': 'shell/controllers/bsAlertController',
+        'tabController': 'shell/controllers/tabController',
+        'leftpaneController': 'shell/controllers/leftpaneController',
+        'rightpaneController': 'shell/controllers/rightpaneController',
+        'fileUploaderController': 'shell/controllers/fileUploaderController',
+        'smiDropDownController': 'shell/controllers/smiDropDownController',
+        'smiModalTabController': 'shell/controllers/smiModalTabController',
+        'errorPageController': 'shell/controllers/errorPageController',
+        //Javascript Libraries
+        'fileSaver': 'empty:',
+        'xlsx': 'empty:',
+        'uiselect': 'shell/libs/uiselect',
+        'kernelShell': 'shell/libs/kernel.client',
+        //Interceptor
+        'tokenInterceptor': 'shell/services/tokenInterceptor',
+        'tinyMCE': 'empty:',
+        'uiTinyMCE': 'empty:',
+        'sanitize': 'empty:',
+        'pdfmake': 'empty:',
+        'vfsfonts': 'shell/libs/vfs_fonts'
+    },
+    optimize: 'uglify',
+    name: "main",
+    out: "main-built.js"
+})

@@ -1,0 +1,140 @@
+﻿<div class="row" ng-if="(isWorkflow && isApprover) || !isWorkflow" >
+    <div class="col-md-1 pull-left">
+        <button class="btn btn-primary" type="button" ng-click="enableAddEvidence('add')" ng-disabled="enableEvidence || gridHasNoData">Add Evidence</button>
+    </div>
+</div>
+
+<!--existing document list-->
+<div class="row">
+    <div class="col-md-7">
+        <label for="existingEvidence" class="pull-left">Existing Evidence:</label>
+        <ul class="list-inline">
+            <li ng-repeat="evidence in existingEvidenceList">
+                <a href="" ng-click="openEvidence(evidence)">{{evidence.Filename}}</a>
+                <a href="" style="text-decoration: none; color: black;" ng-click="removeEvidence(evidence)">[x Remove]</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-5">
+        <label>Selected Fields</label>
+    </div>
+</div>
+
+<!--attach evidence form-->
+<div class="row">
+    <div class="col-md-7">
+        <form class="form-horizontal">
+            <!--source-->
+            <div class="form-group">
+                <label for="source" class="col-md-3">Source:</label>
+                <div class="col-md-9">
+                    <select class="form-control" ng-disabled="!enableEvidence" ng-model="evidenceSelectedSource">
+                        <option ng-repeat="source in evidenceSource" value="{{source.SourceId}}">{{source.SourceName}}</option>
+                    </select>
+                </div>
+            </div>
+            <!--remarks-->
+            <div class="form-group">
+                <label for="remarks" class="col-md-3">Remarks:</label>
+                <div class="col-md-9">
+                    <textarea class="form-control" rows="3" ng-disabled="!enableEvidence" ng-model="evidenceRemarks"></textarea>
+                </div>
+            </div>
+            <!--remarks internal-->
+            <div class="form-group">
+                <label for="remarksInternal" class="col-md-3">Remarks Internal:</label>
+                <div class="col-md-9">
+                    <textarea class="form-control" rows="3" ng-disabled="!enableEvidence" ng-model="evidenceRemarksInternal"></textarea>
+                </div>
+            </div>
+            <!--update date-->
+            <div class="form-group">
+                <label for="updateDate" class="col-md-3">Update Date:</label>
+                <div class="col-md-9">
+                    <!--<input type="text" class="form-control" id="datepicker" ng-disabled="!enableEvidence" ng-model="evidenceUpdateDate">-->
+                    <input id="datepicker" type="text" name="updatedate" ng-disabled="!enableEvidence" kendo-date-picker
+                           k-format="'dd MMM yyyy'"
+                           placeholder="DD MMM YYYY"
+                           style="width: 100%;"
+                           ng-model="evidenceUpdateDate" />
+                </div>
+            </div>
+            <!--evidence note-->
+            <div class="form-group">
+                <label for="evidenceNote" class="col-md-3">Evidence Note:</label>
+                <div class="col-md-9">
+                    <textarea class="form-control" rows="3" ng-disabled="!enableEvidence" ng-model="evidenceNote"></textarea>
+                </div>
+            </div>
+
+            <br />
+
+            <!--attach evidence directive-->
+            <div class="form-group">
+                <label for="evidenceNote" class="col-md-3">Attach Evidence Document:</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <input type="text" class="form-control custom-read-only" name="filename" value="{{selectedFile.name}}" required readonly />
+                        <span class="input-group-btn">
+                            <label class="btn btn-default btn-file" ng-disabled="!enableEvidence">
+                                <i class="fa fa-folder"></i> Browse <input type="file" id="myFile" fileread="selectedFile" modified="isPFModified" style="display:none">
+                            </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!--document type-->
+            <div class="form-group">
+                <label for="documentType" class="col-md-3">Document Type:</label>
+                <div class="col-md-9">
+                    <select class="form-control" ng-disabled="!enableEvidence" ng-model="evidenceSelectedDocumentType">
+                        <option ng-repeat="documentType in evidenceDocumentType" value="{{documentType.DocumentTypeId}}">{{documentType.DocumentName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button class="btn btn-default" ng-disabled="!enableEvidence" ng-click="addEvidence(true)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Another Evidence Document</button>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+
+    <!--selected field list-->
+    <div class="col-md-5">
+        <div class="well well-sm" style="max-height: 500px; overflow-y: auto;">
+            <ul class="list-group">
+                <li ng-repeat="field in selectedFieldList track by $index" class="list-group-item" ng-show="enableEvidence">
+                    {{field.displayText}}
+                    <label class="badge btn" ng-click="removeField(field.fieldId)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div> 
+
+<div class="row" ng-show="isApprover">
+    <div class="col-md-7">
+        <form>
+            <div class="form-group">
+                <div class="well well-sm">                    
+                    <div class="radio">
+                        <label style="line-height: 2">
+                            <input type="radio" name="workflow" id="workflowApprove" ng-value="true" ng-model="workflowAction" checked>
+                            Approve
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label style="line-height: 2">
+                            <input type="radio" name="workflow" id="workflowReject" ng-value="false" ng-model="workflowAction">
+                            Reject
+                        </label>
+                    </div>                    
+                    <input type="text" class="form-control" placeholder="Comment" ng-disabled="workflowAction != false" ng-model="rejectComment" />
+                </div> 
+            </div>
+        </form>                          
+    </div>
+</div>
+

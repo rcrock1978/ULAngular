@@ -1,0 +1,78 @@
+﻿<div>
+    <div id="rightPane" class="{{rightNavOpen ? 'sideNavWith-Open':''}}" style="overflow-y: scroll;">
+        <div class="op-accordion-toggle-nav">
+            <i class="fa {{rightNavOpen ? 'fa-angle-double-right':'fa-angle-double-left'}} pull-left" tooltip-animation="false" tooltip-popup-delay='1000' tooltip-placement="left" uib-tooltip="collapse" ng-click="TogglePane(rightNavOpen)"></i>
+        </div>
+        <div class="op-accordion" ng-hide="!rightNavOpen">
+            <!--Links-->
+            <div class="op-accordion-header">
+                <span><i class="fa fa-external-link"></i>Links</span>
+                <i class="fa {{toggleLinks ? 'fa-chevron-circle-down':'fa-chevron-circle-up'}}  pull-right"
+                   data-toggle="collapse" data-target="#dvLinks"
+                   ng-click="toggleLinks =!toggleLinks"></i>
+            </div>
+            <div id="dvLinks" class="collapse in">
+                <div ng-repeat="doc in documents" class="op-accordion-items" ng-show="!toggleLinks">
+                    <span><i class="fa fa-square"></i> {{doc}}</span>
+                </div>
+            </div>
+
+            <!--Favorites-->
+            <div class="op-accordion-header">
+                <span><i class="fa fa-star"></i>Favorites</span>
+                <i class="fa {{toggleFav ? 'fa-chevron-circle-down':'fa-chevron-circle-up'}}  pull-right"
+                   data-toggle="collapse" data-target="#dvSaveSearches"
+                   ng-click="toggleFav =!toggleFav"></i>
+            </div>
+
+            <div id="dvSaveSearches" class="collapse in">
+                <div ng-repeat="item in savedSearches | limitTo:5" class="op-accordion-items">
+                    <a style="color:#56aca9">
+                        <span style="cursor:pointer" ng-click="searchFavorite(item)">
+                            <i class="fa fa-square"></i>
+                            {{item.Name}}
+                        </span>
+                    </a>
+                </div>
+                <div style="padding:7px; text-align:right;">
+                    <a style="color:#56aca9">
+                        <span style="cursor:pointer" ng-click="manageFavorites()">
+                            View/manage favorites
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!--Saved Views-->
+            <div class="op-accordion-header">
+                <span><i class="fa fa-floppy-o"></i>Saved Views</span>
+                <i class="fa {{toggleRef ? 'fa-chevron-circle-down':'fa-chevron-circle-up'}}  pull-right"
+                   data-toggle="collapse" data-target="#dvReferences"
+                   ng-click="toggleRef =!toggleRef"></i>
+            </div>
+
+            <div id="dvReferences" class="collapse in">
+                <div ng-repeat="item in references" class="op-accordion-items">
+                    <span><i class="fa fa-square"></i> {{item}}</span>
+                </div>
+            </div>
+
+            <!--Change Request Form-->
+            <div class="op-accordion-header" ng-if="isUserContributor">
+                <span><i class="fa fa-edit"></i>Change Request Form</span>
+                <i class="fa {{toggleReq ? 'fa-chevron-circle-down':'fa-chevron-circle-up'}}  pull-right"
+                   data-toggle="collapse" data-target="#dvCrf"
+                   ng-click="toggleReq =!toggleReq">
+                </i>
+            </div>
+
+            <div id="dvCrf" class="collapse in" ng-if="isUserContributor">
+                <div class="op-accordion-items">
+                    <a style="color:#56aca9"><span style="cursor:pointer" ng-click="createCrf()">Create Change Request</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

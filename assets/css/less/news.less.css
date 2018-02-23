@@ -1,0 +1,91 @@
+﻿#rightButtonNews {
+        float: right;
+}
+
+#rightTextAlignNews {
+    text-align: right;
+    color: gray;
+}
+
+#captions {
+    text-align: right;
+    color: gray;
+    font-style: italic;
+}
+
+#titleFontStyle {
+    font-size: 2.5em;
+}
+
+#editButton {
+    padding: 0px;
+    width: 80px;
+}
+
+.odd col-md-9 col-lg-9 {
+    float: right;
+    padding: 20px;
+}
+
+.even col-md-9 col-lg-9 {
+    float: left;
+    padding: 20px;
+}
+
+.odd {
+    float: right;
+    padding: 5px;
+}
+
+.even {
+    float: left;
+    padding: 5px;
+}
+
+#imageSize {
+    width: 245px;
+    height: 160px;
+}
+
+#informationStyle {
+    padding-left: 15px;
+}
+
+/*#modalTablContainer {
+     background:@teal;
+     margin-top:-2px;
+     li:first-child{
+        padding-left:8px;
+     }
+     li > a {
+        border-radius: 0;
+        border: 0;
+         background: #F2F6F7;
+         color: black;
+         font-weight:bold;
+         height: 32px;
+     }
+     .active > a {
+
+        .selectedTabColor;
+          
+     }
+     .active{
+    	.selectedTabBorderColor;
+        border-bottom:0px !important;  
+   	}
+
+    li {
+       margin-bottom: 0px !important;
+        border-bottom: 1px solid #eeeeee !important;
+    }
+    > div {
+       .selectedTabColor;
+        width: 100%;
+        height: 40px;
+        >span {
+               display: inline-block;
+            
+        } 
+    }
+ }*/

@@ -1,0 +1,386 @@
+﻿<div>
+    <script type="text/ng-template" id="AddDeliveryDialog.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <p><small>*Marked fields are required</small></p>
+            <i class="fa fa-times pull-right close" ng-click="closeDialog()"></i>
+        </div>
+        <div class="modal-body">
+            <form class="float-none" name="certificateForm">
+                <div class="col-sm-12  float-none">
+
+                    <!-- LINE 1 -->
+                    <div class="form-group custom-row col-sm-12 float-none">
+
+                        <div class="col-sm-4 {{certificateForm.region.$error.required && showErrors ? 'required': ''}}">
+
+                            <label for="dprRegions" class="control-label">Regions:</label>
+                            <span ng-show="certificateForm.region.$error.required && showErrors" class="required fa fa-exclamation-circle" uib-popover="Region is Required" popover-trigger="mouseenter"></span>
+                            <div>
+                                <select id="dprRegions" name="region" class="form-control" ng-model="selectedRegion" required>
+                                    <option ng-selected="{{reg.RegionId == RegionId}}"
+                                            ng-repeat="reg in regions"
+                                            value="{{reg.RegionId}}">
+                                        {{reg.RegionName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 {{certificateForm.regionalEconomicUnion.$error.required && showErrors ? 'required': ''}}">
+                            <label for="drpRegionalEconomicUnion" class="control-label"><span class="required">*</span>Regional Economic Union:</label>
+                            <span ng-show="certificateForm.regionalEconomicUnion.$error.required && showErrors" class="required fa fa-exclamation-circle" uib-popover="Regional Economic Union is Required" popover-trigger="mouseenter"></span>
+                            <div>
+                                <select id="drpRegionalEconomicUnion" name="regionalEconomicUnion" class="form-control" ng-model="selectedregionalEconomicUnions">
+                                    <option ng-selected="{{regionalEconomicUnion.RegionalEconomicUnionId == selectedregionalEconomicUnions}}"
+                                            ng-repeat="regEconUnion in regionalEconomicUnions"
+                                            value="{{regEconUnion.RegionalEconomicUnionId}}">
+                                        {{regEconUnion.RegionalEconomicUnionName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 {{certificateForm.country.$error.required && showErrors ? 'required': ''}}">
+
+                            <label for="drpCountry" class="control-label"><span class="required">*</span>Country:</label>
+                            <span ng-show="(selectedCountries.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Country(s) is Required" popover-trigger="mouseenter" popover-placement="right"></span>
+                            <div>
+                                <div id="drpCountry" ng-dropdown-multiselect="" options="countries" selected-model="selectedCountries" extra-settings="multiselectSettings" class="multi-Select"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- LINE 2 -->
+                    <div class="form-group custom-row col-sm-12 float-none">
+
+                        <div class="col-sm-4 {{certificateForm.certificationProgram.$error.required && showErrors ? 'required': ''}}">
+                            <label for="drpcertificationProgram" class="control-label"><span class="required">*</span>Certification Program:</label>
+                            <span ng-show="certificateForm.certificationProgram.$error.required && showErrors" class="required fa fa-exclamation-circle" uib-popover="Certification Program is Required" popover-trigger="mouseenter"></span>
+                            <div>
+                                <select id="drpcertificationProgram" name="certificationProgram" class="form-control" ng-model="selectedcertificationPrograms">
+                                    <option ng-selected="{{cp.CertificationProgramId == selectedcertificationPrograms}}"
+                                            ng-repeat="cp in certificationPrograms"
+                                            value="{{cp.CertificationProgramId}}">
+                                        {{cp.CertificationProgramName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 {{certificateForm.sectorRegulated.$error.required && showErrors ? 'required': ''}}">
+
+                            <label for="drpSectorRegulated" class="control-label"><span class="required">*</span>Sector Regulated:</label>
+                            <span ng-show="(selectedsectorsRegulated.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Sector Regulated is Required" popover-trigger="mouseenter" popover-placement="right"></span>
+                            <div>
+                                <div id="drpSectorRegulated" ng-dropdown-multiselect="" options="sectorsRegulated" selected-model="selectedsectorsRegulated" extra-settings="multiselectSettings" class="multi-Select"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-4 {{certificateForm.certificationOrganization.$error.required && showErrors ? 'required': ''}}">
+                            <label for="drpcertificationOrganization" class="control-label"><span class="required">*</span>Certification Organization:</label>
+                            <span ng-show="certificateForm.certificationOrganization.$error.required && showErrors" class="required fa fa-exclamation-circle" uib-popover="Certification Organization is Required" popover-trigger="mouseenter"></span>
+                            <div>
+                                <select id="drpcertificationOrganization" name="certificationOrganization" class="form-control" ng-model="selectedcertificationOrganizations">
+                                    <option ng-selected="{{cp.CertificationOrganizationId == selectedcertificationOrganizations}}"
+                                            ng-repeat="cp in certificationOrganizations"
+                                            value="{{cp.CertificationOrganizationId}}">
+                                        {{cp.CertificationOrganizationName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- LINE 3 -->
+                    <div class="form-group custom-row col-sm-12 float-none">
+
+                        <div class="col-sm-4 {{certificateForm.compalianceModel.$error.required && showErrors ? 'required': ''}}">
+
+                            <label for="drpCompalianceModel" class="control-label"><span class="required">*</span>Compliance Model:</label>
+                            <span ng-show="(selectedcomplianceModels.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Compliance Model is Required" popover-trigger="mouseenter" popover-placement="right"></span>
+                            <div>
+                                <div id="drpCompalianceModel" ng-dropdown-multiselect="" options="complianceModels" selected-model="selectedcomplianceModels" extra-settings="multiselectSettings" class="multi-Select"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-4 {{certificateForm.mandatoryOrVoluntary.$error.required && showErrors ? 'required': ''}}">
+                            <label for="drpmandatoryOrVoluntary" class="control-label"><span class="required">*</span>Mandatory or Voluntary:</label>
+                            <span ng-show="certificateForm.mandatoryOrVoluntary.$error.required && showErrors" class="required fa fa-exclamation-circle" uib-popover="Mandatory or Voluntary is Required" popover-trigger="mouseenter"></span>
+                            <div>
+                                <select id="drpmandatoryOrVoluntary" name="mandatoryOrVoluntary" class="form-control" ng-model="selectedmandatoryOrVoluntary_list">
+                                    <option ng-selected="{{mv.MandatoryOrVoluntaryId == selectedmandatoryOrVoluntary_list}}"
+                                            ng-repeat="mv in mandatoryOrVoluntary_list"
+                                            value="{{mv.MandatoryOrVoluntaryId}}">
+                                        {{mv.MandatoryOrVoluntaryName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 {{certificateForm.productType.$error.required && showErrors ? 'required': ''}}">
+
+                            <label for="drpCompalianceModel" class="control-label"><span class="required">*</span>Compliance Model:</label>
+                            <span ng-show="(selectedcomplianceModels.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Compliance Model is Required" popover-trigger="mouseenter" popover-placement="right"></span>
+                            <div>
+                                <div id="drpCompalianceModel" ng-dropdown-multiselect="" options="complianceModels" selected-model="selectedcomplianceModels" extra-settings="multiselectSettings" class="multi-Select"></div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <!--FILE BROWSER-->
+                    <div class="form-group custom-row-inline  col-sm-12 float-none">
+                        <div class="col-sm-3">
+                            <label>Primay File :</label>
+                        </div>
+                        <div class="input-group col-sm-9">
+                            <input type="text" class="form-control" name="primaryFile" value="{{primaryFile.name}}" readonly />
+                            <span class="input-group-btn">
+                                <label class="btn btn-default btn-file">
+                                    <i class="fa fa-folder"></i> Browse... <input type="file" fileread="primaryFile" style="display:none">
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group custom-row-inline col-sm-12 float-none">
+                        <div class="col-sm-3">
+                            <label>Related Files :</label>
+                        </div>
+                        <div class="input-group col-sm-9">
+
+                            <div ng-include src="fileUploaderTemplateUrl"></div>
+                            <!--<input type="text" class="form-control" value="{{relatedFile.name}}" readonly />
+                            <span class="input-group-btn">
+                                <label class="btn btn-default btn-file">
+                                    Browse <input type="file" fileread="relatedFile" style="display:none">
+                                </label>
+                            </span>-->
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="closeDialog()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="Save((certificateForm.$invalid))">Save</button>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="ViewDeliveryManualDialog.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+        </div>
+        <div class="modal-body">
+            <div class="row float-none col-lg-12" id="certificate-view-document">
+                <div class="form-group custom-row col-sm-12 float-none no-padding">
+                    <div class="col-sm-3">
+                        <label class="control-label">Primary Files:</label>
+
+                    </div>
+                    <div class="col-sm-9">
+                        <ul>
+                            <li ng-repeat="file in primaryFiles"><a ng-click="Download(file,'PrimaryFiles')">{{file}}</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="form-group custom-row col-sm-12 float-none no-padding">
+                    <div class="col-sm-3">
+                        <label class="control-label">Related Files:</label>
+
+                    </div>
+                    <div class="col-sm-9">
+                        <ul>
+                            <li ng-repeat="file in relatedFiles"><a ng-click="Download(file,'RelatedFiles')">{{file}}</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Cancel</button>
+            <!--<button class="btn btn-primary" type="button" ng-click="Save((certificateForm.$invalid))">Save</button>-->
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="AddDeliveryManualDialog.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+        </div>
+        <div class="modal-body">
+            <form class="float-none" name="addDeliveryManualForm">
+                <div class="col-sm-12  float-none">
+
+                    <!--FILE BROWSER-->
+                    <div class="form-group custom-row-inline  col-sm-12 float-none">
+
+                        <div class="form-group">
+                            <!--<div class="form-group custom-row-inline  col-sm-12  {{!primaryFile && showErrors ? 'required' : ''}}">-->
+                            <div class="form-group custom-row-inline  col-sm-12 {{(primaryFile.name.length == 0 || primaryFile.name == undefined)&& showErrors ? 'required': ''}}">
+
+
+                                <div class="col-sm-3">
+                                    <label><span class="required">*</span>Attach Manual :</label>
+                                    <span ng-show="(primaryFile.name.length == 0 || primaryFile.name == undefined) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Primary File is Required" popover-trigger="mouseenter"></span>
+                                </div>
+                                <div class="input-group col-sm-9">
+                                    <input type="text" class="form-control custom-read-only" name="primaryFile" value="{{primaryFile.name}}" required />
+                                    <span class="input-group-btn">
+                                        <label class="btn btn-default btn-file">
+                                            <i class="fa fa-folder"></i> Browse <input type="file" id="myFile" fileread="primaryFile"
+                                                                                       accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*"
+                                                                                       modified="isPFModified" style="display:none">
+                                        </label>
+
+
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group custom-row-inline col-sm-12">
+                                <div class="col-sm-3">
+                                    <span>&nbsp;</span>
+                                </div>
+                                <div class="input-group col-sm-9" style="align-items:flex-end">
+                                    <smi-file-upload datasource="relatedFiles">Add Another Related File</smi-file-upload>
+                                </div>
+                            </div>
+                            <div class="form-group custom-row-inline col-sm-12">
+
+                                <span>&nbsp;</span>
+
+                            </div>
+
+
+
+
+
+                        </div>
+                        <br />
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Close</button>
+            <button class="btn btn-primary" type="button" ng-click="Save((addDeliveryManualForm.$invalid))">{{ buttonLabel }}</button>
+
+        </div>
+
+    </script>
+    <script type="text/ng-template" id="ViewDeliveryChangeRequestDetails.html">
+
+        <div class="modal-header">
+            <h4 class="modal-title">{{ title }}</h4><i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+        </div>
+        <div class="modal-body">
+            <div id="top"></div>
+            <form name="deliveryChangeRequestDetailsForm">
+                <div class="row">
+                    <div class="form-group col-xs-2">
+                        <label class="control-label">Attach Manual:</label>
+                    </div>
+                    <div class="form-group col-xs-3" style="margin-left:-40px;">
+                        <ul style="margin-left:-40px;list-style:none;">
+                            <li ng-repeat="file in primaryFiles"><a ng-click="Download(file, deliveryItemId, 'PrimaryFiles')" style="cursor:pointer;">{{file}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="form-group col-xs-7">
+                        <button class="btn btn-primary" type="button" ng-click="toggleUpdatePrimaryFile()">{{ updatePrimaryFileLabel }}</button>
+                        <div ng-show="updatePrimaryFile" class="form-group custom-row-inline col-sm-12 {{(invalidPrimaryFileName.length != 0 || invalidPrimaryFilesize.length != 0) && showErrors ? 'required' : ''}}">
+                            <div class="col-sm-4">
+                                Primary File:
+                                <span ng-show="(invalidPrimaryFileName.length != 0 && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidPrimaryFilename}}" popover-trigger="mouseenter"></span>
+                                <span ng-show="(invalidPrimaryFilesize.length != 0 && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidPrimaryFilesize}}" popover-trigger="mouseenter"></span>
+                            </div>
+                            <div class="input-group col-sm-8">
+                                <input type="text" class="form-control" name="primaryFile" value="{{ primaryFile.name }}" readonly />
+                                <span class="input-group-btn">
+                                    <label class="btn btn-default btn-file">
+                                        <i class="fa fa-folder"></i> Browse... <input type="file" fileread="primaryFile" style="display:none">
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-2">
+                        <label class="control-label">Additional Files:</label>
+                    </div>
+                    <div class="form-group col-xs-3" style="margin-left:-40px;">
+                        <table>
+                            <tr ng-repeat="file in relatedFiles">
+                                <td><a ng-click="Download(file.name, deliveryItemId, 'RelatedFiles')" style="cursor:pointer;">{{ file.name }}</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form-group col-xs-7">
+                        <button class="btn btn-primary" ng-show="(relatedFiles.length > 0)" type="button" ng-click="toggleUpdateRelatedFile()">{{ updateRelatedFileLabel }}</button>
+                        <div ng-show="updateRelatedFile" class="form-group custom-row-inline col-sm-12 {{(invalidRelatedFileName.length != 0 || invalidRelatedFilesize.length != 0) && showErrors ? 'required' : ''}}">
+                            <div class="col-sm-4">
+                                Related File/s:
+                                <span ng-show="(invalidRelatedFileName.length != 0 && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidRelatedFilename}}" popover-trigger="mouseenter"></span>
+                                <span ng-show="(invalidRelatedFilesize.length != 0 && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidRelatedFilesize}}" popover-trigger="mouseenter"></span>
+                            </div>
+                            <div class="input-group col-sm-8">
+                                <smi-file-upload datasource="newRelatedFiles">Update Related File/s</smi-file-upload>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="canApprove">
+                    <div class="form-group col-xs-8 {{status.length == 0 && showErrors ? 'required': ''}}" style="margin-left:100px;">
+                        <table>
+                            <tr>
+                                <td rowspan="2" style="vertical-align:middle;">
+                                    <span ng-show="(status.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Status is required." popover-trigger="mouseenter" popover-placement="right"></span>
+                                </td>
+                                <td>
+                                    <input type="radio" ng-model="status" value="Approve"> Approve
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" ng-model="status" value="Reject"> Reject
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form-group col-xs-8 {{(comment.length == 0 && status == 'Reject') && showErrors ? 'required': ''}}" style="margin-left:100px;">
+                        <span ng-show="(comment.length == 0 && status == 'Reject') && showErrors" class="required fa fa-exclamation-circle" uib-popover="Comment is required if status is Rejected." popover-trigger="mouseenter" popover-placement="right"></span>
+                        <textarea ng-model="comment" style="width:400px" ng-show="status == 'Reject'"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Close</button>
+            <span ng-show="canApprove">
+                <button class="btn btn-primary" type="button" ng-click="Save((deliveryChangeRequestDetailsForm.$invalid))">Submit</button>
+            </span>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,31 @@
+﻿
+<div>
+    <div class="row col-lg-12 no-padding no-margin">
+        <div ui-view="leftpane" class="col-lg-2 no-padding " id="lp"></div>
+        <div id="content" class="col-lg-8 no-padding">
+            <div id="appContainer" ui-view="content">
+            </div>
+
+        </div>
+        <div ui-view="rightpane" class="col-lg-2 no-padding" id="rp"></div>
+    </div>
+   
+    <div ui-view="modaltemplate"></div>
+    <div ui-view="changeRequestForm"></div>
+    <!--<div ui-view="alertTemplate"></div>-->
+    <iframe id="exportFrame" style="display:none"></iframe>
+    <!--Spinner-->
+    <div class="bg-overlay" style="z-index:1200" ng-hide="!showSpinner">
+        <div style="height:30%"></div>
+        <div class="center">
+            <span class="fa fa-circle-o-notch fa-spin">
+            </span>
+            <p>Loading...</p>
+        </div>
+        <div style="height:30%"> </div>
+    </div>
+    <!--BG Overlay-->
+    <div class="bg-overlay" ng-hide="!showOverlay"></div>
+
+    <div class="diaolog-modal-popup-overlay" ng-hide="!showDialog2Overlay"></div>
+</div>

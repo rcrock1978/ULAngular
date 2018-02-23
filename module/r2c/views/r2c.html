@@ -1,0 +1,129 @@
+﻿
+<div ng-controller="r2cController">
+    <div id="dvSelectedRefiner">
+        <b>SELECTED REFINER :</b>
+        <span ng-hide="selectedRefiners.length == 0" ng-repeat="refiner in selectedRefiners">
+            {{refiner.Parent}} | {{ refiner.IsDateRange ? (refiner.Items[0].Value | date:'dd MMM yyyy').toString() + ' to ' + (refiner.Items[1].Value | date:'dd MMM yyyy').toString() :  refiner.Value}}
+            <i class="fa fa-times" ng-click="removeRefiner(refiner)"></i>
+        </span>
+    </div>
+    <div class="row col-lg-12" style="padding-right:0px">
+        <div ui-view="tabContainer" class="row col-lg-9"></div>
+        <div class="smi-toolbar row col-lg-3 no-padding pull-right">
+            <!--<button class="btn btn-primary" type="button"><i class="fa fa-th"></i>Custom View</button>-->
+            <button class="btn btn-primary" type="button" ng-click="Export()" ng-disabled="IsExportEnable()"> <i class="fa fa-download"></i>Export Results</button>{{infoDoc.IsChecked}}
+        </div>
+    </div>
+     
+    <br /><br /><br />
+    <div class="text-align-right">
+        <button class="btn btn-primary" type="button" ng-show="canAdd" ng-click="AddItem()"><i class="fa fa-plus"></i>MANAGE DATA</button>
+        <button class="btn btn-primary" type="button" ng-click="WorkflowTracking()"ng-hide="contentTemplateUrl.length > 0">WORKFLOW TRACKING</button>
+        <button class="btn btn-primary" type="button" ng-click="BackToList()"ng-hide="contentTemplateUrl.length == 0">BACK TO LIST</button>
+    </div>
+    <!--Showing {{docs.length}} item(s)-->
+    <div ui-view="alertTemplate"></div>
+    <div class="page-content" style="border:0px">
+        <div class="r2cContainer" ng-repeat="doc in docs"  ng-hide="contentTemplateUrl.length > 0">
+            <!--<div class="text-align-left r2c-item-list" ng-click="EditItem(doc)">
+                <div class="edge"></div>
+                <i class="fa fa-pencil r2c-icon-edit" tooltip-animation="true" tooltip-popup-delay='500' tooltip-placement="top" uib-tooltip="Edit"></i>
+            </div>-->
+            
+            <table class="table">
+                <thead>
+                    <tr >
+                        <th rowspan="2" class="bg-white {{IsIE ?  'word-break-breakAll' : 'word-break-breakword' }}" >{{doc.ComplienceProgramName}}
+                        <br />
+                       <!-- <button  type="button" class="btn btn-primary-blue" style="color:white!important"  ng-if="canAdd"  ng-click="EditItem(doc)">EDIT</button>-->
+                        </th>
+                        <th rowspan="1" ng-repeat="header in headers.Info">{{header}}</th>
+                    </tr>
+                    <tr>
+                        <td class="bg-white">{{doc.Region}} </td>
+                        <td class="bg-white">{{doc.SectorRegulated}}</td>
+                        <td class="bg-white">{{doc.CertificateOrganization}}</td>
+                        <!--<td class="bg-white">{{doc.ProductCategory}}</td>-->
+                        <td class="bg-white  {{IsIE ?  'word-break-breakAll' : 'word-break-breakword' }}" >{{doc.FreqAndTech}}</td>
+                        <td class="bg-white">{{doc.ApplicationType}}</td>
+                        <td class="bg-white">{{doc.RegionalEconomicUnion}}</td>
+                        <td class="bg-white">{{doc.Country}}</td>
+                        <td class="bg-white">{{doc.ProductType}}</td>
+                        <td class="bg-white">{{doc.ProductSubType}}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>
+
+            <!--========== DOCUMENTS TABLE ==========-->
+            <h4>Documents</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th ng-repeat="header in headers.Documents">{{header}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="infoDoc in doc.Documents">
+                        <td><input type="checkbox" ng-model="infoDoc.IsChecked" ng-show="AllowedToExport"/></td>
+                        <td>{{infoDoc.DocumentName}} &nbsp;&nbsp;&nbsp;<b ng-if="(infoDoc.RowStatus) == 1 || (infoDoc.RowStatus) == 2" style="color:red;">*{{infoDoc.Status}}*</b></td>
+                        <td>{{infoDoc.Remarks}}</td>
+                        <td>{{infoDoc.DocumentType}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!--========== SAMPLES TABLE ==========-->
+            <h4>Samples</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th ng-repeat="header in headers.Samples">{{header}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="infoSample in doc.Samples">
+                        <td><input type="checkbox" ng-model="infoSample.IsChecked" ng-show="AllowedToExport"/></td>
+                        <td>{{infoSample.SampleMode}}  &nbsp;&nbsp;&nbsp;<b ng-if="(infoSample.RowStatus) == 1 || (infoSample.RowStatus) == 2" style="color:red;">*{{infoSample.Status}}*</b></td>
+                        <td>{{infoSample.Remarks}}</td>
+                        <td>{{infoSample.NumberOfUnitsRequired}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th ng-repeat="header in headers.CommonRemarks">{{header}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="comRem in doc.CommonRemarks">
+                        <td><input type="checkbox" ng-model="comRem.IsChecked" /></td>
+                        <td>{{comRem.Remarks}}</td>
+                    </tr>
+               
+                    <!--<tr ng-repeat="infoSample in doc.Samples">
+                        <td><input type="checkbox" ng-model="infoSample.IsChecked" /></td>
+                        <td>{{infoSample.SampleMode}}  &nbsp;&nbsp;&nbsp;<b ng-if="(infoSample.RowStatus) == 1 || (infoSample.RowStatus) == 2" style="color:red;">*{{infoSample.Status}}*</b></td>
+                        <td>{{infoSample.Remarks}}</td>
+                        <td>{{infoSample.RemarksCountrySpecific}}</td>
+                        <td>{{infoSample.NumberOfUnitsRequired}}</td>
+                        <td>{{infoSample.SampleRequirement == '' ? 'N' : 'Y'}}</td>
+                    </tr>-->
+                </tbody>
+            </table>
+                <!--<div class="grid-loader" ng-hide="!showGridLoader">
+            <i class="fa fa-circle-o-notch fa-spin" area-hidden="true"></i>
+            <span>Loading...</span>
+        </div>-->
+
+            </div>
+       
+        <div class="r2cContainer" ng-include src="contentTemplateUrl"></div>
+    </div>
+    <div ng-include src="modalTemplateUrl"></div>
+    <div ng-include src="r2cWorkFlowFieldChangesTemplateUrl"></div>
+</div>

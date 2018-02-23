@@ -1,0 +1,87 @@
+﻿
+<div ng-controller="newsController">
+    <div id="dvSelectedRefiner">
+        <b>SELECTED REFINER :</b>
+        <span ng-hide="selectedRefiners.length == 0" ng-repeat="refiner in selectedRefiners">
+            {{refiner.Parent}} | {{ refiner.IsDateRange ? (refiner.Items[0].Value | date:'dd MMM yyyy').toString() + ' to ' + (refiner.Items[1].Value | date:'dd MMM yyyy').toString() :  refiner.Value}}
+            <i class="fa fa-times" ng-click="removeRefiner(refiner)"></i>
+        </span>
+    </div>
+
+    <div class="row col-lg-12" style="padding-right:0px">
+        <div ui-view="tabContainer" class="row col-lg-9"></div>
+        <!--<div class="smi-toolbar row col-lg-4" id="rightButtonNews">-->
+        <div class="smi-toolbar row col-lg-3 no-padding pull-right">
+            <!--<button class="btn btn-primary" type="button" ng-click="AddFavoriteNews()"><i class="fa fa-plus"></i>ADD FAVORITES</button>-->
+            <button class="btn btn-primary" type="button" ng-hide="workflowPage" ng-click="ExportNewsToPDF()" ng-disabled="!(news|filter:{IsChecked:true}).length"><i class="fa fa-download"></i>EXPORT NEWS</button>
+        </div>
+    </div>
+    <div class="text-align-right">
+        <button class="btn btn-primary" type="button" ng-hide="workflowPage" ng-click="AddNews()" ng-if="canAddNews"><i class="fa fa-plus"></i>ADD NEWS</button>
+        <button class="btn btn-primary" type="button" ng-click="WorkflowTracking()" ng-if="newsPage">WORKFLOW TRACKING</button>
+        <button class="btn btn-primary" type="button" ng-click="BackToList()" ng-if="workflowPage">BACK TO LIST</button>
+    </div>
+    <br /><br />
+    <!--<hr style="margin: 0px 0px 0px 0px;" width="100%" />-->
+    <div ng-if="newsPage" style="max-height:639px; overflow-y:scroll; overflow-x:hidden;" load-more-on-scroll-down on-scroll="LoadMore()" scroll-threshold="200" time-threshold="600">
+        <hr style="margin: 0px 0px 0px 0px;" width="100%" />
+        <div ng-repeat="detailednews in news | limitTo : newsLimit" id="{{detailednews.ElementId}}">
+            <!--content page-->
+            <div class="row" style="padding:20px;">
+                <!--<div ng-class="$even ? 'even col-md-9 col-lg-9' : 'odd col-md-9 col-lg-9'">-->
+                <div ng-class="{'col-md-12 col-lg-12' : detailednews.Image == 'data:image/png;base64,bnVsbA=='
+                     , 'odd col-md-9 col-lg-9' : ($index+1) % 2 == 0 && detailednews.Image != 'data:image/png;base64,bnVsbA=='
+                     , 'even col-md-9 col-lg-9' : ($index+1) % 2 != 0 && detailednews.Image != 'data:image/png;base64,bnVsbA=='}">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <label for="cb" class="pure-checkbox">
+                                <input type="checkbox" ng-model="detailednews.IsChecked" id="cbxTitle" /> &nbsp;
+                                <label id="titleFontStyle">{{detailednews.Title}}</label>
+                            </label>
+                        </div>
+                        <div class="col-md-6 col-lg-6" style="word-break:break-all;">
+                            <p id="rightTextAlignNews">
+                                <small>
+                                    Posted: {{detailednews.Posted | date:'dd MMM yyyy' }} | Regulatory Category: <span>{{detailednews.SectorRegulatedName}}</span> | Country: <span>{{detailednews.CountryName}}</span>
+                                    <br />
+                                    Compliance Program: <span>{{detailednews.ComplianceProgramName}}</span> | Category: {{detailednews.Category}} | <span class="glyphicon glyphicon-user"></span> {{detailednews.PostedBy}}
+                                    <br />
+                                    <button class="btn btn-primary" type="button" ng-click="EditNews(detailednews)" id="editButton" ng-show="canAddNews">EDIT</button>
+                                    <!--<button class="btn btn-primary" type="button" ng-click="EditNews(detailednews)" id="editButton" ng-show="canAddNews">EDIT</button>-->
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                    <br />
+                    <div ng-bind-html="detailednews.Details"></div>
+                </div>
+
+                <!--photos-->
+                <div ng-show="detailednews.Image != 'data:image/png;base64,bnVsbA=='" ng-class="$even ? 'pull-right' : 'pull-left'">
+                    <span ng-show="detailednews.Image == 'data:image/png;base64,bnVsbA=='" class="glyphicon glyphicon-picture">
+                    </span>
+                    <img class="img-responsive" ng-src="{{detailednews.Image}}" id="imageSize" />
+                    <div id="captions">
+                        <small>
+                            {{detailednews.ImageCaption}}
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <hr width="100%" />
+        </div>
+    </div>
+
+    <div ng-if="workflowPage" class="page-content">
+        <div ui-view="alertTemplate"></div>
+        <div id="workflowGridUL" ui-grid="workflowGrid" style="height:72vh" ui-grid-exporter ui-grid-selection ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column ui-grid-auto-resize></div>
+
+        <div class="grid-loader" ng-hide="!showGridLoader">
+            <i class="fa fa-circle-o-notch fa-spin" area-hidden="true"></i>
+            <span>Loading...</span>
+        </div>
+    </div>
+
+    <div ng-include src="modalTemplateUrl"></div>
+</div>

@@ -1,0 +1,156 @@
+﻿{
+  "Data": {
+    "SectorRegulated": [
+      {
+        "SectorRegulatedId": "1",
+        "RefinerName": "Safety"
+      },
+      {
+        "SectorRegulatedId": "2",
+        "RefinerName": "Wireless"
+      }
+    ],
+    "FrequencyAndTechnology": [
+      {
+        "FrequencyAndTechnologyId": "1",
+        "RefinerName": "NonSpecific_125k"
+      },
+      {
+        "FrequencyAndTechnologyId": "2",
+        "RefinerName": "NonSpecific_315M"
+      },
+      {
+        "FrequencyAndTechnologyId": "3",
+        "RefinerName": "NonSpecific_433M"
+      }
+    ],
+    "ProductCategory": [
+      {
+        "ProductCategoryId": "1",
+        "RefinerName": "Battery"
+      },
+      {
+        "ProductCategoryId": "2",
+        "RefinerName": "Consumer Electronics"
+      },
+      {
+        "ProductCategoryId": "3",
+        "RefinerName": "I.T. Equipment"
+      }
+    ],
+    "Region": [
+      {
+        "RegionId": "1",
+        "RefinerName": "North America"
+      },
+      {
+        "RegionId": "2",
+        "RefinerName": "Europe"
+      },
+      {
+        "RegionId": "3",
+        "RefinerName": "Asia"
+      },
+      {
+        "RegionId": "4",
+        "RefinerName": "Australia/Oceania"
+      },
+      {
+        "RegionId": "5",
+        "RefinerName": "South America"
+      },
+      {
+        "RegionId": "6",
+        "RefinerName": "Region6"
+      },
+      {
+        "RegionId": "7",
+        "RefinerName": "Region7"
+      },
+      {
+        "RegionId": "8",
+        "RefinerName": "Region8"
+      },
+      {
+        "RegionId": "9",
+        "RefinerName": "Region9"
+      }
+    ],
+    "Country": [
+      {
+        "CountryId": "1",
+        "RefinerName": "Afghanistan"
+      },
+      {
+        "CountryId": "2",
+        "RefinerName": "Albania"
+      },
+      {
+        "CountryId": "3",
+        "RefinerName": "Algeria"
+      },
+      {
+        "CountryId": "4",
+        "RefinerName": "Andorra"
+      },
+      {
+        "CountryId": "5",
+        "RefinerName": "Angola"
+      },
+      {
+        "CountryId": "6",
+        "RefinerName": "Argentina"
+      }
+    ],
+    "ComplianceProgram": [
+      {
+        "ComplianceProgramId": "1",
+        "RefinerName": "CDC"
+      },
+      {
+        "ComplianceProgramId": "2",
+        "RefinerName": "CSAT"
+      },
+      {
+        "ComplianceProgramId": "3",
+        "RefinerName": "CWP"
+      },
+      {
+        "ComplianceProgramId": "4",
+        "RefinerName": "CWSP"
+      },
+      {
+        "ComplianceProgramId": "5",
+        "RefinerName": "IGC"
+      }
+    ],
+    "NewsSource": [
+      {
+        "NewsSourceId": "1",
+        "RefinerName": "News Source 1"
+      },
+      {
+        "NewsSourceId": "2",
+        "RefinerName": "News Source 2"
+      },
+      {
+        "NewsSourceId": "3",
+        "RefinerName": "News Source 3"
+      }
+    ],
+    "DateRange": [
+      {
+        "NewsSourceId": "1",
+        "RefinerName": "Posting Date"
+      },
+      {
+        "NewsSourceId": "2",
+        "RefinerName": "Effective Date"
+      },
+      {
+        "NewsSourceId": "3",
+        "RefinerName": "Expiration Date"
+      }
+    ]
+  }
+}

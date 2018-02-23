@@ -1,0 +1,25 @@
+﻿<div class="smi-dropdown">
+    <div class="custom-row col-lg-12 no-padding">
+        <div id="{{controlId}}" class="col-lg-12 no-padding smi-drp">
+            <div class="input-group">
+                <input type="text" class="form-control {{isValid ? '':'red'}}"
+                       style="background:white"
+                       ng-model="searchText"
+                       tooltip-animation="false" tooltip-popup-delay='500' tooltip-placement="top" uib-tooltip="{{isValid ? searchText : 'Invalid!'}}"
+                       ng-keyup="onKeyUp($event,searchText)"
+                       process-on-enter="onEnter()"
+                       ng-readonly="!searchable">
+                       <!--placeholder="Select"-->
+                <div class="input-group-btn {{isOpen ? 'open' : ''}}" onload="init()">
+                    <span style="display:none">{{filterText}}</span>
+                    <button type="button" style="padding-left:6px;padding-right:6px" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-click="toggleDropDown()"><span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right smi-drp-menu" style="max-height:150px;overflow-y:scroll;margin:0px">
+                        <li id="{{item.Id}}" ng-repeat="item in (filtered = ( datasource | filter : filterText:startsWith )) " class="{{item.Selected ? 'smi-drp-menu-selected': ''}}">
+                            <a ng-click="SetSelected(item)">{{item.Text}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

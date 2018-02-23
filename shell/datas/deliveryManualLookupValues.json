@@ -1,0 +1,24 @@
+﻿{
+  "Data": {
+
+    "DocumentType": [
+      {
+        "DocumentTypeId": "1",
+        "DocumentTypeName": "A"
+      },
+      {
+        "DocumentTypeId": "2",
+        "DocumentTypeName": "B"
+      },
+      {
+        "DocumentTypeId": "3",
+        "DocumentTypeName": "C"
+      },
+      {
+        "DocumentTypeId": "4",
+        "DocumentTypeName": "D"
+      }
+    ]
+
+    }
+}

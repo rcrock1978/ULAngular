@@ -1,0 +1,99 @@
+﻿
+<div>
+    <!--MODAL POPUP TEMPLATE-->
+    <script type="text/ng-template" id="shellConfirmDialog.html">
+        <div class="modal-header">
+            <h3 class="modal-title-confirm">{{title}}</h3>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+        </div>
+        <div class="modal-body ">
+            <div class="row col-sm-12" style="margin:0">
+                <div class="row col-sm-2 modal-confirm-icon no-padding no-margin" ng-hide="!HasIcon">
+                    <i class="fa fa-warning"></i>
+                </div>
+                <div class="row {{HasIcon ? 'col-sm-10':'col-sm-12'}} modal-confirm-textfield">
+                    {{message}}
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="cancel()">{{cancelButtonText}}</button>
+            <button class="btn {{IsDangerOkButton ? 'btn-danger':' btn-primary'}}" type="button" ng-click="ok()">{{okButtonText}}</button>
+        </div>
+    </script>
+
+    <!--MODAL POPUP LAYER 3-->
+
+    <script type="text/ng-template" id="shellConfirmDialog2.html">
+
+        <div class="modal-header">
+            <h3 class="modal-title-confirm">{{title}}</h3>
+            <i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+        </div>
+        <div class="modal-body ">
+            <div class="row col-sm-12" style="margin:0">
+                <div class="row col-sm-2 modal-confirm-icon no-padding no-margin" ng-hide="!HasIcon">
+                    <i class="fa fa-warning"></i>
+                </div>
+                <div class="row {{HasIcon ? 'col-sm-10':'col-sm-12'}} modal-confirm-textfield">
+                    {{message}}
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="cancel()">{{cancelButtonText}}</button>
+            <button class="btn {{IsDangerOkButton ? 'btn-danger':' btn-primary'}}" type="button" ng-click="ok()">{{okButtonText}}</button>
+        </div>
+    </script>
+
+    <!--MODAL ALERT-->
+    <script type="text/ng-template" id="shellAlertDialog.html">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="{{type}}"></i>{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            {{message}}
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">Ok</button>
+        </div>
+    </script>
+    <!--MODAL Evidence-->
+    <script type="text/ng-template" id="shellEvidenceDialog.html">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="{{type}}"></i>{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div>
+                <p><b style="text-decoration: underline;">Source:</b> {{source}}</p>
+            </div>
+            <div style="margin-top: -20px">
+                <p><b style="text-decoration: underline;">Remarks:</b> {{remarks}}</p>
+            </div>
+            <div style="margin-top: -20px">
+                <p><b style="text-decoration: underline;">Remarks Internal:</b> {{remarksInternal}}</p>
+            </div>
+            <div style="margin-top: -20px">
+                <p><b style="text-decoration: underline;">Update Date:</b> {{updateDate}}</p>
+            </div>
+            <div style="margin-top: -20px">
+                <p><b style="text-decoration: underline;">Evidence Note:</b> {{evidenceNote}}</p>
+            </div>
+            <div>
+                <ul style="list-style: none; padding: 2px; margin-top: 18px;">
+                    <li ng-repeat="evidence in evidences">
+                        <p><b style="text-decoration: underline;">Evidence:&nbsp;</b><a href="" ng-click="openEvidence(evidence)">{{evidence.Filename}}</a></p>
+                        <p style="margin-top:-18px;"><b style="text-decoration: underline;">Document Type:&nbsp;</b>{{documentType}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">Close</button>
+        </div>
+    </script>
+
+
+
+
+</div>

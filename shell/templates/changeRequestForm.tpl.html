@@ -1,0 +1,167 @@
+﻿<!--CRF ALERT-->
+<div>
+    <script type="text/ng-template" id="changeRequestForm.tpl.html">
+
+        <div class="modal-header">
+            <h4 class="modal-title">{{ title }}</h4><i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+            <p><small>*Marked fields are required</small></p>
+        </div>
+        <div class="modal-body">
+            <div id="top"></div>
+            <form name="changeRequestForm">
+                <div class="row">
+                    <div class="form-group col-xs-4 {{(selectedCountry == undefined || selectedCountry.length == 0) && showErrors ? 'required': ''}}">
+                        <label for="dprCountry" class="control-label"><span class="required">*</span>Country:</label>
+                        <span ng-show="(selectedCountry == undefined || selectedCountry.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Country is Required" popover-trigger="mouseenter"></span>
+                    </div>
+                    <div class="form-group col-xs-6 {{(selectedCountry == undefined || selectedCountry.length == 0) && showErrors ? 'required': ''}}">
+                        <div id="multiselectCountry" ng-dropdown-multiselect="" options="countries" selected-model="selectedCountry" extra-settings="countrySettings"></div>
+                    </div>
+
+                    <div class="form-group col-xs-4">
+                        <label class="control-label" for="dprUnion">Regional Economic Union:</label>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <div id="multiselectUnion" ng-dropdown-multiselect="" options="unionList" selected-model="selectedUnion" extra-settings="unionSettings"></div>
+                    </div>
+
+                    <div class="form-group col-xs-4 {{(selectedSector == undefined || selectedSector.length == 0) && showErrors ? 'required': ''}}">
+                        <label for="dprSectors" class="control-label"><span class="required">*</span>Regulatory Category:</label>
+                        <span ng-show="(selectedSector == undefined || selectedSector.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Regulatory Category is Required" popover-trigger="mouseenter"></span>
+                    </div>
+                    <div class="form-group col-xs-6 {{(selectedSector == undefined || selectedSector.length == 0) && showErrors ? 'required': ''}}">
+                        <div id="multiselectSectors" ng-dropdown-multiselect="" options="sectorList" selected-model="selectedSector" extra-settings="sectorSettings"></div>
+                    </div>
+
+                    <div class="form-group col-xs-4">
+                        <label class="control-label" for="dprCompliance">Compliance Program:</label>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <div id="multiselectCompliance" ng-dropdown-multiselect="" options="complianceList" selected-model="selectedCompliance" extra-settings="complianceSettings"></div>
+                    </div>
+
+                    <div class="form-group col-xs-4 {{(selectedModule == undefined || selectedModule.length == 0) && showErrors ? 'required': ''}}">
+                        <label for="dprModules" class="control-label"><span class="required">*</span>Scope:</label>
+                        <span ng-show="(selectedModule == undefined || selectedModule.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Scope is Required" popover-trigger="mouseenter"></span>
+                    </div>
+                    <div class="form-group col-xs-6 {{(selectedModule == undefined || selectedModule.length == 0) && showErrors ? 'required': ''}}">
+                        <div id="multiselectScope" ng-dropdown-multiselect="" options="modules" selected-model="selectedModule" extra-settings="moduleSettings"></div>
+                    </div>
+
+                    <div class="form-group col-xs-4 {{(details == undefined || details.length == 0) && showErrors ? 'required': ''}}">
+                        <label for="txtDetails" class="control-label"><span class="required">*</span>Details of Request:</label>
+                        <span ng-show="(details == undefined || details.length == 0) && showErrors" class="required fa fa-exclamation-circle" uib-popover="Details of Request is Required" popover-trigger="mouseenter"></span>
+                    </div>
+                    <div class="form-group col-xs-6 {{(details == undefined || details.length == 0) && showErrors ? 'required': ''}}">
+                        <input type="text" class="form-control" id="txtDetails" placeholder="" ng-model="details" maxlength="100">
+                    </div>
+
+                    <div class="form-group custom-row-inline col-sm-12 {{(invalidRelatedFileName.length != 0 || invalidRelatedFilesize.length != 0) && showErrors ? 'required' : ''}}">
+                        <div class="col-sm-3">
+                            <label>Attachment (s):</label>
+                            <span ng-show="(invalidRelatedFileName.length != 0 && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidRelatedFilename}}" popover-trigger="mouseenter"></span>
+                            <span ng-show="(invalidRelatedFilesize.length != 0 && showErrors)" class="required fa fa-exclamation-circle" uib-popover="{{uploadPromptInvalidRelatedFilesize}}" popover-trigger="mouseenter"></span>
+                        </div>
+                        <div class="input-group col-sm-9">
+                            <smi-file-upload datasource="relatedFiles"></smi-file-upload>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-4">
+                        <label class="control-label" for="txtDetails">Link to External Webpage:</label>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <input type="text" class="form-control" id="txtWebpage" placeholder="" ng-model="webpage" maxlength="100">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="Save((changeRequestForm.$invalid))">Save</button>
+        </div>
+    </script>
+</div>
+<div>
+    <script type="text/ng-template" id="changeRequestDetails.tpl.html">
+
+        <div class="modal-header">
+            <h4 class="modal-title">{{ title }}</h4><i class="fa fa-times pull-right close" ng-click="CloseDialog()"></i>
+        </div>
+        <div class="modal-body">
+            <div id="top"></div>
+            <form name="changeRequestDetailsForm">
+                <div class="row">
+                    <div class="form-group col-xs-4">
+                        <label for="lblCountry" class="control-label">Country:</label>
+                    </div>
+                    <div class="form-group col-xs-8">
+                        <div style='overflow-y:auto; line-height:1.5'><p>{{Country}}</p></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-4">
+                        <label for="lblCountry" class="control-label">Regional Economic Union:</label>
+                    </div>
+                    <div class="form-group col-xs-8">
+                        <div style='overflow-y:auto; line-height:1.5'><p>{{RegionalEconomicUnion}}</p></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-4">
+                        <label for="lblCountry" class="control-label">Regulatory Category:</label>
+                    </div>
+                    <div class="form-group col-xs-8">
+                        <div style='overflow-y:auto; line-height:1.5'><p>{{Sector}}</p></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-4">
+                        <label for="lblCountry" class="control-label">Compliance Program:</label>
+                    </div>
+                    <div class="form-group col-xs-8">
+                        <div style='overflow-y:auto; line-height:1.5'><p>{{ComplianceProgram}}</p></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-4">
+                        <label for="lblCountry" class="control-label">Scope:</label>
+                    </div>
+                    <div class="form-group col-xs-8">
+                        <div style='overflow-y:auto; line-height:1.5'><p>{{Scope}}</p></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-4">
+                        <label for="lblCountry" class="control-label">Details of Request:</label>
+                    </div>
+                    <div class="form-group col-xs-8">
+                        <div style='overflow-y:auto; line-height:1.5'><p>{{WorkflowDetails}}</p></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-4">
+                        <label for="lblCountry" class="control-label">Attachment(s):</label>
+                    </div>
+                    <div class="form-group col-xs-8">
+                        <ul style="margin-left:-40px;list-style:none;">
+                            <li ng-repeat="file in relatedFiles.files"><a ng-click="Download(file, relatedFiles.workflowItemId)" style="cursor:pointer;"><i class="fa fa-edit"></i>{{file}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-4">
+                        <label for="lblCountry" class="control-label">Link to External Webpage:</label>
+                    </div>
+                    <div class="form-group col-xs-8">
+                        <label class="control-label"><a href="//{{WorkflowLink}}" target="_blank">{{WorkflowLink}}</a></label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button ng-hide="isDisabled" class="btn btn-primary" type="button" ng-click="Save((changeRequestDetailsForm.$invalid))">Review Completed</button>
+            <button class="btn btn-warning" type="button" ng-click="CloseDialog()">Cancel</button>
+        </div>
+    </script>
+</div>

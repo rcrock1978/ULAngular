@@ -1,0 +1,69 @@
+﻿{
+  "Data": {
+    "SectorRegulated": [
+      {
+        "SectorRegulatedId": "1",
+        "RefinerName": "Wireless"
+      },
+      {
+        "SectorRegulatedId": "2",
+        "RefinerName": "Safety"
+      }
+    ],
+    "Region": [
+      {
+        "RegionId": "1",
+        "RefinerName": "EU"
+      },
+      {
+        "RegionId": "2",
+        "RefinerName": "EU Others"
+      },
+      {
+        "RegionId": "3",
+        "RefinerName": "Japan"
+      },
+      {
+        "RegionId": "4",
+        "RefinerName": "North America"
+      }
+    ],
+    "Country": [
+      {
+        "CountryId": "1",
+        "RefinerName": "Afghanistan"
+      },
+      {
+        "CountryId": "2",
+        "RefinerName": "Albania"
+      },
+      {
+        "CountryId": "3",
+        "RefinerName": "Algeria"
+      },
+      {
+        "CountryId": "4",
+        "RefinerName": "Andorra"
+      }
+    ],
+    "CertificateOrganization": [
+      {
+        "CertificateOrganizationId" :  "1",
+        "RefinerName": "UL Japan"
+      },
+      {
+        "CertificateOrganizationId" :  "2",
+        "RefinerName": "UL Taiwan"
+      },
+      {
+        "CertificateOrganizationId" :  "3",
+        "RefinerName": "KTC"
+      },
+      {
+        "CertificateOrganizationId" :  "4",
+        "RefinerName": "ANATEL"
+      }
+    ]
+  }
+}
+

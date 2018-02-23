@@ -1,0 +1,438 @@
+﻿<style>
+    .manageDataModal .modal-dialog{
+        width: 1300px;
+    }
+    .manageDataModal .modal-body{
+        min-height: 800px;
+    }
+
+    .ui-grid-cell {
+      overflow: visible;
+      z-index: 99999;
+    }
+
+    .ui-grid-cell, ui-select-wrap {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Make sure the container doesn't shrink too small */
+    .ui-select-container {
+      min-width: 100px;
+    }
+
+    .not-active {
+       pointer-events: none;
+       cursor: default;
+    }
+
+    
+</style>
+
+<div>    
+    <script type="text/ng-template" id="regModalDialog.html">
+        <div class="modal-header">
+            <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <!--<p><small>*Marked fields are required</small></p>-->
+            <i class="fa fa-times pull-right close" ng-click="closeDialog()"></i>
+        </div>
+        <div class="row col-lg-12" style="padding-right:0px">
+            <div ui-view="tabContainer" class="row col-lg-9"></div>
+            <div class="smi-toolbar row col-lg-3 no-padding pull-right">
+                <!--<button class="btn btn-primary" type="button" disabled><i class="fa fa-th"></i>Custom View</button>-->
+                <!--<button class="btn btn-primary {{gridSelections.length > 0 ? '':'disabled'}}" type="button" ng-click="DownloadToExcel()" ng-disabled="!gridSelections.length > 0"><i class="fa fa-download"></i>Export Results</button>-->
+            </div>
+        </div> 
+        <!--<smi-modal-tabs datasource="tabs" onchange="TabSelectionChange(val)" selected="selectedTab"></smi-modal-tabs>-->
+        <div id="modalTablContainer">
+            <ul class="nav nav-tabs">
+                <li smi-active-tab="CountryInfo"><a href="#tab1" data-toggle="tab" ng-click="switchGrid('CountryInfo')" ng-class="isWorkflow ? 'not-active' : ''">Country Info</a></li>
+                <li smi-active-tab="AuthorityRegulation"><a href="#tab2" data-toggle="tab" ng-click="switchGrid('AuthorityRegulation')" ng-class="isWorkflow ? 'not-active' : ''">Authority and Regulation</a></li>
+                <li smi-active-tab="FrequencyTechnology"><a href="#tab3" data-toggle="tab" ng-click="switchGrid('FrequencyTechnology')" ng-class="isWorkflow ? 'not-active' : ''">Frequency and Technology</a></li>
+                <li smi-active-tab="ComplianceProgram"><a href="#tab4" data-toggle="tab" ng-click="switchGrid('ComplianceProgram')" ng-class="isWorkflow ? 'not-active' : ''">Compliance Program</a></li>
+                <li smi-active-tab="ScopeStandards"><a href="#tab5" data-toggle="tab" ng-click="switchGrid('ScopeStandards')" ng-class="isWorkflow ? 'not-active' : ''">Scope and Standards</a></li>
+                <li smi-active-tab="TestingValidity"><a href="#tab6" data-toggle="tab" ng-click="switchGrid('TestingValidity')" ng-class="isWorkflow ? 'not-active' : ''">Testing and Validity</a></li>
+
+                <li role="presentation" class="pull-right" style="margin-right:8px">
+                    <a>
+                        Language :
+                        <select>
+                            <option>English</option>
+                            <option>Japanese</option>
+                        </select>
+                        <!--<smi-drop-down datasource="languages" searchable="true" model="language"></smi-drop-down>-->
+                                <!--<select ng-options="item.Id as item.Text for item in languages track by item.Id" ng-model="selected"></select>-->
+                                <!--<select>
+                        <option ng-options="item in language">item</option>
+                    </select>-->
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-body">
+            <div class="tabbable">
+
+                <div class="tab-content">
+                    <!--COUNTRY INFO-->
+                    <div class="tab-pane" smi-active-tab="CountryInfo" id="tab1">
+                        <!--Country Info Angular Grid-->
+                        <div ui-grid="countryInfoGrid" ui-grid-cellnav ui-grid-edit ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column style="height: 250px; width: 100%; line-height: 1.4285;" ng-if="showGrid1"></div>
+                                                
+                        <div class="row">
+                            <div class="col-md-1 pull-right"  ng-if="isWorkflow == false">
+                                <button class="btn btn-primary" type="button" ng-click="addCountryInfo()">Add Row</button>
+                            </div>                            
+                        </div>
+                        
+                        <!--add evidence-->
+                        <smi-add-evidence></smi-add-evidence>
+
+                        <!--for refactoring; convert footer to directive(as well as the whole tab)-->
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-10"></div>
+                                
+                                <div class="col-md-12" style="text-align:center;">
+                                    <button class="btn btn-warning" ng-click="closeDialog()">Cancel</button>
+                                    <button class="btn btn-primary" type="button" ng-if="(isWorkflow && isApprover) || !isWorkflow" ng-click="saveCountryInfo()" ng-disabled="isWorkflow && (!(workflowAction == false && rejectComment != '') && !(workflowAction == true))" >{{submitText}}</button>                                         
+                                </div>
+
+                                <div class="col-md-10"></div>
+
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+                    <!--AUTHORITY AND REGULATION-->                    
+                    <div class="tab-pane" smi-active-tab="AuthorityRegulation" id="tab2">
+                        <div class="row" style="display:inline">
+                            <div class="row">
+                                <div class="col-md-1 pull-left" style="width:10%;">
+                                    <label for="drpCountry"><b>Select a Country:</b></label>
+                                </div>
+                                <div class="col-md-2 pull-left" style="width: 30%;">
+                                    <select ng-model="selectedAuthorityRegulationCountry" ng-change="authorityRegulationsGridOnSelectedCountry(selectedAuthorityRegulationCountry)" class="form-control" ng-options="item.CountryName for item in authorityRegulationCountryList track by item.CountryItemId" ng-disabled="isWorkflow">
+                                        <option value="" disabled selected>Select Country</option>
+                                        <!--<option ng-repeat="country in freqTechCountries" value="{{country.CountryItemId}}">{{country.CountryName}}</option>-->
+                                    </select>
+                                    <!--<smi-drop-down datasource="" model=""></smi-drop-down>-->
+                                </div>
+                                <div class="col-md-4" style="width: 20%;">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Authority and Regulation Angular Grid-->
+                        <div ui-grid="authorityregulationInfoGrid" ui-grid-cellnav ui-grid-edit ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column style="height: 250px; width: 100%; line-height: 1.4285;" ng-if="showGrid2 && (selectedAuthorityRegulationCountry != null || authorityregulationInfoGrid.data.length != 0)"></div>
+                        
+                        <div class="row" ng-if="selectedAuthorityRegulationCountry != null || isWorkflow == false">
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-primary" type="button" ng-click="addAuthorityRegulation()">Add Row</button>
+                            </div>
+                        </div>
+
+                        <!--add evidence-->
+                        <smi-add-evidence></smi-add-evidence>
+                                                
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-10"></div>
+
+                                <div class="col-md-12" style="text-align:center;">
+                                    <button class="btn btn-warning" ng-click="closeDialog()">Cancel</button>
+                                    <button class="btn btn-primary" type="button" ng-if="(isWorkflow && isApprover) || !isWorkflow" ng-click="saveAuthorityAndRegulation()" ng-disabled="isWorkflow && (!(workflowAction == false && rejectComment != '') && !(workflowAction == true))">{{submitText}}</button>
+                                </div>
+
+                                <div class="col-md-10"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--FREQUENCY AND TECHNOLOGY-->
+                    <div class="tab-pane" smi-active-tab="FrequencyTechnology" id="tab3">
+                        <div class="row" style="display:inline">
+                            <div class="row">
+                                <div class="col-md-1 pull-left" style="width:10%;">
+                                    <label for="drpCountry"><b>Select a Country:</b></label>
+                                </div>
+                                <div class="col-md-2 pull-left" style="width: 30%;">
+                                    <!--<div id="drpCountry" ng-dropdown-multiselect="" options="freqTechCountries" extra-settings="multiselectSettings" class="multi-Select"></div>-->
+                                    <select ng-model="selectedFreqTechCountry" ng-change="frequencyTechnologyGridOnSelectedCountry(selectedFreqTechCountry)" class="form-control" ng-options="item.CountryName for item in frequencytechnologyCountryLookup track by item.CountryItemId" ng-disabled="isWorkflow">
+                                        <option value="" disabled selected>Select Country</option>
+                                        <!--<option ng-repeat="country in freqTechCountries" value="{{country.CountryItemId}}">{{country.CountryName}}</option>-->
+                                    </select>
+                                    <!--<smi-drop-down datasource="" model=""></smi-drop-down>-->
+                                </div>
+                                <div class="col-md-4" style="width: 20%;">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Frequency and Technology Angular Grid-->
+                        <div ui-grid="frequencytechnologyInfoGrid" ui-grid-cellnav ui-grid-edit ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column style="height: 250px; width: 100%; line-height: 1.4285;" ng-if="showGrid3 && (selectedFreqTechCountry != null || frequencytechnologyInfoGrid.data.length != 0)"></div>
+
+                        <div class="row" ng-if="selectedFreqTechCountry != null">
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-primary" type="button" ng-click="addFrequencyTechnology()">Add Row</button>
+                            </div>
+                        </div>
+
+                        <!--add evidence-->
+                        <smi-add-evidence></smi-add-evidence>
+                        
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-10"></div>
+
+                                <div class="col-md-12" style="text-align:center;">
+                                    <button class="btn btn-warning" ng-click="closeDialog()">Cancel</button>
+                                    <button class="btn btn-primary" type="button" ng-if="(isWorkflow && isApprover) || !isWorkflow" ng-click="saveFrequencyAndTechnology()" ng-disabled="isWorkflow && (!(workflowAction == false && rejectComment != '') && !(workflowAction == true))">{{submitText}}</button>
+                                </div>
+
+                                <div class="col-md-10"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--COMPLIANCE PROGRAM-->
+                    <div class="tab-pane" smi-active-tab="ComplianceProgram" id="tab4">
+                        <div class="row" style="display:inline">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="drpCountry"><b>Select a Country:</b></label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" ng-options="item.CountryName for item in countryLookup track by item.CountryItemId" ng-model="selectedComplianceProgramCountry" ng-change="onComplianceProgramCountrySelect()" ng-disabled="isWorkflow">
+                                        <option value="" disabled selected>Select Country</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Compliance Program Angular Grid-->
+                        <div class="page-content" ng-if="showGrid4 && (selectedComplianceProgramCountry !== null || complianceProgramInfoGrid.data.length !== 0)">
+                            <div ui-grid="complianceProgramInfoGrid" ui-grid-cellnav ui-grid-edit ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column style="height: 250px; width: 100%; line-height: 1.4285;" ></div>
+                        </div>
+
+                        <div class="row" ng-if="selectedComplianceProgramCountry !== null">
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-primary" type="button" ng-click="addComplianceProgram()" >Add Row</button>
+                            </div>
+                        </div>    
+                        
+                        <!--add evidence-->
+                        <smi-add-evidence></smi-add-evidence>                 
+                        
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-10"></div>
+
+                                <div class="col-md-12" style="text-align:center;">
+                                    <button class="btn btn-warning" ng-click="closeDialog()">Cancel</button>
+                                    <button class="btn btn-primary" type="button" ng-if="(isWorkflow && isApprover) || !isWorkflow" ng-click="saveComplianceProgram()" ng-disabled="isWorkflow && (!(workflowAction == false && rejectComment != '') && !(workflowAction == true))">{{submitText}}</button>
+                                </div>
+
+                                <div class="col-md-10"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--SCOPE AND STANDARDS-->
+                    <div class="tab-pane" smi-active-tab="ScopeStandards" id="tab5">
+                        <div class="row" style="display:inline">
+                            <div class="row">
+                                <div class="col-md-1 pull-left" style="width:10%;">
+                                    <label for="drpCountry"><b>Select a Country:</b></label>
+                                </div>
+                                <div class="col-md-2 pull-left" style="width: 30%;">
+                                    <select class="form-control" ng-options="item.CountryName for item in scopeStandardsCountryLookup track by item.CountryItemId" ng-model="selectedScopeStandardsCountry" ng-change="onScopeStandardsCountrySelect()" ng-disabled="isWorkflow">
+                                        <option value="" disabled selected>Select Country</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1 pull-left" style="width:15%;">
+                                    <label for="drpCountry"><b>Compliance Program:</b></label>
+                                </div>
+                                <div class="col-md-2 pull-left" style="width: 30%;">
+                                    <select ng-disabled="selectedScopeStandardsCountry == null && isWorkflow" ng-change="scopeStandardsGridOnSelectedCountryCompliance(selectedScopeStandardsCountry, selectedScopeStandardsCompliance)" class="form-control" ng-options="item.CertificateProgramName for item in complianceProgramUniqueIds track by item.CertificateProgramId" ng-model="selectedScopeStandardsCompliance">
+                                        <option value="" disabled selected>Select Compliance Program</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Scope and Standards Angular Grid-->
+                        <div ui-grid="scopeStandardsInfoGrid" ui-grid-cellnav ui-grid-edit ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column style="height: 250px; width: 100%; line-height: 1.4285;" ng-if="showGrid5 && (selectedScopeStandardsCompliance != null || scopeStandardsInfoGrid.data.length != 0)"></div>
+
+                        <div class="row" ng-if="selectedScopeStandardsCompliance != null">
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-primary" type="button" ng-click="addScopeStandards()">Add Row</button>
+                            </div>
+                        </div>
+
+                        <!--add evidence-->
+                        <smi-add-evidence></smi-add-evidence>     
+                        
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-10"></div>
+
+                                <div class="col-md-12" style="text-align:center;">
+                                    <button class="btn btn-warning" ng-click="closeDialog()">Cancel</button>
+                                    <button class="btn btn-primary" type="button" ng-if="(isWorkflow && isApprover) || !isWorkflow" ng-click="saveScopeStandards()" ng-disabled="isWorkflow && (!(workflowAction == false && rejectComment != '') && !(workflowAction == true))">{{submitText}}</button>
+                                </div>
+
+                                <div class="col-md-10"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--TESTING AND VALIDITY-->
+                    <div class="tab-pane" smi-active-tab="TestingValidity" id="tab6">
+                        <div class="row" style="display:inline">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="drpCountry"><b>Select a Country:</b></label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" ng-options="item.CountryName for item in countryLookup track by item.CountryItemId" ng-model="selectedTestingValidityCountry" ng-change="onTestingValidityCountrySelect()" ng-disabled="isWorkflow">
+                                        <option value="" disabled selected>Select Country</option>
+                                    </select>                                    
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="drpCountry"><b>Compliance Program:</b></label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" ng-options="item.CertificateProgramName for item in complianceProgramUniqueIds track by item.CertificateProgramId" ng-model="selectedTestingValidityComplianceProgram" ng-disabled="selectedTestingValidityCountry === null || isWorkflow" ng-change="onTestingValidityComplianceProgramSelect()">
+                                        <option value="" disabled selected>Select Compliance Program</option>
+                                    </select>
+                                    <!--<smi-drop-down datasource="" model=""></smi-drop-down>-->
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <!--Testing and Validiry Angular Grid-->
+                        <div ui-grid="testingValidityInfoGrid" ui-grid-cellnav ui-grid-edit ui-grid-resize-columns ui-grid-infinite-scroll ui-grid-resize-column style="height: 250px; width: 100%; line-height: 1.4285;" ng-if="showGrid6 && ((selectedTestingValidityCountry !== null && selectedTestingValidityComplianceProgram !== null) || testingValidityInfoGrid.data.length !== null)"></div>
+                        
+                        <div class="row" ng-if="selectedTestingValidityCountry !== null && selectedTestingValidityComplianceProgram !== null">
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-primary" type="button" ng-click="addTestingValidity()" >Add Row</button>
+                            </div>
+                        </div>
+
+                        <!--add evidence-->
+                        <smi-add-evidence></smi-add-evidence>
+
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-10"></div>
+
+                                <div class="col-md-12" style="text-align:center;">
+                                    <button class="btn btn-warning" ng-click="closeDialog()">Cancel</button>
+                                    <button class="btn btn-primary" type="button" ng-if="(isWorkflow && isApprover) || !isWorkflow" ng-click="saveTestingValidity()" ng-disabled="isWorkflow && (!(workflowAction == false && rejectComment != '') && !(workflowAction == true))">{{submitText}}</button>
+                                </div>
+
+                                <div class="col-md-10"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/ng-template" id="addEditFile.html">
+            <div class="modal-header">
+                <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+                <h4 class="modal-title">{{modalTitle}}</h4>
+                <i class="fa fa-times pull-right close" ng-click="closeDialog()"></i>
+            </div>
+            <div class="modal-body">
+                <form class="float-none" name="fileForm" novalidate>                    
+                    <div class="col-sm-12  float-none">
+                        <!--FILE BROWSER-->
+                        <div class="form-group custom-row-inline  col-sm-12 float-none">
+                            <div class="form-group">
+                                <div class="form-group custom-row-inline  col-sm-12">
+
+
+                                    <div class="col-sm-3">
+                                        <label><span class="required">*</span>Filename</label>
+                                        <span ng-show="showErrors" class="required fa fa-exclamation-circle" uib-popover="File is required" popover-trigger="mouseenter"></span>
+                                    </div>
+                                    <div class="input-group col-sm-9">
+                                        <input type="text" class="form-control custom-read-only" name="filename" value="{{selectedFile.name}}" required />
+                                        <span class="input-group-btn">
+                                            <label class="btn btn-default btn-file">
+                                                <i class="fa fa-folder"></i> Browse <input type="file" id="myFile" fileread="selectedFile" modified="isPFModified" style="display:none">
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" type="button" ng-click="closeDialog()">Cancel</button>
+                <button class="btn btn-primary" type="button" ng-click="saveFile()">Save</button>
+
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="workflowFieldChanges.html">
+            <div class="modal-header">
+                <i class="fa fa-spinner fa-spin icon" ng-hide="!isLoading"></i>
+                <h4 class="modal-title">{{modalTitle}}</h4>
+                <i class="fa fa-times pull-right close" ng-click="closeDialog()"></i>
+            </div>
+            <div class="modal-body">
+                <form class="float-none" name="fileForm" novalidate>
+                    <div class="col-sm-12  float-none">
+                        <div class="row">
+                            <!--<div class="col-md-6">
+                                <h4>Original Information</h4>
+                                <div class="panel panel-default">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="info in row.OriginalInformation track by $index">{{info}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Updated Information</h4>
+                                <div class="panel panel-default">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="info in row.UpdatedInformation track by $index">{{info}}</li>
+                                    </ul>
+                                </div>
+                            </div>-->
+                            <div class="col-md-12">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th width="50%">Original Information</th>
+                                        <th width="50%">Updated Information</th>
+                                    </tr>
+                                    <tr ng-repeat="info in row.OriginalInformation track by $index">
+                                        <td>{{info}}</td>
+                                        <td>{{row.UpdatedInformation[$index]}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" type="button" ng-click="closeDialog()">Close</button>               
+            </div>
+        </script>
+    </script>
+</div>
